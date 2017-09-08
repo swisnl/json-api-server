@@ -24,13 +24,13 @@ $ php artisan laravel-api:generate-all {Model}
 ```
 
 This generates the following files:
-- An eloquent model
-- A translation model: not mandatory. If you won't use it. You can just delete it after generating
-- A schema for your model: used to convert your model to a json api format
-- An API controller
-- A repository for your model
-- A policy for checking permissions
-- 2 tests and a testing trait
+* An eloquent model
+* A translation model: not mandatory. If you won't use it. You can just delete it after generating
+* A schema for your model: used to convert your model to a json api format
+* An API controller
+* A repository for your model
+* A policy for checking permissions
+* 2 tests and a testing trait
 
 If everything is generated, all you have to do is write some endpoints for your new controller and you're good to go.
 
@@ -38,16 +38,16 @@ You'll be able to do the basic CRUD actions without writing anything.
 
 ### Optional middleware
 There are 2 optional middlewares:
-- route_permission_middleware: used to check if a user has permission to acces an API endpoint
-- configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
+* route_permission_middleware: used to check if a user has permission to acces an API endpoint
+* configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 
 ### URL parameters out of the box
 The following URL parameters are supported after installing this package:
-- ?include={relationship}: To include all data the relationship has
-- ?page={pageNumber}: To decide which page the pagination should show
-- ?per_page={amountToShowPerPage}:To decide how many items you get per page
-- ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
-- ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
+* ?include={relationship}: To include all data the relationship has
+* ?page={pageNumber}: To decide which page the pagination should show
+* ?per_page={amountToShowPerPage}:To decide how many items you get per page
+* ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
+* ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
 
 ### Requests and responses
 All requests and responses are according to the format specified by http://jsonapi.org/. To encode your response to the correct format you should call JsonEncoder's method: encodeData(). 
