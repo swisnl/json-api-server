@@ -1,0 +1,9 @@
+<?php
+
+namespace $NAMESPACE_SCHEMA$;
+
+use Swis\LaravelApi\JsonSchemas\ApiSchema;
+
+class $MODEL_NAME$Schema extends ApiSchema
+{
+}

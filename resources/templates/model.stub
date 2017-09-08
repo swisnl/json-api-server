@@ -1,0 +1,19 @@
+<?php
+
+namespace $NAMESPACE_MODEL$;
+
+use $NAMESPACE_MODEL_EXTEND$;
+use Dimsav\Translatable\Translatable;
+
+class $MODEL_NAME$ extends Model
+{
+    use Translatable;
+
+    public $fillable = [
+        $FIELDS$
+    ];
+
+    public $translatedAttributes = [
+        $FIELDS$
+    ];
+}

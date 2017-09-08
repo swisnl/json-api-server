@@ -1,0 +1,27 @@
+<?php
+
+namespace $NAMESPACE_API_CONTROLLER$;
+
+use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
+use Illuminate\Http\Request;
+use Swis\LaravelApi\Http\Controllers\Api\ApiBaseController;
+use Swis\LaravelApi\JsonEncoders\JsonEncoder;
+
+class $MODEL_NAME$Controller extends ApiBaseController
+{
+    /** @var $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository */
+    private $$MODEL_NAME_CAMEL$Repository;
+
+    public function __construct(JsonEncoder $jsonEncoder, $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository, Request $request)
+    {
+        $jsonEncoder->setRepository($$MODEL_NAME_CAMEL$Repository);
+        parent::__construct($jsonEncoder, $$MODEL_NAME_CAMEL$Repository, $request);
+    }
+
+     public function validateResource(Request $request, $id = null)
+    {
+        $this->validate($request, [
+        ]);
+        return $request->all();
+    }
+}
