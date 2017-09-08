@@ -1,0 +1,12 @@
+<?php
+
+namespace $NAMESPACE_MODEL$;
+
+use $NAMESPACE_MODEL_EXTEND$;
+
+class $MODEL_NAME$Translation extends Model
+{
+    public $fillable = [
+        $FIELDS$
+    ];
+}

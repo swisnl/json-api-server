@@ -1,0 +1,10 @@
+<?php
+
+namespace $NAMESPACE_MODEL$;
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class $MODEL_NAME$Policy
+{
+    use HandlesAuthorization;
+}
