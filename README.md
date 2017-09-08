@@ -7,7 +7,9 @@ Via Composer
 ``` bash
 $ composer require swisnl/laravel-api
 ```
+
 Add the following to your config/app.php file:
+
 ``` php
 'providers' => [
  // Other providers
@@ -19,11 +21,13 @@ Add the following to your config/app.php file:
 
 ### Generating the required files
 After installing the package you can instantly generate all the required files by executing this command:
+
 ``` bash
 $ php artisan laravel-api:generate-all {Model}
 ```
 
 This generates the following files:
+
 * An eloquent model
 * A translation model: not mandatory. If you won't use it. You can just delete it after generating
 * A schema for your model: used to convert your model to a json api format
@@ -38,11 +42,13 @@ You'll be able to do the basic CRUD actions without writing anything.
 
 ### Optional middleware
 There are 2 optional middlewares:
+
 * route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 
 ### URL parameters out of the box
 The following URL parameters are supported after installing this package:
+
 * ?include={relationship}: To include all data the relationship has
 * ?page={pageNumber}: To decide which page the pagination should show
 * ?per_page={amountToShowPerPage}:To decide how many items you get per page
@@ -56,7 +62,7 @@ All requests and responses are according to the format specified by http://jsona
 If by chance you are in need of a schema but you don't have a model for that schema in your own repository. You can use the following command to generate schemas based on the relationships of the given model:
 
 ``` bash
-php artisan laravel-api:generate-schemas {Model}
+$ php artisan laravel-api:generate-schemas {Model}
 ```
 
 Keep in mind that this schema will also need a repository. In the future this command will also generate this for you.
