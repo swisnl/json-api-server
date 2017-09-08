@@ -1,4 +1,15 @@
-# laravel-api
+# Laravel-Api
+Set up a laravel API in just a few minutes with this package. All the standard API functionality is already there for you.
+
+This package strives to save you some time while building your API. 
+It already has the basic features an API should have, like:
+
+* A generator to generate your needed files for each model
+* An abstract layer to handle your basic CRUD actions
+* Support for a few useful URL parameters
+* Permission and route permission handling
+* Responses in API json format
+* Automatically translates your models based on your database
 
 ## Install
 
