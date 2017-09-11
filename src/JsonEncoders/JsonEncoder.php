@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Neomerx\JsonApi\Encoder\Encoder;
 use Neomerx\JsonApi\Encoder\EncoderOptions;
 use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
+use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
 use Swis\LaravelApi\Repositories\Repository;
 
 class JsonEncoder
@@ -74,13 +75,13 @@ class JsonEncoder
     protected function getModelsToEncode()
     {
         $model = $this->repository->getModel();
-        $modelPath = get_class($model);
-        $this->insertIntoArray($modelPath);
+        $modelClass = get_class($model);
+        $this->insertIntoModelsToEncode($modelClass);
 
-        $relationships = $this->repository->getResourceRelationships();
+        $relationships = $this->repository->getModelRelationships();
         foreach ($relationships as $relation) {
-            $modelPath = get_class($model->$relation()->getRelated());
-            $this->insertIntoArray($modelPath);
+            $modelClass = get_class($model->$relation()->getRelated());
+            $this->insertIntoModelsToEncode($modelClass);
         }
 
         return $this->modelsToEncode;
@@ -88,32 +89,37 @@ class JsonEncoder
 
     /**
      * Helper function to insert the model and schema into an array.
+     * Example: [User::class => UserSchema::class];
      *
-     * @param $modelPath
-     *
+     * @param $modelClass
      * @return mixed
      */
-    protected function insertIntoArray($modelPath)
+    protected function insertIntoModelsToEncode($modelClass)
     {
-        $schemaName = $this->createSchemaName($modelPath);
-        $this->modelsToEncode[$modelPath] = $schemaName;
+        $schemaName = $this->createSchemaName($modelClass);
+        $this->modelsToEncode[$modelClass] = $schemaName;
 
         return $this;
     }
 
-    protected function createSchemaName($modelPath)
+    protected function createSchemaName($modelClass)
     {
-        $modelSchema = app()->make($modelPath)->schema;
+        $modelSchema = app()->make($modelClass)->schema;
         if ($modelSchema !== null) {
             return $modelSchema;
         }
 
-        $schema = $modelPath.'\\'.class_basename($modelPath).'Schema';
-        if (!class_exists($schema)) {
-            return 'App\JsonSchemas\\'.class_basename($modelPath).'Schema';
-            //TODO: kan mogelijk leiden tot meerdere van dezelfde naam, check dit asap.
+        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model. Dus als modelSchema null is throw new Exception
+        $schemaInModelFolder = $modelClass.'\\'.class_basename($modelClass).'Schema';
+        if (class_exists($schemaInModelFolder)) {
+            return $schemaInModelFolder;
         }
 
-        return $schema;
+        $schemaInSchemasFolder = 'App\JsonSchemas\\'.class_basename($modelClass).'Schema';
+        if (class_exists($schemaInSchemasFolder)) {
+            return $schemaInSchemasFolder;
+        }
+
+        throw new SchemaNotFoundException('No Schema found for: ' . $modelClass);
     }
 }

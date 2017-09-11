@@ -2,30 +2,33 @@
 
 namespace Swis\LaravelApi\Http\Controllers\Api;
 
+use Illuminate\Routing\Route;
 use Swis\LaravelApi\Repositories\Repository;
 use Swis\LaravelApi\Traits\HandleResponses;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
+use Swis\LaravelApi\Traits\HasPermissionChecks;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class ApiBaseController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HandleResponses;
+    use DispatchesJobs, ValidatesRequests, HandleResponses, HasPermissionChecks;
 
     protected $respondController;
     protected $jsonEncoder;
     protected $repository;
     protected $request;
+    protected $route;
 
-    public function __construct(JsonEncoder $jsonEncoder, Repository $repository, Request $request)
+    public function __construct(JsonEncoder $jsonEncoder, Repository $repository, Request $request, Route $route)
     {
         $this->jsonEncoder = $jsonEncoder;
         $this->repository = $repository;
         $this->request = $request;
+        $this->route = $route;
     }
 
     public function index()
@@ -33,10 +36,12 @@ abstract class ApiBaseController extends Controller
         $this->repository->setPage($this->request->get('page', null));
         $this->repository->setPerPage($this->request->get('per_page', null));
 
-        $this->authorize('index', $this->repository->getModelName());
+        $this->validateUser();
+
         if ($this->request->exists('ids')) {
             return $this->getByUrlInputIds();
         }
+
         $items = $this->repository->getAll();
 
         return $this->respondWithCollection($this->jsonEncoder->encodeToJson($items));
@@ -60,7 +65,7 @@ abstract class ApiBaseController extends Controller
     public function show($id)
     {
         $item = $this->repository->findById($id);
-        $this->authorize('show', $item);
+        $this->validateUser($item);
 
         return $this->respondWithOK($this->jsonEncoder->encodeToJson($item));
     }
@@ -72,7 +77,7 @@ abstract class ApiBaseController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', $this->repository->getModelName());
+        $this->validateUser();
         $createdResource = $this->repository->create($this->validateResource($this->request));
         $encodedResource = $this->jsonEncoder->encodeToJson($createdResource);
 
@@ -88,7 +93,7 @@ abstract class ApiBaseController extends Controller
      */
     public function update($id)
     {
-        $this->authorize('update', $this->repository->findById($id));
+        $this->validateUser($this->repository->findById($id));
         $updated = $this->repository->update($this->validateResource($this->request, $id), $id);
         if (!$updated) {
             throw new NotFoundHttpException();
@@ -106,5 +111,15 @@ abstract class ApiBaseController extends Controller
     {
     }
 
+    protected function validateUser($requestedObject = null, $policyActionName = null)
+    {
+        if ($this->checkForPermissions()) {
+            $this->checkIfUserHasPermissions($this->route, $this->repository->getModelName(),
+                $requestedObject, $policyActionName);
+        }
+    }
+
     abstract public function validateResource(Request $request, $id = null);
+
+    abstract public function checkForPermissions(): bool;
 }

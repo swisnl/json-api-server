@@ -4,9 +4,12 @@ namespace Swis\LaravelApi\JsonSchemas;
 
 use Neomerx\JsonApi\Contracts\Schema\SchemaFactoryInterface;
 use Neomerx\JsonApi\Schema\SchemaProvider;
+use Swis\LaravelApi\Exceptions\RepositoryNotFoundException;
+use Swis\LaravelApi\Repositories\Repository;
 
 abstract class ApiSchema extends SchemaProvider
 {
+    /** @var  Repository $repository */
     protected $repository;
 
     public function __construct(SchemaFactoryInterface $factory)
@@ -27,7 +30,8 @@ abstract class ApiSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-        return $resource->id;
+//        Model::getKey()
+        return $resource->id; //getKey //todo
     }
 
     /**
@@ -50,15 +54,15 @@ abstract class ApiSchema extends SchemaProvider
      * self::SHOW_SELF and self::SHOW_RELATED parameters.
      *
      * @param object $object
-     * @param bool   $isPrimary
-     * @param array  $includeList
+     * @param bool $isPrimary
+     * @param array $includeList
      *
      * @return array
      */
     public function getRelationships($object, $isPrimary, array $includeList)
     {
         $relations = [];
-        foreach ($this->repository->getResourceRelationships() as $relation) {
+        foreach ($this->repository->getModelRelationships() as $relation) {
             $relations[$relation] = [
                 self::DATA => $object->$relation,
                 self::SHOW_SELF => false,
@@ -83,16 +87,23 @@ abstract class ApiSchema extends SchemaProvider
             }
         }
 
-        $repository = $modelWithPath.'Repository';
-        if (!class_exists($repository)) {
-            $this->repository = app()->make('App\Repositories\\'.$modelName.'Repository');
+        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model. Dus als $modelRepository null is, throw new Exception
+
+        $repository = $modelWithPath . 'Repository';
+        if (class_exists($repository)) {
+            $this->repository = app()->make($repository);
 
             return $this;
         }
 
-        $this->repository = app()->make($repository);
+        $repositoryInRepositoriesDir = 'App\Repositories\\' . $modelName . 'Repository';
+        if (class_exists($repositoryInRepositoriesDir)) {
+            $this->repository = app()->make($repositoryInRepositoriesDir);
 
-        return $this;
+            return $this;
+        }
+
+        throw new RepositoryNotFoundException('No repository found for: ' . $modelName);
     }
 
     protected function setResourceType()

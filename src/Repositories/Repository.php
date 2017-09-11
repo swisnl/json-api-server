@@ -88,7 +88,7 @@ abstract class Repository
         $this->model = $model;
     }
 
-    public function getResourceRelationships(): array
+    public function getModelRelationships(): array //TODO: Skipt dit geen relaties die geen return type hebben?
     {
         $relations = [];
 
@@ -100,7 +100,8 @@ abstract class Repository
             if (!$returnType) {
                 continue;
             }
-            if (in_array($returnType->__toString(), $this->relationshipTypes)) {
+
+            if (in_array(pathinfo($returnType)['basename'], $this->relationshipTypes)) {
                 $relations[] = $method->getName();
             }
         }
@@ -136,7 +137,6 @@ abstract class Repository
     {
         return $this->page;
     }
-
 
     abstract public function getModelName(): string;
 }
