@@ -8,5 +8,6 @@ class $MODEL_NAME$Translation extends Model
 {
     public $fillable = [
         $FIELDS$
+        //TODO: Same as model's fillable
     ];
 }

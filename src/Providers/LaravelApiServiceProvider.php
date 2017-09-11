@@ -11,8 +11,15 @@ use InfyOm\Generator\InfyOmGeneratorServiceProvider;
 use Laracasts\Flash\FlashServiceProvider;
 use Prettus\Repository\Providers\RepositoryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
-use Swis\LaravelApi\Console\Commands\GenerateApiClasses;
-use Swis\LaravelApi\Console\Commands\GenerateSchemasCommand;
+use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
+use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
+use Swis\LaravelApi\Console\Commands\GenerateMigrationCommand;
+use Swis\LaravelApi\Console\Commands\GenerateModelCommand;
+use Swis\LaravelApi\Console\Commands\GenerateModelSchemaCommand;
+use Swis\LaravelApi\Console\Commands\GenerateModelTranslationCommand;
+use Swis\LaravelApi\Console\Commands\GeneratePolicyCommand;
+use Swis\LaravelApi\Console\Commands\GenerateRepositoryCommand;
+use Swis\LaravelApi\Console\Commands\GenerateMissingSchemaCommand;
 use Swis\LaravelApi\Http\Middleware\ConfigureLocale;
 use Swis\LaravelApi\Http\Middleware\PermissionMiddleware;
 
@@ -35,12 +42,19 @@ class LaravelApiServiceProvider extends ServiceProvider
         $this->app->register(AdminLTETemplatesServiceProvider::class);
         $this->app->register(htmlServiceProvider::class);
         $this->commands([
-           GenerateApiClasses::class,
-           GenerateSchemasCommand::class,
+            GenerateAllCommand::class,
+            GenerateMissingSchemaCommand::class,
+            GenerateApiControllerCommand::class,
+            GenerateModelCommand::class,
+            GenerateModelSchemaCommand::class,
+            GenerateModelTranslationCommand::class,
+            GeneratePolicyCommand::class,
+            GenerateRepositoryCommand::class,
+            GenerateMigrationCommand::class
         ]);
-        
+
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravel_generator.php', 'infyom.laravel_generator'
+            __DIR__ . '/../../config/laravel_generator.php', 'infyom.laravel_generator'
         );
     }
 }

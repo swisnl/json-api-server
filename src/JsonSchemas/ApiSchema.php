@@ -103,6 +103,13 @@ abstract class ApiSchema extends SchemaProvider
             return $this;
         }
 
+        $repositoryInRoot = 'App\\' . $modelName . 'Repository';
+        if (class_exists($repositoryInRoot)) {
+            $this->repository = app()->make($repositoryInRoot);
+
+            return $this;
+        }
+
         throw new RepositoryNotFoundException('No repository found for: ' . $modelName);
     }
 

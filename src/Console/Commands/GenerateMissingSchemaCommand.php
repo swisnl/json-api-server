@@ -5,14 +5,14 @@ namespace Swis\LaravelApi\Console\Commands;
 use Swis\LaravelApi\Services\CustomFileGenerator;
 use Illuminate\Console\Command;
 
-class GenerateSchemasCommand extends Command
+class GenerateMissingSchemaCommand extends BaseGenerateCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-schemas {model}';
+    protected $signature = 'laravel-api:generate-relation-schema {model}';
 
     /**
      * The console command description.
@@ -45,7 +45,7 @@ class GenerateSchemasCommand extends Command
         }
 
         $repository = app()->make($pathToRepositoryClass);
-        $relationships = $repository->getResourceRelationships();
+        $relationships = $repository->getModelRelationships();
 
         foreach ($relationships as $relationship) {
             $schema = $this->generateSchemaClassName($relationship);
@@ -54,8 +54,8 @@ class GenerateSchemasCommand extends Command
                 continue;
             }
 
-            $generator = new CustomFileGenerator($schema);
-            $generator->generateSchema($pathToSchemas);
+            $this->modelName = $schema;
+            $this->generateSchema();
         }
     }
 
@@ -89,5 +89,11 @@ class GenerateSchemasCommand extends Command
     protected function generateSchemaClassName($relationship): string
     {
         return ucfirst(str_singular($relationship));
+    }
+
+    public function getModelName()
+    {
+        return $this->modelName;
+
     }
 }

@@ -120,6 +120,11 @@ class JsonEncoder
             return $schemaInSchemasFolder;
         }
 
+        $schemaInRoot = 'App\\'.class_basename($modelClass).'Schema';
+        if (class_exists($schemaInRoot)) {
+            return $schemaInRoot;
+        }
+
         throw new SchemaNotFoundException('No Schema found for: ' . $modelClass);
     }
 }

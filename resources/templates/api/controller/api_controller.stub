@@ -4,6 +4,7 @@ namespace $NAMESPACE_API_CONTROLLER$;
 
 use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Swis\LaravelApi\Http\Controllers\Api\ApiBaseController;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 
@@ -12,10 +13,11 @@ class $MODEL_NAME$Controller extends ApiBaseController
     /** @var $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository */
     private $$MODEL_NAME_CAMEL$Repository;
 
-    public function __construct(JsonEncoder $jsonEncoder, $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository, Request $request)
+    public function __construct(JsonEncoder $jsonEncoder, $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository,
+    Request $request, Route $route)
     {
         $jsonEncoder->setRepository($$MODEL_NAME_CAMEL$Repository);
-        parent::__construct($jsonEncoder, $$MODEL_NAME_CAMEL$Repository, $request);
+        parent::__construct($jsonEncoder, $$MODEL_NAME_CAMEL$Repository, $request, $route);
     }
 
      public function validateResource(Request $request, $id = null)
@@ -23,5 +25,10 @@ class $MODEL_NAME$Controller extends ApiBaseController
         $this->validate($request, [
         ]);
         return $request->all();
+    }
+
+    public function checkForPermissions(): bool
+    {
+        return false;
     }
 }
