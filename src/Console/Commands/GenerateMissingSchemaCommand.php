@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-use Swis\LaravelApi\Services\CustomFileGenerator;
 use Illuminate\Console\Command;
 
 class GenerateMissingSchemaCommand extends BaseGenerateCommand
@@ -22,6 +21,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     protected $description = 'Generates all not existing schemas based on relationships in the models';
 
     protected $modelName;
+
     /**
      * Create a new command instance.
      */
@@ -79,7 +79,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
 
         $modelRepository = $model->repository;
 
-        if ($modelRepository !== null) {
+        if (null !== $modelRepository) {
             return $modelRepository;
         }
 

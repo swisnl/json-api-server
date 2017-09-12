@@ -2,8 +2,8 @@
 
 namespace Swis\LaravelApi\Exceptions;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Swis\LaravelApi\Constants\HttpCodes;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SchemaNotFoundException extends HttpException
 {

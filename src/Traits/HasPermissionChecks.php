@@ -9,12 +9,17 @@ trait HasPermissionChecks
 {
     use AuthorizesRequests;
 
-    public function checkIfUserHasPermissions(Route $route, string $model, $requestedObject = null, $policyActionName = null)
-    {
+    public function checkIfUserHasPermissions(
+        Route $route,
+        string $model,
+        $requestedObject = null,
+        $policyActionName = null
+    ) {
         $actionName = $this->extractActionName($route, $policyActionName);
 
         if ($requestedObject == !null) {
             $this->authorize($actionName, $requestedObject);
+
             return;
         }
 
@@ -23,11 +28,12 @@ trait HasPermissionChecks
 
     protected function extractActionName(Route $route, $policyActionName)
     {
-        if ($policyActionName ==! null) {
+        if ($policyActionName == !null) {
             return $policyActionName;
         }
 
         $actionName = substr($route->getActionName(), strpos($route->getActionName(), '@') + 1);
+
         return $actionName;
     }
 }

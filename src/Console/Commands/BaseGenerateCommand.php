@@ -35,7 +35,7 @@ abstract class BaseGenerateCommand extends Command
 
     protected function generateNewControllerName(): string
     {
-        return 'app/Http/Controllers/Api/' . $this->getModelName() . 'Controller.php';
+        return 'app/Http/Controllers/Api/'.$this->getModelName().'Controller.php';
     }
 
     protected function renameController()
@@ -44,10 +44,12 @@ abstract class BaseGenerateCommand extends Command
 
         if (file_exists($newControllerName)) {
             $this->error('Auto generated files already exist - GenerateAllCommand.php, renameFiles()');
+
             return $this;
         }
 
-        rename(config('infyom.laravel_generator.path.api_controller') . $this->getModelName() . 'APIController.php', $newControllerName);
+        rename(config('infyom.laravel_generator.path.api_controller').$this->getModelName()
+            .'APIController.php', $newControllerName);
 
         return $this;
     }

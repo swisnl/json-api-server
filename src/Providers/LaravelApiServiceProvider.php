@@ -14,12 +14,12 @@ use Spatie\Permission\PermissionServiceProvider;
 use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
 use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
 use Swis\LaravelApi\Console\Commands\GenerateMigrationCommand;
+use Swis\LaravelApi\Console\Commands\GenerateMissingSchemaCommand;
 use Swis\LaravelApi\Console\Commands\GenerateModelCommand;
 use Swis\LaravelApi\Console\Commands\GenerateModelSchemaCommand;
 use Swis\LaravelApi\Console\Commands\GenerateModelTranslationCommand;
 use Swis\LaravelApi\Console\Commands\GeneratePolicyCommand;
 use Swis\LaravelApi\Console\Commands\GenerateRepositoryCommand;
-use Swis\LaravelApi\Console\Commands\GenerateMissingSchemaCommand;
 use Swis\LaravelApi\Http\Middleware\ConfigureLocale;
 use Swis\LaravelApi\Http\Middleware\PermissionMiddleware;
 
@@ -51,11 +51,11 @@ class LaravelApiServiceProvider extends ServiceProvider
             GenerateModelTranslationCommand::class,
             GeneratePolicyCommand::class,
             GenerateRepositoryCommand::class,
-            GenerateMigrationCommand::class
+            GenerateMigrationCommand::class,
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/laravel_generator.php',
+            __DIR__.'/../../config/laravel_generator.php',
             'infyom.laravel_generator'
         );
     }

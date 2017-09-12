@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ddewit
  * Date: 11-9-2017
- * Time: 15:21
+ * Time: 15:21.
  */
 
 namespace Swis\LaravelApi\Console\Commands;

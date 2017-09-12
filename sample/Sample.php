@@ -2,7 +2,7 @@
 
 namespace Swis\sample;
 
-use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Swis\sample\Repositories\SampleRepository;
 use Swis\sample\Schemas\SampleSchema;
 

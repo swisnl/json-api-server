@@ -2,13 +2,12 @@
 
 namespace Swis\test\Unit;
 
-use Illuminate\Database\Eloquent\Model;
 use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
-use Swis\LaravelApi\JsonSchemas\BaseApiSchema;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
-use Swis\LaravelApi\Repositories\BaseApiRepository;
+use Swis\tests\TestClasses\TestModel;
+use Swis\tests\TestClasses\TestRepository;
 
 class JsonEncoderTest extends TestCase
 {
@@ -50,21 +49,4 @@ class JsonEncoderTest extends TestCase
 
         $this->assertJson($error);
     }
-}
-
-class TestRepository extends BaseApiRepository {
-
-    public function getModelName(): string
-    {
-        return TestModel::class;
-    }
-}
-
-class TestModel extends Model {
-    public $schema = TestSchema::class;
-    public $repository = TestRepository::class;
-}
-
-class TestSchema extends BaseApiSchema {
-
 }

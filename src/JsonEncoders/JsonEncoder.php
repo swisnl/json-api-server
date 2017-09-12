@@ -26,7 +26,8 @@ class JsonEncoder
      */
     public function encodeToJson($object)
     {
-        $encoder = Encoder::instance($this->getModelsToEncode(), $this->getEncoderOptions())->withMeta($this->getMeta($object));
+        $encoder = Encoder::instance($this->getModelsToEncode(), $this->getEncoderOptions())
+            ->withMeta($this->getMeta($object));
 
         return $encoder->encodeData($object, new EncodingParameters($this->getIncludes()));
     }
@@ -89,9 +90,10 @@ class JsonEncoder
 
     /**
      * Helper function to insert the model and schema into an array.
-     * Example: [User::class => UserSchema::class];
+     * Example: [User::class => UserSchema::class];.
      *
      * @param $modelClass
+     *
      * @return mixed
      */
     protected function insertIntoModelsToEncode($modelClass)
@@ -105,11 +107,12 @@ class JsonEncoder
     protected function createSchemaName($modelClass)
     {
         $modelSchema = app()->make($modelClass)->schema;
-        if ($modelSchema !== null) {
+        if (null !== $modelSchema) {
             return $modelSchema;
         }
 
-        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model. Dus als modelSchema null is throw new Exception
+        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model.
+        // Dus als modelSchema null is throw new Exception
         $schemaInModelFolder = $modelClass.'\\'.class_basename($modelClass).'Schema';
         if (class_exists($schemaInModelFolder)) {
             return $schemaInModelFolder;
@@ -125,6 +128,6 @@ class JsonEncoder
             return $schemaInRoot;
         }
 
-        throw new SchemaNotFoundException('No Schema found for: ' . $modelClass);
+        throw new SchemaNotFoundException('No Schema found for: '.$modelClass);
     }
 }

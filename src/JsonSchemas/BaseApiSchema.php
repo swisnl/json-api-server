@@ -9,7 +9,7 @@ use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 abstract class BaseApiSchema extends SchemaProvider
 {
-    /** @var  BaseApiRepository $repository */
+    /** @var BaseApiRepository $repository */
     protected $repository;
 
     public function __construct(SchemaFactoryInterface $factory)
@@ -54,8 +54,8 @@ abstract class BaseApiSchema extends SchemaProvider
      * self::SHOW_SELF and self::SHOW_RELATED parameters.
      *
      * @param object $object
-     * @param bool $isPrimary
-     * @param array $includeList
+     * @param bool   $isPrimary
+     * @param array  $includeList
      *
      * @return array
      */
@@ -80,37 +80,38 @@ abstract class BaseApiSchema extends SchemaProvider
 
         if (class_exists($modelWithPath)) {
             $modelRepository = app()->make($modelWithPath)->repository;
-            if ($modelRepository !== null) {
+            if (null !== $modelRepository) {
                 $this->repository = app()->make($modelRepository);
 
                 return $this;
             }
         }
 
-        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model. Dus als $modelRepository null is, throw new Exception
+        // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model.
+        // Dus als $modelRepository null is, throw new Exception
 
-        $repository = $modelWithPath . 'Repository';
+        $repository = $modelWithPath.'Repository';
         if (class_exists($repository)) {
             $this->repository = app()->make($repository);
 
             return $this;
         }
 
-        $repositoryInRepositoriesDir = 'App\Repositories\\' . $modelName . 'Repository';
+        $repositoryInRepositoriesDir = 'App\Repositories\\'.$modelName.'Repository';
         if (class_exists($repositoryInRepositoriesDir)) {
             $this->repository = app()->make($repositoryInRepositoriesDir);
 
             return $this;
         }
 
-        $repositoryInRoot = 'App\\' . $modelName . 'Repository';
+        $repositoryInRoot = 'App\\'.$modelName.'Repository';
         if (class_exists($repositoryInRoot)) {
             $this->repository = app()->make($repositoryInRoot);
 
             return $this;
         }
 
-        throw new RepositoryNotFoundException('No repository found for: ' . $modelName);
+        throw new RepositoryNotFoundException('No repository found for: '.$modelName);
     }
 
     protected function setResourceType()

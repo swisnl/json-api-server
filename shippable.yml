@@ -8,10 +8,11 @@ build:
   - composer --no-interaction --no-progress --no-suggest install
 
   # Code style
-  - php vendor/bin/php-cs-fixer -vvv fix src
+  - composer fix-style
+  - composer check-style
 
   # Tests
-  #  - vendor/bin/phpunit
+#  - vendor/bin/phpunit
 
 notifications:
   email:
