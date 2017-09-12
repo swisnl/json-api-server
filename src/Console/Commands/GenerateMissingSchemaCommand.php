@@ -73,7 +73,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     {
         $model = app()->make($pathToFolder.$this->modelName);
 
-        if (!file_exists($model)){
+        if (!file_exists($model)) {
             return $pathToFolder.$this->modelName.'BaseApiRepository';
         }
 
@@ -94,6 +94,5 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     public function getModelName()
     {
         return $this->modelName;
-
     }
 }

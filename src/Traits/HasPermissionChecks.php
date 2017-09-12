@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Traits;
 
-
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Route;
 

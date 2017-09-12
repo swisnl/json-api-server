@@ -3,12 +3,12 @@
 namespace Swis\test\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use PHPUnit\Framework\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\sample\Repositories\SampleRepository;
 use Swis\sample\Sample;
+use PHPUnit\Framework\TestCase;
 
 class JsonEncoderTest extends TestCase
 {

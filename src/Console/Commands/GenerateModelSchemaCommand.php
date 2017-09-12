@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-
 class GenerateModelSchemaCommand extends BaseGenerateCommand
 {
     /**

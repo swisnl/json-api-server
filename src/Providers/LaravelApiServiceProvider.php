@@ -41,6 +41,7 @@ class LaravelApiServiceProvider extends ServiceProvider
         $this->app->register(InfyOmGeneratorServiceProvider::class);
         $this->app->register(AdminLTETemplatesServiceProvider::class);
         $this->app->register(htmlServiceProvider::class);
+
         $this->commands([
             GenerateAllCommand::class,
             GenerateMissingSchemaCommand::class,
@@ -54,7 +55,8 @@ class LaravelApiServiceProvider extends ServiceProvider
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/laravel_generator.php', 'infyom.laravel_generator'
+            __DIR__ . '/../../config/laravel_generator.php',
+            'infyom.laravel_generator'
         );
     }
 }

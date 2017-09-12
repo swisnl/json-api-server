@@ -114,8 +114,12 @@ abstract class BaseApiController extends Controller
     protected function validateUser($requestedObject = null, $policyActionName = null)
     {
         if ($this->checkForPermissions()) {
-            $this->checkIfUserHasPermissions($this->route, $this->repository->getModelName(),
-                $requestedObject, $policyActionName);
+            $this->checkIfUserHasPermissions(
+                $this->route,
+                $this->repository->getModelName(),
+                $requestedObject,
+                $policyActionName
+            );
         }
     }
 

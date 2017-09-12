@@ -29,7 +29,7 @@ Add the following to your config/app.php file:
 ```
 
 ## Sample 
-Please see the folder[sample](sample) for a sample of an application using this package.
+Please see the folder [sample](sample) for a sample of an application using this package.
 
 ## Usage
 
@@ -87,15 +87,6 @@ return $this->respondWithCollection($jsonObject);
 
 These methods automatically create a response with the correct status code and body.
 
-### URL parameters out of the box
-The following URL parameters are supported after installing this package:
-
-* ?include={relationship}: To include all data the relationship has
-* ?page={pageNumber}: To decide which page the pagination should show
-* ?per_page={amountToShowPerPage}:To decide how many items you get per page
-* ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
-* ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
-
 ### Using policies
 If you decide to use policies to check for the user's pemissions you have to add the policies to your Providers\AuthServicePorvider.
 
@@ -127,6 +118,15 @@ If  you want to redirect the validation to a specific function in your policy yo
 $this->validateUser($requestedObject, 'show');
 ```
 
+### URL parameters out of the box
+The following URL parameters are supported after installing this package:
+
+* ?include={relationship}: To add all relationship data to the response
+* ?page={pageNumber}: To decide which page the pagination should show
+* ?per_page={amountToShowPerPage}:To decide how many items you get per page
+* ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
+* ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
+
 ### Optional middleware
 There are 2 optional middlewares:
 
@@ -140,7 +140,7 @@ If by chance you are in need of a schema but you don't have a model for that sch
 $ php artisan laravel-api:generate-missing-schemas {Model}
 ```
 
-Keep in mind that this schema will also need a repository. In the future this command will also generate this for you.
+Keep in mind that this schema will also needs a repository. In the future this command will also generate this for you.
 
 ## Packages Laravel-Api uses
 

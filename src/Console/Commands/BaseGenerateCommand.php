@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-
 use Illuminate\Console\Command;
 use Swis\LaravelApi\Services\CustomFileGenerator;
 
@@ -54,5 +53,4 @@ abstract class BaseGenerateCommand extends Command
     }
 
     abstract public function getModelName();
-
 }

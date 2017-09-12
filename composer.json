@@ -18,9 +18,9 @@
     ],
     "require": {
         "php": "^7.0",
+        "friendsofphp/php-cs-fixer": "^2.4",
         "dimsav/laravel-translatable": "^7.3",
         "laravel/framework": "~5.4",
-        "laravel/passport": "^3.0",
         "laravel/tinker": "^1.0",
         "neomerx/json-api": "^1.0",
         "spatie/laravel-permission": "^2.5",

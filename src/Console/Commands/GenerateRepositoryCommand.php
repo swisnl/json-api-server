@@ -38,5 +38,4 @@ class GenerateRepositoryCommand extends Command
         $this->name = $this->argument('name');
         $this->call('infyom:repository', ['model' => $this->name]);
     }
-
 }
