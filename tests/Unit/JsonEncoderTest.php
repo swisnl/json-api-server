@@ -6,8 +6,8 @@ use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
-use Swis\tests\TestClasses\TestModel;
-use Swis\tests\TestClasses\TestRepository;
+use Tests\TestClasses\TestModel;
+use Tests\TestClasses\TestRepository;
 
 class JsonEncoderTest extends TestCase
 {

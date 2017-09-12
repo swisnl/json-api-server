@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\tests\TestClasses;
+namespace Tests\TestClasses;
 
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 

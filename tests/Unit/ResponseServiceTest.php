@@ -9,9 +9,11 @@ use Swis\LaravelApi\Models\Responses\RespondHttpOk;
 use Swis\LaravelApi\Models\Responses\RespondHttpPartialContent;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\LaravelApi\Services\ResponseService;
+use Swis\LaravelApi\Traits\HandleResponses;
 
 class ResponseServiceTest extends TestCase
 {
+    use HandleResponses;
     /**
      * @var ResponseService
      */
@@ -27,7 +29,7 @@ class ResponseServiceTest extends TestCase
     public function it_creates_an_OK_response()
     {
         $message = 'OK';
-        $response = $this->responseService->response(RespondHttpOk::class, $message);
+        $response = $this->respondWithOK($message);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('OK', $response->getContent());
@@ -37,10 +39,48 @@ class ResponseServiceTest extends TestCase
     public function it_creates_a_partial_content_response()
     {
         $message = 'PARTIAL';
-        $response = $this->responseService->response(RespondHttpPartialContent::class, $message);
+        $response = $this->respondWithPartialContent($message);
 
         $this->assertEquals(206, $response->getStatusCode());
         $this->assertEquals('PARTIAL', $response->getContent());
+    }
+
+    /** @test */
+    public function it_creates_a_created_response()
+    {
+        $message = 'CREATED';
+        $response = $this->respondWithCreated($message);
+
+        $this->assertEquals(201, $response->getStatusCode());
+        $this->assertEquals('CREATED', $response->getContent());
+    }
+
+    /** @test */
+    public function it_creates_a_no_content_response()
+    {
+        $response = $this->respondWithNoContent();
+
+        $this->assertEquals(204, $response->getStatusCode());
+    }
+
+    /** @test */
+    public function it_creates_a_collection_response_with_OK()
+    {
+        $message = 'OK';
+        $response = $this->respondWithCollection($message);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('OK', $response->getContent());
+    }
+
+    /** @test */
+    public function it_creates_a_collection_response_with_PARTIAL()
+    {
+        $message = ['meta' => 'test'];
+        $response = $this->respondWithCollection(json_encode($message));
+
+        $this->assertEquals(206, $response->getStatusCode());
+        $this->assertEquals('{"meta":"test"}', $response->getContent());
     }
 
     /** @test */

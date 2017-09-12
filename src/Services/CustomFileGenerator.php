@@ -61,10 +61,12 @@ class CustomFileGenerator extends BaseGenerator
     protected function generateNewDir()
     {
         if (!file_exists(config('infyom.laravel_generator.path.schema'))) {
+            dump(config('infyom.laravel_generator.path.schema'));
             mkdir(config('infyom.laravel_generator.path.schema'));
         }
 
         if (!file_exists(config('infyom.laravel_generator.path.policy'))) {
+            dump(config('infyom.laravel_generator.path.policy'));
             mkdir(config('infyom.laravel_generator.path.policy'));
         }
 

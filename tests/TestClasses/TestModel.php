@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\tests\TestClasses;
+namespace Tests\TestClasses;
 
 use Illuminate\Database\Eloquent\Model;
 

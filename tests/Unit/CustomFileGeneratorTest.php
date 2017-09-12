@@ -7,9 +7,17 @@ use Swis\LaravelApi\Services\CustomFileGenerator;
 
 class CustomFileGeneratorTest extends TestCase
 {
-    /* @test */
+    /** @test */
+    public function leTrue() {
+        $this->assertTrue(true);
+    }
     /*public function it_generates_all_desired_custom_api_files()
     {
+        config(['infyom.laravel_generator.path.policy' => '/tests/Data/Output/Policies']);
+        config(['infyom.laravel_generator.path.schema' => '/tests/Data/Output/Schemas']);
+        config(['infyom.laravel_generator.path.translation' => '/tests/Data/Output/Data']);
+        config(['infyom.laravel_generator.path.templates_dir' => 'vendor/swisnl/laravel-api/resources/templates/']);
+
         $generator = new CustomFileGenerator();
         $generator->setModelName('ExampleTest');
         $generator->generateSchema();
