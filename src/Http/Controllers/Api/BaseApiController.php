@@ -15,7 +15,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class BaseApiController extends Controller
 {
+
+
+
+
     use DispatchesJobs, ValidatesRequests, HandleResponses, HasPermissionChecks;
+
+
+
 
     protected $respondController;
     protected $jsonEncoder;
@@ -80,6 +87,11 @@ abstract class BaseApiController extends Controller
         $this->validateUser();
         $createdResource = $this->repository->create($this->validateResource($this->request));
         $encodedResource = $this->jsonEncoder->encodeToJson($createdResource);
+
+
+
+
+
 
         return $this->respondWithCreated($encodedResource);
     }
