@@ -2,18 +2,16 @@
 
 namespace Swis\test\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\Model;
+use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
+use Swis\LaravelApi\JsonSchemas\BaseApiSchema;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
-use Swis\sample\Repositories\SampleRepository;
-use Swis\sample\Sample;
-use PHPUnit\Framework\TestCase;
+use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class JsonEncoderTest extends TestCase
 {
-    use DatabaseTransactions;
-
     /** @var JsonEncoder $jsonEncoder */
     private $jsonEncoder;
 
@@ -21,25 +19,25 @@ class JsonEncoderTest extends TestCase
     {
         parent::setUp();
         $this->jsonEncoder = new JsonEncoder();
-        $this->jsonEncoder->setRepository(app()->make(SampleRepository::class));
+        $this->jsonEncoder->setRepository(app()->make(TestRepository::class));
     }
 
     /** @test */
     public function it_formats_the_given_object_to_json_api_format()
     {
-        $user = factory(Sample::class)->create();
+        $testModel = new TestModel();
 
-        $jsonUser = $this->jsonEncoder->encodeToJson($user);
+        $jsonObject = $this->jsonEncoder->encodeToJson($testModel);
 
-        $this->assertJson($jsonUser);
+        $this->assertJson($jsonObject);
     }
 
     /** @test */
     public function it_sets_the_repository()
     {
-        $this->jsonEncoder->setRepository(app()->make(SampleRepository::class));
+        $this->jsonEncoder->setRepository(app()->make(TestRepository::class));
 
-        $this->assertInstanceOf(SampleRepository::class, $this->jsonEncoder->getRepository());
+        $this->assertInstanceOf(TestRepository::class, $this->jsonEncoder->getRepository());
     }
 
     /** @test */
@@ -52,4 +50,21 @@ class JsonEncoderTest extends TestCase
 
         $this->assertJson($error);
     }
+}
+
+class TestRepository extends BaseApiRepository {
+
+    public function getModelName(): string
+    {
+        return TestModel::class;
+    }
+}
+
+class TestModel extends Model {
+    public $schema = TestSchema::class;
+    public $repository = TestRepository::class;
+}
+
+class TestSchema extends BaseApiSchema {
+
 }

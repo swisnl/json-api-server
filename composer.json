@@ -18,7 +18,6 @@
     ],
     "require": {
         "php": "^7.0",
-        "friendsofphp/php-cs-fixer": "^2.4",
         "dimsav/laravel-translatable": "^7.3",
         "laravel/framework": "~5.4",
         "laravel/tinker": "^1.0",
@@ -31,7 +30,9 @@
         "jlapp/swaggervel": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit" : ">=5.4.3",
+        "friendsofphp/php-cs-fixer": "^2.4",
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": ">=5.4.3",
         "squizlabs/php_codesniffer": "^2.3"
     },
     "autoload": {

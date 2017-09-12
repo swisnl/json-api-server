@@ -2,19 +2,16 @@
 
 namespace Swis\test\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
 use Swis\LaravelApi\Models\Responses\RespondHttpOk;
 use Swis\LaravelApi\Models\Responses\RespondHttpPartialContent;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\LaravelApi\Services\ResponseService;
-use PHPUnit\Framework\TestCase;
 
 class ResponseServiceTest extends TestCase
 {
-    use DatabaseTransactions;
-
     /**
      * @var ResponseService
      */

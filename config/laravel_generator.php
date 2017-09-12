@@ -15,7 +15,7 @@ return [
 
         'translation' => app_path('/'),
 
-        'schema' => app_path('JsonSchemas/'),
+        'schema' => app_path('Schemas/'),
 
         'policy' => app_path('Policies/'),
 
