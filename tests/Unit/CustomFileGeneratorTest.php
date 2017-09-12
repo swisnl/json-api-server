@@ -8,9 +8,11 @@ use Swis\LaravelApi\Services\CustomFileGenerator;
 class CustomFileGeneratorTest extends TestCase
 {
     /** @test */
-    public function leTrue() {
+    public function leTrue()
+    {
         $this->assertTrue(true);
     }
+
     /*public function it_generates_all_desired_custom_api_files()
     {
         config(['infyom.laravel_generator.path.policy' => '/tests/Data/Output/Policies']);

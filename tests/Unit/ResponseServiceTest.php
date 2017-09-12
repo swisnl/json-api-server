@@ -5,8 +5,6 @@ namespace Swis\test\Unit;
 use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
-use Swis\LaravelApi\Models\Responses\RespondHttpOk;
-use Swis\LaravelApi\Models\Responses\RespondHttpPartialContent;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\LaravelApi\Services\ResponseService;
 use Swis\LaravelApi\Traits\HandleResponses;
