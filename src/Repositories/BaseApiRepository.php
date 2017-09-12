@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-abstract class Repository
+abstract class BaseApiRepository
 {
     /**
      * @var Model
@@ -43,7 +43,7 @@ abstract class Repository
     ];
 
     /**
-     * Repository constructor.
+     * BaseApiRepository constructor.
      *
      * @param Container $container
      */

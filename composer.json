@@ -24,10 +24,10 @@
         "laravel/tinker": "^1.0",
         "neomerx/json-api": "^1.0",
         "spatie/laravel-permission": "^2.5",
-        "laravelcollective/html": "^5.4",
         "InfyOmLabs/laravel-generator": "dev-master",
         "infyomlabs/adminlte-templates": "dev-master",
         "infyomlabs/swagger-generator": "dev-master",
+        "laravelcollective/html": "^5.4",
         "jlapp/swaggervel": "dev-master"
     },
     "require-dev": {

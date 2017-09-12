@@ -16,7 +16,7 @@ class GenerateAllCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $description = 'Creates the following classes with implementation: Model, Controller, Repository, Schema, Tests';
+    protected $description = 'Creates the following classes with implementation: Model, Controller, BaseApiRepository, Schema, Tests';
 
     protected $modelName;
 
@@ -34,7 +34,7 @@ class GenerateAllCommand extends BaseGenerateCommand
     public function handle()
     {
         $this->modelName = $this->argument('model');
-        $this->call('infyom:api', ['model' => $this->modelName]);
+        $this->call('infyom:api', ['model' => $this->modelName, '--skip' => 'requests, api_requests, routes, api_routes']);
         $this->call('laravel-api:generate-schema', ['name' => $this->modelName]);
         $this->call('laravel-api:generate-translation', ['name' => $this->modelName]);
         $this->call('laravel-api:generate-policy', ['name' => $this->modelName]);

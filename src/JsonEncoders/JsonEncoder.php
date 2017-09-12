@@ -7,12 +7,12 @@ use Neomerx\JsonApi\Encoder\Encoder;
 use Neomerx\JsonApi\Encoder\EncoderOptions;
 use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
 use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
-use Swis\LaravelApi\Repositories\Repository;
+use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class JsonEncoder
 {
     /**
-     * @var Repository
+     * @var BaseApiRepository
      * */
     protected $repository;
     protected $modelsToEncode;
@@ -57,7 +57,7 @@ class JsonEncoder
         ];
     }
 
-    public function setRepository(Repository $repository)
+    public function setRepository(BaseApiRepository $repository)
     {
         $this->repository = $repository;
     }

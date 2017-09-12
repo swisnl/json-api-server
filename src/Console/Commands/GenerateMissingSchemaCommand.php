@@ -12,7 +12,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-relation-schema {model}';
+    protected $signature = 'laravel-api:generate-missing-schemas {model}';
 
     /**
      * The console command description.
@@ -74,7 +74,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
         $model = app()->make($pathToFolder.$this->modelName);
 
         if (!file_exists($model)){
-            return $pathToFolder.$this->modelName.'Repository';
+            return $pathToFolder.$this->modelName.'BaseApiRepository';
         }
 
         $modelRepository = $model->repository;

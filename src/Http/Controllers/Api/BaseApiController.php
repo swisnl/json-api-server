@@ -3,7 +3,7 @@
 namespace Swis\LaravelApi\Http\Controllers\Api;
 
 use Illuminate\Routing\Route;
-use Swis\LaravelApi\Repositories\Repository;
+use Swis\LaravelApi\Repositories\BaseApiRepository;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,7 +13,7 @@ use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-abstract class ApiBaseController extends Controller
+abstract class BaseApiController extends Controller
 {
     use DispatchesJobs, ValidatesRequests, HandleResponses, HasPermissionChecks;
 
@@ -23,7 +23,7 @@ abstract class ApiBaseController extends Controller
     protected $request;
     protected $route;
 
-    public function __construct(JsonEncoder $jsonEncoder, Repository $repository, Request $request, Route $route)
+    public function __construct(JsonEncoder $jsonEncoder, BaseApiRepository $repository, Request $request, Route $route)
     {
         $this->jsonEncoder = $jsonEncoder;
         $this->repository = $repository;
