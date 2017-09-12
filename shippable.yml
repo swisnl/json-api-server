@@ -1,0 +1,27 @@
+language: php
+
+php:
+ - '7.0'
+
+build:
+  ci:
+  - composer --no-interaction --no-progress --no-suggest install
+
+  # Code style
+  - php vendor/bin/php-cs-fixer -vvv fix src
+
+  # Tests
+  #  - vendor/bin/phpunit
+
+notifications:
+  email:
+    - ddewit@swis.nl
+  on_success: change
+  on_failure: always
+
+branches:
+  only:
+    - develop
+    - master
+
+cache: true
