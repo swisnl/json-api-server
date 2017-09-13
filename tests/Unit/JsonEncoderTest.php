@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
+use Tests\TestCase;
 use Tests\TestClasses\TestModel;
 use Tests\TestClasses\TestRepository;
 

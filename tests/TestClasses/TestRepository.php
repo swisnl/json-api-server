@@ -27,7 +27,5 @@ class TestRepository extends BaseApiRepository
 //        Mail::isCalledWith()
 
         // google: laravel test call to artisan
-
     }
-
 }

@@ -25,14 +25,14 @@ class CustomFileGeneratorTest extends TestCase
         $generator->generatePolicy();
         $generator->generateTranslation();
 
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy') . 'ExamplePolicy.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema') . 'ExampleSchema.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation') . 'ExampleTranslation.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy').'ExamplePolicy.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema').'ExampleSchema.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation').'ExampleTranslation.php'));
 
         // Rolls back creations
-        unlink(config('infyom.laravel_generator.path.policy') . 'ExamplePolicy.php');
-        unlink(config('infyom.laravel_generator.path.schema') . 'ExampleSchema.php');
-        unlink(config('infyom.laravel_generator.path.translation') . 'ExampleTranslation.php');
+        unlink(config('infyom.laravel_generator.path.policy').'ExamplePolicy.php');
+        unlink(config('infyom.laravel_generator.path.schema').'ExampleSchema.php');
+        unlink(config('infyom.laravel_generator.path.translation').'ExampleTranslation.php');
 
         rmdir(config('infyom.laravel_generator.path.policy'));
         rmdir(config('infyom.laravel_generator.path.schema'));

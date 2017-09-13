@@ -14,7 +14,8 @@ class TestModelWithRelationships extends Model
     public $schema = TestSchema::class;
     public $repository = TestRepositoryWithRelationships::class;
 
-    public function testModels(): HasMany {
+    public function testModels(): HasMany
+    {
         return $this->hasMany(TestModel::class);
     }
 }

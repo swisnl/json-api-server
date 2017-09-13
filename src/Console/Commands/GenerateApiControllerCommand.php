@@ -22,7 +22,6 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
 
     protected $overridePath;
 
-
     /**
      * Create a new command instance.
      */

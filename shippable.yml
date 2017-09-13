@@ -24,5 +24,3 @@ branches:
   only:
     - develop
     - master
-
-cache: true

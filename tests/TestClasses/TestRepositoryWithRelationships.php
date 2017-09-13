@@ -2,7 +2,6 @@
 
 namespace Tests\TestClasses;
 
-
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class TestRepositoryWithRelationships extends BaseApiRepository

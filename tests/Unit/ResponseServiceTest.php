@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\LaravelApi\Services\ResponseService;
 use Swis\LaravelApi\Traits\HandleResponses;
+use Tests\TestCase;
 
 class ResponseServiceTest extends TestCase
 {

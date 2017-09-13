@@ -35,7 +35,7 @@ abstract class BaseGenerateCommand extends Command
 
     protected function generateNewControllerName(): string
     {
-        return config('infyom.laravel_generator.path.api_controller') . $this->getModelName() . 'Controller.php';
+        return config('infyom.laravel_generator.path.api_controller').$this->getModelName().'Controller.php';
     }
 
     protected function renameController()
@@ -48,8 +48,8 @@ abstract class BaseGenerateCommand extends Command
             return $this;
         }
 
-        rename(config('infyom.laravel_generator.path.api_controller') . $this->getModelName()
-            . 'APIController.php', $newControllerName);
+        rename(config('infyom.laravel_generator.path.api_controller').$this->getModelName()
+            .'APIController.php', $newControllerName);
 
         return $this;
     }

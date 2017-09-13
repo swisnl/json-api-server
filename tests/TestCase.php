@@ -13,7 +13,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        $dir = substr(__DIR__, 0,  strpos(__DIR__, 'tests'));
+        $dir = substr(__DIR__, 0, strpos(__DIR__, 'tests'));
         app()->setBasePath($dir);
     }
 }

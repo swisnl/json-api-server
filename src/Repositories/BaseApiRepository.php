@@ -38,7 +38,6 @@ abstract class BaseApiRepository
 
     /**
      * BaseApiRepository constructor.
-     *
      */
     public function __construct()
     {

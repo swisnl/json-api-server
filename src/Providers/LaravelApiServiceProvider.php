@@ -33,7 +33,6 @@ class LaravelApiServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator'),
             /* __DIR__.'/../../config/laravel_api_config.php' => base_path('config/laravel_api/laravel_generator'),*/
-
         ], 'laravel-api');
     }
 
