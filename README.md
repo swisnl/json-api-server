@@ -1,5 +1,6 @@
 [![Run Status](https://api.shippable.com/projects/59b1544eb54e3d0700e6495f/badge?branch=develop)](https://app.shippable.com/bitbucket/swisnl/laravel-api)
 [![Coverage Badge](https://api.shippable.com/projects/59b1544eb54e3d0700e6495f/coverageBadge?branch=develop)](https://app.shippable.com/bitbucket/swisnl/laravel-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Laravel-Api
 Set up a laravel API in just a few minutes with this package. All the standard API functionality is already there for you.
