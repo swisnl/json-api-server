@@ -12,7 +12,7 @@ build:
   - composer check-style
 
   # Tests
-  - composer test --coverage-xml=shippable/codecoverage
+  - vendor/bin/phpunit --coverage-xml=shippable/codecoverage
 
 notifications:
   email:
