@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\sample\Policies;
+namespace Sample\Policies;
 
 class SamplePolicy
 {

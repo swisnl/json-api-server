@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\test\Unit;
+namespace Tests\Unit;
 
-use Orchestra\Testbench\TestCase;
+use Tests\TestCase;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;

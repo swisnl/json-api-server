@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ddewit
- * Date: 11-9-2017
- * Time: 15:21.
- */
 
 namespace Swis\LaravelApi\Console\Commands;
 
@@ -15,7 +9,7 @@ class GeneratePolicyCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-policy {name}';
+    protected $signature = 'laravel-api:generate-policy {model} {--path=}';
 
     /**
      * The console command description.
@@ -25,6 +19,8 @@ class GeneratePolicyCommand extends BaseGenerateCommand
     protected $description = 'Create a policy for a model';
 
     protected $name;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -39,11 +35,24 @@ class GeneratePolicyCommand extends BaseGenerateCommand
      */
     public function handle()
     {
+        $this->overridePath = $this->option('path');
+        $this->overridePath();
+
         $this->generatePolicy();
     }
 
     public function getModelName()
     {
-        return $this->argument('name');
+        return $this->argument('model');
+    }
+
+    public function getOverridePath()
+    {
+        return $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.policy';
     }
 }

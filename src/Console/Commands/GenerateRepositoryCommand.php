@@ -2,16 +2,14 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-use Illuminate\Console\Command;
-
-class GenerateRepositoryCommand extends Command
+class GenerateRepositoryCommand extends BaseGenerateCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-repository {name}';
+    protected $signature = 'laravel-api:generate-repository {model} {--path=}';
 
     /**
      * The console command description.
@@ -21,6 +19,8 @@ class GenerateRepositoryCommand extends Command
     protected $description = 'Creates a repository for a model';
 
     protected $name;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -35,7 +35,24 @@ class GenerateRepositoryCommand extends Command
      */
     public function handle()
     {
-        $this->name = $this->argument('name');
+        $this->name = $this->argument('model');
+        $this->overridePath = $this->option('path');
+
         $this->call('infyom:repository', ['model' => $this->name]);
+    }
+
+    public function getModelName()
+    {
+        return $this->name;
+    }
+
+    public function getOverridePath()
+    {
+        return $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.repository';
     }
 }

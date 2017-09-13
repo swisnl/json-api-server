@@ -29,6 +29,12 @@ class LaravelApiServiceProvider extends ServiceProvider
     {
         $router->aliasMiddleware('route_permission_middleware', PermissionMiddleware::class);
         $router->aliasMiddleware('configure-locale', ConfigureLocale::class);
+
+        $this->publishes([
+            __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator'),
+            /* __DIR__.'/../../config/laravel_api_config.php' => base_path('config/laravel_api/laravel_generator'),*/
+
+        ], 'laravel-api');
     }
 
     public function register()
@@ -58,5 +64,10 @@ class LaravelApiServiceProvider extends ServiceProvider
             __DIR__.'/../../config/laravel_generator.php',
             'infyom.laravel_generator'
         );
+
+        /*$this->mergeConfigFrom(
+            __DIR__.'/../../config/laravel_api_config.php',
+            'laravel_api.laravel_api_config'
+        );*/
     }
 }

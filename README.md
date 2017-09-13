@@ -44,6 +44,11 @@ After installing the package you can instantly generate all the required files b
 $ php artisan laravel-api:generate-all {Model}
 ```
 
+To override the default path without overriding the laravel_generator config file, you can use the `--path={path}` option. For example:
+``` bash
+$ php artisan laravel-api:generate-all Test --path=app/temp/
+```
+
 This generates the following files:
 
 * An eloquent model

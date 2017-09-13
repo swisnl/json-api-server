@@ -9,7 +9,7 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-schema {name}';
+    protected $signature = 'laravel-api:generate-schema {model} {--path=}';
 
     /**
      * The console command description.
@@ -19,6 +19,8 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
     protected $description = 'Creates a schema for a model.';
 
     protected $name;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -33,11 +35,23 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
      */
     public function handle()
     {
+        $this->overridePath = $this->option('path');
+        $this->overridePath();
         $this->generateSchema();
     }
 
     public function getModelName()
     {
-        return $this->argument('name');
+        return $this->argument('model');
+    }
+
+    public function getOverridePath()
+    {
+        return $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.schema';
     }
 }

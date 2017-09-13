@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\sample\Repositories;
+namespace Sample\Repositories;
 
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 use Swis\sample\Sample;

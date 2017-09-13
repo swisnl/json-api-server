@@ -30,8 +30,7 @@ abstract class BaseApiSchema extends SchemaProvider
      */
     public function getId($resource)
     {
-//        Model::getKey()
-        return $resource->id; //getKey //todo
+        return $resource->getKey();
     }
 
     /**
@@ -43,7 +42,7 @@ abstract class BaseApiSchema extends SchemaProvider
      */
     public function getAttributes($resource)
     {
-        $resource->addHidden('id');
+        $resource->addHidden($resource->getKeyName());
 
         return $resource->attributesToArray();
     }

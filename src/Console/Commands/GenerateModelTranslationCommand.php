@@ -9,7 +9,7 @@ class GenerateModelTranslationCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-translation {name}';
+    protected $signature = 'laravel-api:generate-translation {model} {--path=}';
 
     /**
      * The console command description.
@@ -19,6 +19,8 @@ class GenerateModelTranslationCommand extends BaseGenerateCommand
     protected $description = 'Create a translation for a model';
 
     protected $name;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -33,11 +35,24 @@ class GenerateModelTranslationCommand extends BaseGenerateCommand
      */
     public function handle()
     {
+        $this->overridePath = $this->option('path');
+        $this->overridePath();
+
         $this->generateTranslation();
     }
 
     public function getModelName()
     {
-        return $this->argument('name');
+        return $this->argument('model');
+    }
+
+    public function getOverridePath()
+    {
+        return $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.translation';
     }
 }

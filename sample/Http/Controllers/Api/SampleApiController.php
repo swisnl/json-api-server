@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\sample\Http\Controllers\Api;
+namespace Sample\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Swis\LaravelApi\Http\Controllers\Api\BaseApiController;

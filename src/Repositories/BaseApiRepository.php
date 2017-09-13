@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Repositories;
 
-use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -20,11 +19,6 @@ abstract class BaseApiRepository
      * @var Model
      */
     protected $model;
-
-    /**
-     * @var Container
-     */
-    protected $container;
 
     protected $page;
 
@@ -45,11 +39,9 @@ abstract class BaseApiRepository
     /**
      * BaseApiRepository constructor.
      *
-     * @param Container $container
      */
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->container = $container;
         $this->makeModel();
     }
 
@@ -73,9 +65,10 @@ abstract class BaseApiRepository
         return $this->model->create($data);
     }
 
-    public function update(array $data, $resourceId)
+    public function update(array $data, $resourceKey)
     {
-        return $this->model->where('id', $resourceId)->update($data);
+        // todo: gebruik niet hardcoded 'id' maar gebruik model->getKey()
+        return $this->model->where($this->model->getKeyName(), $resourceKey)->update($data);
     }
 
     public function destroy($resourceId)
@@ -84,7 +77,7 @@ abstract class BaseApiRepository
 
     public function makeModel()
     {
-        $model = $this->container->make($this->getModelName());
+        $model = app()->make($this->getModelName());
         $this->model = $model;
     }
 

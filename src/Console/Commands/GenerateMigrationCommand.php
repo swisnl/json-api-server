@@ -2,16 +2,14 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-use Illuminate\Console\Command;
-
-class GenerateMigrationCommand extends Command
+class GenerateMigrationCommand extends BaseGenerateCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-migration {name}';
+    protected $signature = 'laravel-api:generate-migration {model} {--path=}';
 
     /**
      * The console command description.
@@ -21,6 +19,8 @@ class GenerateMigrationCommand extends Command
     protected $description = 'Creates an API controller.';
 
     protected $name;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -35,7 +35,24 @@ class GenerateMigrationCommand extends Command
      */
     public function handle()
     {
-        $this->name = $this->argument('name');
+        $this->name = $this->argument('model');
+        $this->overridePath = $this->option('path');
+
         $this->call('infyom:migration', ['model' => $this->name]);
+    }
+
+    public function getModelName()
+    {
+        return $this->name;
+    }
+
+    public function getOverridePath()
+    {
+        return $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.migration';
     }
 }

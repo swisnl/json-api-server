@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\sample\Schemas;
+namespace Sample\Schemas;
 
 use Swis\LaravelApi\JsonSchemas\BaseApiSchema;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\sample;
+namespace sample;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\sample\Repositories\SampleRepository;
-use Swis\sample\Schemas\SampleSchema;
+use Sample\Repositories\SampleRepository;
+use Sample\Schemas\SampleSchema;
 
 class Sample extends Model
 {

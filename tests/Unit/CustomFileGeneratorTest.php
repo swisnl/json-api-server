@@ -1,38 +1,40 @@
 <?php
 
-namespace Swis\test\Unit;
+namespace Tests\Unit;
 
-use Orchestra\Testbench\TestCase;
 use Swis\LaravelApi\Services\CustomFileGenerator;
+use Tests\TestCase;
 
 class CustomFileGeneratorTest extends TestCase
 {
     /** @test */
-    public function leTrue()
+    public function it_generates_all_desired_custom_api_files()
     {
-        $this->assertTrue(true);
-    }
+        $modelName = 'Example';
+        $path = 'tests/Data/Output/';
+        $templatesDir = 'resources/templates/';
 
-    /*public function it_generates_all_desired_custom_api_files()
-    {
-        config(['infyom.laravel_generator.path.policy' => '/tests/Data/Output/Policies']);
-        config(['infyom.laravel_generator.path.schema' => '/tests/Data/Output/Schemas']);
-        config(['infyom.laravel_generator.path.translation' => '/tests/Data/Output/Data']);
-        config(['infyom.laravel_generator.path.templates_dir' => 'vendor/swisnl/laravel-api/resources/templates/']);
+        config(['infyom.laravel_generator.path.policy' => $path.'policies/']);
+        config(['infyom.laravel_generator.path.schema' => $path.'schemas/']);
+        config(['infyom.laravel_generator.path.translation' => $path]);
+        config(['infyom.laravel_generator.path.templates_dir' => $templatesDir]);
 
         $generator = new CustomFileGenerator();
-        $generator->setModelName('ExampleTest');
+        $generator->setModelName($modelName);
         $generator->generateSchema();
         $generator->generatePolicy();
         $generator->generateTranslation();
 
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy').'ExampleTestPolicy.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema').'ExampleTestSchema.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation').'ExampleTestTranslation.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy') . 'ExamplePolicy.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema') . 'ExampleSchema.php'));
+        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation') . 'ExampleTranslation.php'));
 
         // Rolls back creations
-        unlink(config('infyom.laravel_generator.path.policy').'ExampleTestPolicy.php');
-        unlink(config('infyom.laravel_generator.path.schema').'ExampleTestSchema.php');
-        unlink(config('infyom.laravel_generator.path.translation').'ExampleTestTranslation.php');
-    }*/
+        unlink(config('infyom.laravel_generator.path.policy') . 'ExamplePolicy.php');
+        unlink(config('infyom.laravel_generator.path.schema') . 'ExampleSchema.php');
+        unlink(config('infyom.laravel_generator.path.translation') . 'ExampleTranslation.php');
+
+        rmdir(config('infyom.laravel_generator.path.policy'));
+        rmdir(config('infyom.laravel_generator.path.schema'));
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\sample;
+namespace Sample;
 
 class SampleTranslation
 {

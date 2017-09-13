@@ -16,4 +16,8 @@ class $MODEL_NAME$ extends Model
     public $translatedAttributes = [
         $FIELDS$
     ];
+
+    public static $rules = [
+            $RULES$
+        ];
 }

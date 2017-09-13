@@ -2,8 +2,6 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-use Illuminate\Console\Command;
-
 class GenerateMissingSchemaCommand extends BaseGenerateCommand
 {
     /**
@@ -11,7 +9,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-missing-schemas {model}';
+    protected $signature = 'laravel-api:generate-missing-schemas {model} {--path=}';
 
     /**
      * The console command description.
@@ -21,6 +19,8 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     protected $description = 'Generates all not existing schemas based on relationships in the models';
 
     protected $modelName;
+
+    protected $overridePath;
 
     /**
      * Create a new command instance.
@@ -36,6 +36,8 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     public function handle()
     {
         $this->modelName = $this->argument('model');
+        $this->overridePath = $this->option('path');
+
         $pathToFolder = $this->generatePathToFolder();
         $pathToSchemas = $this->generatePathToSchemaFolder();
         $pathToRepositoryClass = $this->generatePathToRepositoryClassName($pathToFolder);
@@ -94,5 +96,15 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
     public function getModelName()
     {
         return $this->modelName;
+    }
+
+    public function getOverridePath()
+    {
+        $this->overridePath;
+    }
+
+    public function getConfigPath()
+    {
+        return 'infyom.laravel_generator.path.schema';
     }
 }

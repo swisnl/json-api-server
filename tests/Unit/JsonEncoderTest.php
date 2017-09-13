@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\test\Unit;
+namespace Tests\Unit;
 
-use Orchestra\Testbench\TestCase;
+use Tests\TestCase;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
