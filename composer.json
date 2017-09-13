@@ -46,7 +46,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "vendor/bin/phpunit",
         "check-style": "vendor/bin/php-cs-fixer fix --dry-run -vvv",
         "fix-style": "vendor/bin/php-cs-fixer fix -vvv"
     },
