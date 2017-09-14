@@ -12,6 +12,7 @@ class CustomFileGeneratorTest extends TestCase
     {
         $modelName = 'Example';
         $path = 'tests/Data/Output/';
+        is_dir($path) ?  : mkdir($path);
         $templatesDir = 'resources/templates/';
 
         config(['infyom.laravel_generator.path.policy' => $path.'policies/']);
