@@ -33,7 +33,7 @@ class CustomFileGenerator extends BaseGenerator
 
     protected function generate($classExtensionName, $stubName, $path)
     {
-        if (file_exists($path . $this->modelName . $classExtensionName . '.php')) {
+        if (file_exists($path.$this->modelName.$classExtensionName.'.php')) {
             return;
         }
 
@@ -41,7 +41,7 @@ class CustomFileGenerator extends BaseGenerator
 
         $templateData = TemplateUtil::getTemplate($stubName, 'laravel-generator');
         $templateData = TemplateUtil::fillTemplate($this->dynamicVars, $templateData);
-        FileUtil::createFile($path, $this->modelName . $classExtensionName . '.php', $templateData);
+        FileUtil::createFile($path, $this->modelName.$classExtensionName.'.php', $templateData);
     }
 
     protected function setDynamicVars()
