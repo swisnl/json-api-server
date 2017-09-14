@@ -52,6 +52,6 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.schema';
+        return 'laravel_api_config.path.schema';
     }
 }

@@ -77,6 +77,13 @@ $ php artisan laravel-api:generate-repository {Model}
 $ php artisan laravel-api:generate-migration {Model}
 ```
 
+
+### Configuration
+If you would like to override the configuration files, you can add `--tag=laravel-api` to your artisan publish call. There are two configuration files:
+* infyom.laravel_generator
+    * This is for the basic generator classes provided by InfyOmLabs
+* laravel_api_config
+    * This is for the config of the generator classes added by this package
 ### Requests and responses
 All requests and responses are according to the format specified by http://jsonapi.org/.
 

@@ -8,4 +8,12 @@ return [
 
         'policy' => app_path('Policies/'),
     ],
+
+    'namespace' => [
+        'translation' => 'App',
+
+        'schema' => 'App\JsonSchemas',
+
+        'policy' => 'App\Policies'
+    ],
 ];

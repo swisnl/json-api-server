@@ -31,8 +31,8 @@ class LaravelApiServiceProvider extends ServiceProvider
         $router->aliasMiddleware('configure-locale', ConfigureLocale::class);
 
         $this->publishes([
-            __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator'),
-            /* __DIR__.'/../../config/laravel_api_config.php' => base_path('config/laravel_api/laravel_generator'),*/
+            __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator.php'),
+             __DIR__.'/../../config/laravel_api_config.php' => base_path('config/laravel_api_config.php'),
         ], 'laravel-api');
     }
 
@@ -64,9 +64,9 @@ class LaravelApiServiceProvider extends ServiceProvider
             'infyom.laravel_generator'
         );
 
-        /*$this->mergeConfigFrom(
+        $this->mergeConfigFrom(
             __DIR__.'/../../config/laravel_api_config.php',
-            'laravel_api.laravel_api_config'
-        );*/
+            'laravel_api_config'
+        );
     }
 }

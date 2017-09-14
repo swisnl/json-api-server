@@ -13,12 +13,6 @@ return [
 
         'model' => app_path('/'),
 
-        'translation' => app_path('/'),
-
-        'schema' => app_path('Schemas/'),
-
-        'policy' => app_path('Policies/'),
-
         'repository' => app_path('Repositories/'),
 
         'migration' => base_path('database/migrations/'),
@@ -60,10 +54,6 @@ return [
     'namespace' => [
 
         'model' => 'App',
-
-        'translation' => 'App',
-
-        'schema' => 'App\JsonSchemas',
 
         'repository' => 'App\Repositories',
 

@@ -53,6 +53,6 @@ class GeneratePolicyCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.policy';
+        return 'laravel_api_config.path.policy';
     }
 }

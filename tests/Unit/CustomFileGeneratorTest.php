@@ -14,9 +14,9 @@ class CustomFileGeneratorTest extends TestCase
         $path = 'tests/Data/Output/';
         $templatesDir = 'resources/templates/';
 
-        config(['infyom.laravel_generator.path.policy' => $path.'policies/']);
-        config(['infyom.laravel_generator.path.schema' => $path.'schemas/']);
-        config(['infyom.laravel_generator.path.translation' => $path]);
+        config(['laravel_api_config.path.policy' => $path.'policies/']);
+        config(['laravel_api_config.path.schema' => $path.'schemas/']);
+        config(['laravel_api_config.path.translation' => $path]);
         config(['infyom.laravel_generator.path.templates_dir' => $templatesDir]);
 
         $generator = new CustomFileGenerator();
@@ -25,16 +25,16 @@ class CustomFileGeneratorTest extends TestCase
         $generator->generatePolicy();
         $generator->generateTranslation();
 
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy').'ExamplePolicy.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema').'ExampleSchema.php'));
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation').'ExampleTranslation.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.policy').'ExamplePolicy.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.schema').'ExampleSchema.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.translation').'ExampleTranslation.php'));
 
         // Rolls back creations
-        unlink(config('infyom.laravel_generator.path.policy').'ExamplePolicy.php');
-        unlink(config('infyom.laravel_generator.path.schema').'ExampleSchema.php');
-        unlink(config('infyom.laravel_generator.path.translation').'ExampleTranslation.php');
+        unlink(config('laravel_api_config.path.policy').'ExamplePolicy.php');
+        unlink(config('laravel_api_config.path.schema').'ExampleSchema.php');
+        unlink(config('laravel_api_config.path.translation').'ExampleTranslation.php');
 
-        rmdir(config('infyom.laravel_generator.path.policy'));
-        rmdir(config('infyom.laravel_generator.path.schema'));
+        rmdir(config('laravel_api_config.path.policy'));
+        rmdir(config('laravel_api_config.path.schema'));
     }
 }

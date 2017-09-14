@@ -14,7 +14,7 @@ class CommandTest extends TestCase
     public function it_generates_a_schema()
     {
         $this->artisan('laravel-api:generate-schema', ['model' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.schema').'ExampleSchema.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.schema').'ExampleSchema.php'));
         unlink('tests/Data/Output/'.'ExampleSchema.php');
     }
 
@@ -22,7 +22,7 @@ class CommandTest extends TestCase
     public function it_generates_a_policy()
     {
         $this->artisan('laravel-api:generate-policy', ['model' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.policy').'ExamplePolicy.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.policy').'ExamplePolicy.php'));
         unlink('tests/Data/Output/'.'ExamplePolicy.php');
     }
 
@@ -30,7 +30,7 @@ class CommandTest extends TestCase
     public function it_generates_a_translation()
     {
         $this->artisan('laravel-api:generate-translation', ['model' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('infyom.laravel_generator.path.translation').'ExampleTranslation.php'));
+        $this->assertTrue(file_exists(config('laravel_api_config.path.translation').'ExampleTranslation.php'));
         unlink('tests/Data/Output/'.'ExampleTranslation.php');
     }
 }

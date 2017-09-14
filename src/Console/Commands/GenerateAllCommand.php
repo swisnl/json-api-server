@@ -46,9 +46,9 @@ class GenerateAllCommand extends BaseGenerateCommand
             '--skip' => 'requests, api_requests, routes, api_routes, test_trait',
         ]);
 
-        $this->call('laravel-api:generate-schema', ['name' => $this->modelName, '--path' => $this->getOverridePath()]);
-        $this->call('laravel-api:generate-translation', ['name' => $this->modelName, '--path' => $this->getOverridePath()]);
-        $this->call('laravel-api:generate-policy', ['name' => $this->modelName, '--path' => $this->getOverridePath()]);
+        $this->call('laravel-api:generate-schema', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
+        $this->call('laravel-api:generate-translation', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
+        $this->call('laravel-api:generate-policy', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
 
         $this->renameController();
     }
