@@ -73,7 +73,13 @@ abstract class BaseApiSchema extends SchemaProvider
     }
 
     protected function setRepository()
-    {
+    { //todo: if not set throw exception? @arnaud bespreken.
+        $repository = $this->getRepositoryClassName();
+        if(isset($repository))  {
+            $this->repository = app()->make($repository);
+            return $this;
+        }
+
         $modelName = $this->extractClassName();
         $modelWithPath = $this->extractModelWithPath();
 
@@ -96,7 +102,7 @@ abstract class BaseApiSchema extends SchemaProvider
             return $this;
         }
 
-        $repositoryInRepositoriesDir = 'App\Repositories\\'.$modelName.'Repository';
+        $repositoryInRepositoriesDir = config('infyom.laravel_generator.path.repository').$modelName.'Repository';
         if (class_exists($repositoryInRepositoriesDir)) {
             $this->repository = app()->make($repositoryInRepositoriesDir);
 
@@ -133,4 +139,6 @@ abstract class BaseApiSchema extends SchemaProvider
     {
         return substr(get_called_class(), 0, strrpos(get_called_class(), 'Schema'));
     }
+
+    public abstract function getRepositoryClassName();
 }

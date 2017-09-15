@@ -30,4 +30,9 @@ class Sample extends Model
     {
         return $this->translatable;
     }
+
+    public function getRelations()
+    {
+        return ['samples1', 'samples2'];
+    }
 }

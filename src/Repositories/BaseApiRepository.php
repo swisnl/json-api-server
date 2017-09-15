@@ -3,18 +3,12 @@
 namespace Swis\LaravelApi\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphPivot;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Prettus\Repository\Exceptions\RepositoryException;
+use Swis\LaravelApi\Traits\HandlesRelationships;
 
-abstract class BaseApiRepository
+abstract class BaseApiRepository implements RepositoryInterface
 {
+    use HandlesRelationships;
     /**
      * @var Model
      */
@@ -24,29 +18,17 @@ abstract class BaseApiRepository
 
     protected $perPage;
 
-    protected $relationshipTypes = [
-        MorphToMany::class,
-        HasMany::class,
-        HasManyThrough::class,
-        HasOne::class,
-        HasOneOrMany::class,
-        MorphMany::class,
-        MorphOne::class,
-        MorphPivot::class,
-        MorphTo::class,
-    ];
-
     /**
      * BaseApiRepository constructor.
      */
     public function __construct()
     {
-        $this->makeModel();
+        $this->model = $this->makeModel();
     }
 
-    public function getAll($columns = ['*'])
+    public function paginate($per_page = 15, $page = 1, $columns = ['*'])
     {
-        return $this->model->paginate($this->getPerPage(), $columns, 'page', $this->getPage());
+        return $this->model->paginate($per_page, $columns, 'page', $page);
     }
 
     public function findById($value, $columns = ['*'])
@@ -54,9 +36,9 @@ abstract class BaseApiRepository
         return $this->model->findOrFail($value, $columns);
     }
 
-    public function findByIds(array $ids, $columns = ['*'])
+    public function findByIds(array $ids, $per_page = 15, $page = 1, $columns = ['*'])
     {
-        return $this->model->whereIn('id', $ids)->paginate($this->getPerPage(), $columns, 'page', $this->getPage());
+        return $this->model->whereIn('id', $ids)->paginate($per_page, $columns, 'page', $page);
     }
 
     public function create(array $data)
@@ -66,7 +48,6 @@ abstract class BaseApiRepository
 
     public function update(array $data, $resourceKey)
     {
-        // todo: gebruik niet hardcoded 'id' maar gebruik model->getKey()
         return $this->model->where($this->model->getKeyName(), $resourceKey)->update($data);
     }
 
@@ -77,57 +58,17 @@ abstract class BaseApiRepository
     public function makeModel()
     {
         $model = app()->make($this->getModelName());
-        $this->model = $model;
-    }
 
-    public function getModelRelationships(): array //TODO: Skipt dit geen relaties die geen return type hebben?
-    {
-        $relations = [];
-
-        //TODO: ook op permissies checken welke relaties ze mogen zien.
-        $class = new \ReflectionClass(get_class($this->model));
-        foreach ($class->getMethods() as $method) {
-            $returnType = $method->getReturnType();
-            //TODO: niet alleen op ! checken maar beter afvangen
-            if (!$returnType) {
-                continue;
-            }
-
-            if (in_array(pathinfo($returnType)['basename'], $this->relationshipTypes)) {
-                $relations[] = $method->getName();
-            }
+        if (!$model instanceof Model) {
+            throw new RepositoryException("Class {$this->getModelName()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
         }
 
-        return $relations;
+        return $model;
     }
 
-    public function getModel(): Model
+    public function getModelRelationships(): array
     {
-        return $this->model;
-    }
-
-    public function setPerPage($perPage)
-    {
-        $this->perPage = $perPage;
-
-        return $this;
-    }
-
-    public function getPerPage()
-    {
-        return $this->perPage;
-    }
-
-    public function setPage($page)
-    {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    public function getPage()
-    {
-        return $this->page;
+       return $this->getRelationships($this->model);
     }
 
     abstract public function getModelName(): string;

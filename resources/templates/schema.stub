@@ -2,8 +2,12 @@
 
 namespace $NAMESPACE_SCHEMA$;
 
-use Swis\LaravelApi\JsonSchemas\ApiSchema;
+use Swis\LaravelApi\JsonSchemas\BaseApiSchema;
 
-class $MODEL_NAME$Schema extends ApiSchema
+class $MODEL_NAME$Schema extends BaseApiSchema
 {
+    public function getRepositoryClassName()
+    {
+        // TODO: Implement getRepositoryClassName() method.
+    }
 }

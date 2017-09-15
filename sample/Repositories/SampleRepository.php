@@ -3,7 +3,7 @@
 namespace Sample\Repositories;
 
 use Swis\LaravelApi\Repositories\BaseApiRepository;
-use Swis\sample\Sample;
+use sample\Sample;
 
 class SampleRepository extends BaseApiRepository
 {

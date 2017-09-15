@@ -37,6 +37,25 @@ Please see the folder [sample](sample) for a sample of an application using this
 
 ## Usage
 
+### Base Api Classes
+There are a few base classes your classes should/could inherit:
+
+##### BaseApiController
+This controller handles your basic CRUD actions as well as permissions if you choose to use permissions.
+
+##### BaseApiRepository
+This repository is a standard base repository with a small addition that it figures out your models relationships. 
+
+If you want to use your own BaseRepository, you have to implement the RepositoryInterface. This ensures that you have full compatibility with the BaseApiController.
+
+The BaseApiRepository uses a trait to retrieve a models relationships. You can use this trait if you want to use the existing implementation.
+
+##### BaseApiSchema
+Every model needs a schema to be mapped for Json Api response. This schema needs to inherit the BaseApiSchema. You can override the methods from the BaseApiSchema and if the existing implementation can't figure out the resource type, you can override that as well.
+
+#### Relationships
+If you don't like the magic that happens to figure out the relationships. You can override the getRelations() in your model to return an array with your relationships. It should be an array of strings. For example: ['posts', 'comments'].
+
 ### Generating the required files
 After installing the package you can instantly generate all the required files by executing this command:
 
@@ -54,11 +73,10 @@ This generates the following files:
 * An eloquent model
 * A translation model: not mandatory. If you won't use it. You can just delete it after generating
 * A schema for your model: used to convert your model to a json api format
-    * Has to extend the BaseApiSchema
 * An API controller
     * Should extend the BaseApiController
 * A repository for your model
-    * Has to extend the BaseApiRepository
+    * Could extend the BaseApiRepository
 * A policy for checking permissions
 * 2 tests and a testing trait
 
@@ -144,8 +162,9 @@ The following URL parameters are supported after installing this package:
 * ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
 
 ### Optional middleware
-There are 2 optional middlewares:
+There are 3 optional middlewares:
 
+* inspect_content_type: Highly recommended. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
 * route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 

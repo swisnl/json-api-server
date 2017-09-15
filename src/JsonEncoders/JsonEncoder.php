@@ -58,7 +58,7 @@ class JsonEncoder
         ];
     }
 
-    public function setRepository(BaseApiRepository $repository)
+    public function setRepository($repository)
     {
         $this->repository = $repository;
     }
@@ -75,7 +75,7 @@ class JsonEncoder
      */
     protected function getModelsToEncode()
     {
-        $model = $this->repository->getModel();
+        $model = $this->repository->makeModel();
         $modelClass = get_class($model);
         $this->insertIntoModelsToEncode($modelClass);
 
@@ -107,7 +107,8 @@ class JsonEncoder
     protected function createSchemaName($modelClass)
     {
         $modelSchema = app()->make($modelClass)->schema;
-        if (null !== $modelSchema) {
+
+        if ($modelSchema !== null) {
             return $modelSchema;
         }
 
@@ -118,7 +119,7 @@ class JsonEncoder
             return $schemaInModelFolder;
         }
 
-        $schemaInSchemasFolder = 'App\JsonSchemas\\'.class_basename($modelClass).'Schema';
+        $schemaInSchemasFolder = config('laravel_api_config.path.schema').class_basename($modelClass).'Schema';
         if (class_exists($schemaInSchemasFolder)) {
             return $schemaInSchemasFolder;
         }

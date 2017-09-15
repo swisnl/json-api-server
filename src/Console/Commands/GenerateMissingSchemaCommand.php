@@ -38,54 +38,22 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
         $this->modelName = $this->argument('model');
         $this->overridePath = $this->option('path');
 
-        $pathToFolder = $this->generatePathToFolder();
-        $pathToSchemas = $this->generatePathToSchemaFolder();
-        $pathToRepositoryClass = $this->generatePathToRepositoryClassName($pathToFolder);
+        $this->overridePath();
 
-        if (!class_exists($pathToRepositoryClass)) {
-            return;
-        }
+        $model = app()->make($this->modelName);
+        $repository = app()->make($model->repository);
 
-        $repository = app()->make($pathToRepositoryClass);
         $relationships = $repository->getModelRelationships();
 
         foreach ($relationships as $relationship) {
             $schema = $this->generateSchemaClassName($relationship);
-            if (file_exists($pathToSchemas.$schema) ||
-                file_exists($pathToFolder.$schema)) {
+            if (file_exists($this->getConfigPath() . $schema)) {
                 continue;
             }
 
             $this->modelName = $schema;
             $this->generateSchema();
         }
-    }
-
-    protected function generatePathToFolder(): string
-    {
-        return 'App\\'.$this->modelName.'\\';
-    }
-
-    protected function generatePathToSchemaFolder(): string
-    {
-        return 'App/JsonSchemas/';
-    }
-
-    protected function generatePathToRepositoryClassName($pathToFolder): string
-    {
-        $model = app()->make($pathToFolder.$this->modelName);
-
-        if (!file_exists($model)) {
-            return $pathToFolder.$this->modelName.'BaseApiRepository';
-        }
-
-        $modelRepository = $model->repository;
-
-        if (null !== $modelRepository) {
-            return $modelRepository;
-        }
-
-        return 'Not Found';
     }
 
     protected function generateSchemaClassName($relationship): string
@@ -100,7 +68,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
 
     public function getOverridePath()
     {
-        $this->overridePath;
+        return $this->overridePath;
     }
 
     public function getConfigPath()

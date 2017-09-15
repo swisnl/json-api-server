@@ -4,10 +4,11 @@ namespace Tests\TestClasses;
 
 use Swis\LaravelApi\JsonSchemas\BaseApiSchema;
 
-class TestSchema extends BaseApiSchema
+class TestSchemaWithRelationships extends BaseApiSchema
 {
+
     public function getRepositoryClassName()
     {
-        return TestRepository::class;
+        return TestRepositoryWithRelationships::class;
     }
 }

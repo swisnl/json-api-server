@@ -23,7 +23,7 @@ abstract class BaseApiController extends Controller
     protected $request;
     protected $route;
 
-    public function __construct(JsonEncoder $jsonEncoder, BaseApiRepository $repository, Request $request, Route $route)
+    public function __construct(JsonEncoder $jsonEncoder, $repository, Request $request, Route $route)
     {
         $this->jsonEncoder = $jsonEncoder;
         $this->repository = $repository;
@@ -33,16 +33,14 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $this->repository->setPage($this->request->get('page', null));
-        $this->repository->setPerPage($this->request->get('per_page', null));
-
         $this->validateUser();
 
         if ($this->request->exists('ids')) {
             return $this->getByUrlInputIds();
         }
 
-        $items = $this->repository->getAll();
+        $items = $this->repository->paginate($this->request->get('page', null),
+            $this->request->get('per_page', null));
 
         return $this->respondWithCollection($this->jsonEncoder->encodeToJson($items));
     }
@@ -50,7 +48,9 @@ abstract class BaseApiController extends Controller
     private function getByUrlInputIds()
     {
         $ids = explode(',', $this->request->get('ids', null));
-        $items = $this->repository->findByIds($ids);
+        $items = $this->repository->findByIds($ids,
+            $this->request->get('per_page'),
+            $this->request->get('page'));
 
         return $this->respondWithCollection($this->jsonEncoder->encodeToJson($items));
     }
