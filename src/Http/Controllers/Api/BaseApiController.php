@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Route;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
-use Swis\LaravelApi\Repositories\BaseApiRepository;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -47,7 +47,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
 
         foreach ($relationships as $relationship) {
             $schema = $this->generateSchemaClassName($relationship);
-            if (file_exists($this->getConfigPath() . $schema)) {
+            if (file_exists($this->getConfigPath().$schema)) {
                 continue;
             }
 

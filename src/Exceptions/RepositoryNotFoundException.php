@@ -8,9 +8,6 @@
 
 namespace Swis\LaravelApi\Exceptions;
 
-use Swis\LaravelApi\Constants\HttpCodes;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-
 class RepositoryNotFoundException extends \Exception
 {
 }

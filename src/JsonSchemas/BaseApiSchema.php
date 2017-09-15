@@ -75,8 +75,9 @@ abstract class BaseApiSchema extends SchemaProvider
     protected function setRepository()
     { //todo: if not set throw exception? @arnaud bespreken.
         $repository = $this->getRepositoryClassName();
-        if(isset($repository))  {
+        if (isset($repository)) {
             $this->repository = app()->make($repository);
+
             return $this;
         }
 
@@ -140,5 +141,5 @@ abstract class BaseApiSchema extends SchemaProvider
         return substr(get_called_class(), 0, strrpos(get_called_class(), 'Schema'));
     }
 
-    public abstract function getRepositoryClassName();
+    abstract public function getRepositoryClassName();
 }

@@ -107,7 +107,7 @@ class JsonEncoder
     protected function createSchemaName($modelClass)
     {
         $modelSchema = app()->make($modelClass)->schema;
-        if ($modelSchema !== null) {
+        if (null !== $modelSchema) {
             return $modelSchema;
         }
 

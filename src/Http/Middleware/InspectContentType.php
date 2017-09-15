@@ -10,7 +10,7 @@ class InspectContentType
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($request->header('Content-Type') !== 'application/json') {
+        if ('application/json' !== $request->header('Content-Type')) {
             throw new ContentTypeNotSupportedException('Your request should be in json format. (Content-Type: application/json)');
         }
 

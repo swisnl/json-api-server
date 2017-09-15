@@ -33,7 +33,6 @@ trait HandlesRelationships
 
         if ($model->getRelations()) {
             return $model->getRelations();
-
         }
 
         //TODO: ook op permissies checken welke relaties ze mogen zien.

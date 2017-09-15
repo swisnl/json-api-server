@@ -68,7 +68,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function getModelRelationships(): array
     {
-       return $this->getRelationships($this->model);
+        return $this->getRelationships($this->model);
     }
 
     abstract public function getModelName(): string;
