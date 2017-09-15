@@ -107,7 +107,6 @@ class JsonEncoder
     protected function createSchemaName($modelClass)
     {
         $modelSchema = app()->make($modelClass)->schema;
-
         if ($modelSchema !== null) {
             return $modelSchema;
         }
@@ -119,7 +118,7 @@ class JsonEncoder
             return $schemaInModelFolder;
         }
 
-        $schemaInSchemasFolder = config('laravel_api_config.path.schema').class_basename($modelClass).'Schema';
+        $schemaInSchemasFolder = config('laravel_api_config.namespace.schema').'\\'.class_basename($modelClass).'Schema';
         if (class_exists($schemaInSchemasFolder)) {
             return $schemaInSchemasFolder;
         }
