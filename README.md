@@ -12,7 +12,7 @@ It already has the basic features an API should have, like:
 * An abstract layer to handle your basic CRUD actions
 * Support for a few useful URL parameters
 * Permission and route permission handling
-* Responses in API json format
+* Responses in json api format (http://jsonapi.org/)
 * Automatically translates your models based on your database
 
 ## Install
@@ -85,23 +85,18 @@ If you would like to override the configuration files, you can add `--tag=larave
 * laravel_api_config
     * This is for the config of the generator classes added by this package
 ### Requests and responses
-All requests and responses are according to the format specified by http://jsonapi.org/.
-
-To encode your objects to Json Api format: 
-``` php
-$this->jsonEncoder->encodeToJson($object);
-```
+All requests and responses are formatted according to the format specified by http://jsonapi.org/.
 
 There are several respond methods at your disposal in your controller. The following respond methods are implemented at this moment:
 ``` php
-return $this->respondWithOk($jsonObject);
-return $this->respondWithPartialContent($jsonObject);
-return $this->respondWithCreated($jsonObject);
-return $this->respondWithNoContent($jsonObject);
-return $this->respondWithCollection($jsonObject);
+return $this->respondWithOk($object);
+return $this->respondWithPartialContent($object);
+return $this->respondWithCreated($object);
+return $this->respondWithNoContent($object);
+return $this->respondWithCollection($object);
 ``` 
 
-These methods automatically create a response with the correct status code and body.
+These methods automatically converts your objects to json api format and creates a response with the correct status code and body.
 
 ### Using policies
 If you decide to use policies to check for the user's pemissions you have to add the policies to your Providers\AuthServicePorvider.
