@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
@@ -85,7 +88,9 @@ class ResponseServiceTest extends TestCase
     public function it_creates_a_collection_response_with_PARTIAL()
     {
         $this->testModel->body = 'PARTIAL';
-        $response = $this->respondWithCollection([$this->testModel]);
+        $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
+
+        $response = $this->respondWithCollection($paginator);
         $responseBody = json_decode($response->getContent())->data[0]->attributes->body;
 
         $this->assertEquals(206, $response->getStatusCode());
