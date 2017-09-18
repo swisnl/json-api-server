@@ -2,6 +2,7 @@
 
 namespace Swis\LaravelApi\Traits;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpCreated;
 use Swis\LaravelApi\Models\Responses\RespondHttpNoContent;
@@ -49,7 +50,7 @@ trait HandleResponses
 
     public function respondWithCollection($content)
     {
-        if (is_array($content)) {
+        if ($content instanceof Paginator) {
             return $this->respondWithPartialContent($content);
         }
 
