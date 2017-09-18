@@ -2,9 +2,7 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Swis\LaravelApi\Models\Responses\RespondHttpForbidden;
 use Swis\LaravelApi\Models\Responses\RespondHttpNotFound;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
