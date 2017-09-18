@@ -22,12 +22,14 @@ class JsonEncoder
      * Encodes the given data to the JSON API format.
      *
      * @param $object
-     * @return string
+     *
      * @throws TypeException
+     *
+     * @return string
      */
     public function encodeToJson($object)
     {
-        if(is_string($object)) {
+        if (is_string($object)) {
             throw new TypeException('Can not encode a string to Json Format');
         }
 

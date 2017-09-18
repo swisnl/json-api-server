@@ -11,7 +11,6 @@ use Swis\LaravelApi\Services\ResponseService;
 
 trait HandleResponses
 {
-
     protected $repository;
     protected $jsonEncoder;
 
@@ -53,6 +52,7 @@ trait HandleResponses
         if (is_array($content)) {
             return $this->respondWithPartialContent($content);
         }
+
         return $this->respondWithOK($content);
     }
 
@@ -60,6 +60,7 @@ trait HandleResponses
     {
         $this->repository = $repository;
         $this->setJsonEncoder();
+
         return $this;
     }
 
@@ -67,6 +68,7 @@ trait HandleResponses
     {
         $this->jsonEncoder = new JsonEncoder();
         $this->jsonEncoder->setRepository($this->repository);
+
         return $this;
     }
 
