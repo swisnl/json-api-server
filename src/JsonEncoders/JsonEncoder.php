@@ -7,6 +7,7 @@ use Neomerx\JsonApi\Encoder\Encoder;
 use Neomerx\JsonApi\Encoder\EncoderOptions;
 use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
 use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
+use Swis\LaravelApi\Exceptions\TypeException;
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class JsonEncoder
@@ -21,11 +22,15 @@ class JsonEncoder
      * Encodes the given data to the JSON API format.
      *
      * @param $object
-     *
      * @return string
+     * @throws TypeException
      */
     public function encodeToJson($object)
     {
+        if(is_string($object)) {
+            throw new TypeException('Can not encode a string to Json Format');
+        }
+
         $encoder = Encoder::instance($this->getModelsToEncode(), $this->getEncoderOptions())
             ->withMeta($this->getMeta($object));
 
@@ -75,6 +80,9 @@ class JsonEncoder
      */
     protected function getModelsToEncode()
     {
+        if (!isset($this->repository)) {
+            return [];
+        }
         $model = $this->repository->makeModel();
         $modelClass = get_class($model);
         $this->insertIntoModelsToEncode($modelClass);
