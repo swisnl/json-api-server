@@ -18,6 +18,6 @@ class $MODEL_NAME$ extends Model
     ];
 
     public static $rules = [
-            $RULES$
-        ];
+        $RULES$
+    ];
 }

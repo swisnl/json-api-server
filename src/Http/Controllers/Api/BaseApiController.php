@@ -7,8 +7,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Route;
-use Swis\LaravelApi\JsonEncoders\JsonEncoder;
-use Swis\LaravelApi\Repositories\BaseApiRepository;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,41 +16,40 @@ abstract class BaseApiController extends Controller
     use DispatchesJobs, ValidatesRequests, HandleResponses, HasPermissionChecks;
 
     protected $respondController;
-    protected $jsonEncoder;
     protected $repository;
     protected $request;
     protected $route;
 
-    public function __construct(JsonEncoder $jsonEncoder, BaseApiRepository $repository, Request $request, Route $route)
+    public function __construct($repository, Request $request, Route $route)
     {
-        $this->jsonEncoder = $jsonEncoder;
         $this->repository = $repository;
         $this->request = $request;
         $this->route = $route;
+        $this->setResponseRepository($this->repository);
     }
 
     public function index()
     {
-        $this->repository->setPage($this->request->get('page', null));
-        $this->repository->setPerPage($this->request->get('per_page', null));
-
         $this->validateUser();
 
         if ($this->request->exists('ids')) {
             return $this->getByUrlInputIds();
         }
 
-        $items = $this->repository->getAll();
+        $items = $this->repository->paginate($this->request->get('page', null),
+            $this->request->get('per_page', null));
 
-        return $this->respondWithCollection($this->jsonEncoder->encodeToJson($items));
+        return $this->respondWithCollection($items);
     }
 
     private function getByUrlInputIds()
     {
         $ids = explode(',', $this->request->get('ids', null));
-        $items = $this->repository->findByIds($ids);
+        $items = $this->repository->findByIds($ids,
+            $this->request->get('per_page'),
+            $this->request->get('page'));
 
-        return $this->respondWithCollection($this->jsonEncoder->encodeToJson($items));
+        return $this->respondWithCollection($items);
     }
 
     /**
@@ -67,7 +64,7 @@ abstract class BaseApiController extends Controller
         $item = $this->repository->findById($id);
         $this->validateUser($item);
 
-        return $this->respondWithOK($this->jsonEncoder->encodeToJson($item));
+        return $this->respondWithOK($item);
     }
 
     /**
@@ -79,9 +76,8 @@ abstract class BaseApiController extends Controller
     {
         $this->validateUser();
         $createdResource = $this->repository->create($this->validateResource($this->request));
-        $encodedResource = $this->jsonEncoder->encodeToJson($createdResource);
 
-        return $this->respondWithCreated($encodedResource);
+        return $this->respondWithCreated($createdResource);
     }
 
     /**

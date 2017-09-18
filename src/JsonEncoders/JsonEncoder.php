@@ -7,6 +7,7 @@ use Neomerx\JsonApi\Encoder\Encoder;
 use Neomerx\JsonApi\Encoder\EncoderOptions;
 use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
 use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
+use Swis\LaravelApi\Exceptions\TypeException;
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class JsonEncoder
@@ -22,10 +23,16 @@ class JsonEncoder
      *
      * @param $object
      *
+     * @throws TypeException
+     *
      * @return string
      */
     public function encodeToJson($object)
     {
+        if (is_string($object)) {
+            throw new TypeException('Can not encode a string to Json Format');
+        }
+
         $encoder = Encoder::instance($this->getModelsToEncode(), $this->getEncoderOptions())
             ->withMeta($this->getMeta($object));
 
@@ -58,7 +65,7 @@ class JsonEncoder
         ];
     }
 
-    public function setRepository(BaseApiRepository $repository)
+    public function setRepository($repository)
     {
         $this->repository = $repository;
     }
@@ -75,7 +82,10 @@ class JsonEncoder
      */
     protected function getModelsToEncode()
     {
-        $model = $this->repository->getModel();
+        if (!isset($this->repository)) {
+            return [];
+        }
+        $model = $this->repository->makeModel();
         $modelClass = get_class($model);
         $this->insertIntoModelsToEncode($modelClass);
 
@@ -118,7 +128,7 @@ class JsonEncoder
             return $schemaInModelFolder;
         }
 
-        $schemaInSchemasFolder = 'App\JsonSchemas\\'.class_basename($modelClass).'Schema';
+        $schemaInSchemasFolder = config('laravel_api_config.namespace.schema').'\\'.class_basename($modelClass).'Schema';
         if (class_exists($schemaInSchemasFolder)) {
             return $schemaInSchemasFolder;
         }

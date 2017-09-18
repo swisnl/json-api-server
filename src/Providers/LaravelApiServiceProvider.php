@@ -21,6 +21,7 @@ use Swis\LaravelApi\Console\Commands\GenerateModelTranslationCommand;
 use Swis\LaravelApi\Console\Commands\GeneratePolicyCommand;
 use Swis\LaravelApi\Console\Commands\GenerateRepositoryCommand;
 use Swis\LaravelApi\Http\Middleware\ConfigureLocale;
+use Swis\LaravelApi\Http\Middleware\InspectContentType;
 use Swis\LaravelApi\Http\Middleware\PermissionMiddleware;
 
 class LaravelApiServiceProvider extends ServiceProvider
@@ -29,6 +30,7 @@ class LaravelApiServiceProvider extends ServiceProvider
     {
         $router->aliasMiddleware('route_permission_middleware', PermissionMiddleware::class);
         $router->aliasMiddleware('configure-locale', ConfigureLocale::class);
+        $router->aliasMiddleware('inspect_content_type', InspectContentType::class);
 
         $this->publishes([
             __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator.php'),

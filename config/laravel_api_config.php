@@ -12,7 +12,7 @@ return [
     'namespace' => [
         'translation' => 'App',
 
-        'schema' => 'App\JsonSchemas',
+        'schema' => 'App\Schemas',
 
         'policy' => 'App\Policies'
     ],

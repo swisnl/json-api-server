@@ -23,11 +23,11 @@
         "laravel/tinker": "^1.0",
         "neomerx/json-api": "^1.0",
         "spatie/laravel-permission": "^2.5",
-        "InfyOmLabs/laravel-generator": "dev-master",
-        "infyomlabs/adminlte-templates": "dev-master",
-        "infyomlabs/swagger-generator": "dev-master",
+        "InfyOmLabs/laravel-generator": "dev-master#b0cd27100bc89fd155623a9a1994450259992878",
+        "infyomlabs/adminlte-templates": "dev-master#61164131a009d1e42f06142340f8efab1e6948a5",
+        "infyomlabs/swagger-generator": "dev-master#a0d85f22acd100f73515d98901d6f23efc1d2443",
         "laravelcollective/html": "^5.4",
-        "jlapp/swaggervel": "dev-master"
+        "jlapp/swaggervel": "dev-master#e026d72cacec8b2db8b2510179d73042f5e87bb9"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.4",

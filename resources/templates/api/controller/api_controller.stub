@@ -5,10 +5,10 @@ namespace $NAMESPACE_API_CONTROLLER$;
 use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
-use Swis\LaravelApi\Http\Controllers\Api\ApiBaseController;
+use Swis\LaravelApi\Http\Controllers\Api\BaseApiController;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 
-class $MODEL_NAME$Controller extends ApiBaseController
+class $MODEL_NAME$Controller extends BaseApiController
 {
     /** @var $MODEL_NAME$Repository $$MODEL_NAME_CAMEL$Repository */
     private $$MODEL_NAME_CAMEL$Repository;

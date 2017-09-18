@@ -8,10 +8,14 @@ use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
 use Swis\LaravelApi\Services\ResponseService;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Tests\TestCase;
+use Tests\TestClasses\TestModel;
+use Tests\TestClasses\TestRepository;
 
 class ResponseServiceTest extends TestCase
 {
     use HandleResponses;
+
+    protected $testModel;
     /**
      * @var ResponseService
      */
@@ -21,36 +25,41 @@ class ResponseServiceTest extends TestCase
     {
         parent::setUp();
         $this->responseService = new ResponseService();
+        $this->setResponseRepository(new TestRepository());
+        $this->testModel = new TestModel();
     }
 
     /** @test */
     public function it_creates_an_OK_response()
     {
-        $message = 'OK';
-        $response = $this->respondWithOK($message);
+        $this->testModel->body = 'OK';
+        $response = $this->respondWithOK($this->testModel);
+        $responseBody = json_decode($response->getContent())->data->attributes->body;
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('OK', $response->getContent());
+        $this->assertEquals('OK', $responseBody);
     }
 
     /** @test */
     public function it_creates_a_partial_content_response()
     {
-        $message = 'PARTIAL';
-        $response = $this->respondWithPartialContent($message);
+        $this->testModel->body = 'PARTIAL';
+        $response = $this->respondWithPartialContent($this->testModel);
+        $responseBody = json_decode($response->getContent())->data->attributes->body;
 
         $this->assertEquals(206, $response->getStatusCode());
-        $this->assertEquals('PARTIAL', $response->getContent());
+        $this->assertEquals('PARTIAL', $responseBody);
     }
 
     /** @test */
     public function it_creates_a_created_response()
     {
-        $message = 'CREATED';
-        $response = $this->respondWithCreated($message);
+        $this->testModel->body = 'CREATED';
+        $response = $this->respondWithCreated($this->testModel);
+        $responseBody = json_decode($response->getContent())->data->attributes->body;
 
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertEquals('CREATED', $response->getContent());
+        $this->assertEquals('CREATED', $responseBody);
     }
 
     /** @test */
@@ -64,21 +73,23 @@ class ResponseServiceTest extends TestCase
     /** @test */
     public function it_creates_a_collection_response_with_OK()
     {
-        $message = 'OK';
-        $response = $this->respondWithCollection($message);
+        $this->testModel->body = 'OK';
+        $response = $this->respondWithCollection($this->testModel);
+        $responseBody = json_decode($response->getContent())->data->attributes->body;
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('OK', $response->getContent());
+        $this->assertEquals('OK', $responseBody);
     }
 
     /** @test */
     public function it_creates_a_collection_response_with_PARTIAL()
     {
-        $message = ['meta' => 'test'];
-        $response = $this->respondWithCollection(json_encode($message));
+        $this->testModel->body = 'PARTIAL';
+        $response = $this->respondWithCollection([$this->testModel]);
+        $responseBody = json_decode($response->getContent())->data[0]->attributes->body;
 
         $this->assertEquals(206, $response->getStatusCode());
-        $this->assertEquals('{"meta":"test"}', $response->getContent());
+        $this->assertEquals('PARTIAL', $responseBody);
     }
 
     /** @test */
