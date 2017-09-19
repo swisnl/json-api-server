@@ -3,7 +3,7 @@
 namespace Swis\LaravelApi\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Exceptions\RepositoryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -60,7 +60,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $model = app()->make($this->getModelName());
 
         if (!$model instanceof Model) {
-            throw new RepositoryException("Class {$this->getModelName()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
+            throw new ModelNotFoundException("Class: {$this->getModelName()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
         }
 
         return $model;

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use Swis\LaravelApi\Exceptions\RepositoryNotFoundException;
+use Swis\LaravelApi\Exceptions\TypeException;
 use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
 use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpUnauthorized;
@@ -48,5 +50,23 @@ class JsonEncoderTest extends TestCase
         $error = $errorEncoder->encodeError($errorModel, 'UNAUTHORIZED');
 
         $this->assertJson($error);
+    }
+
+    /** @test */
+    public function it_throws_a_type_exception()
+    {
+        $this->expectException(TypeException::class);
+        $this->jsonEncoder->encodeToJson('test');
+    }
+
+    /** @test */
+    public function it_throws_a_repository_not_found_exception()
+    {
+        $testModel = new TestModel();
+        $this->jsonEncoder->setRepository(null);
+
+        $this->expectException(RepositoryNotFoundException::class);
+
+        $this->jsonEncoder->encodeToJson($testModel);
     }
 }

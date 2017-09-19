@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Neomerx\JsonApi\Encoder\Encoder;
 use Neomerx\JsonApi\Encoder\EncoderOptions;
 use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
+use Swis\LaravelApi\Exceptions\RepositoryNotFoundException;
 use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
 use Swis\LaravelApi\Exceptions\TypeException;
 use Swis\LaravelApi\Repositories\BaseApiRepository;
@@ -78,12 +79,14 @@ class JsonEncoder
     /**
      * This method generates Model names and ModelSchema names based on the repository model.
      *
+     * @throws RepositoryNotFoundException
+     *
      * @return array|mixed
      */
     protected function getModelsToEncode()
     {
         if (!isset($this->repository)) {
-            return [];
+            throw new RepositoryNotFoundException('No repository set in your controller');
         }
         $model = $this->repository->makeModel();
         $modelClass = get_class($model);
