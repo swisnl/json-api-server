@@ -40,17 +40,17 @@ Please see the folder [sample](sample) for a sample of an application using this
 ### Base Api Classes
 There are a few base classes your classes should/could inherit:
 
-##### BaseApiController
+#### BaseApiController
 This controller handles your basic CRUD actions as well as permissions if you choose to use permissions.
 
-##### BaseApiRepository
+#### BaseApiRepository
 This repository is a standard base repository with a small addition that it figures out your models relationships. 
 
 If you want to use your own BaseRepository, you have to implement the RepositoryInterface. This ensures that you have full compatibility with the BaseApiController.
 
 The BaseApiRepository uses a trait to retrieve a models relationships. You can use this trait if you want to use the existing implementation.
 
-##### BaseApiSchema
+#### BaseApiSchema
 Every model needs a schema to be mapped for Json Api response. This schema needs to inherit the BaseApiSchema. You can override the methods from the BaseApiSchema and if the existing implementation can't figure out the resource type, you can override that as well.
 
 #### Relationships
