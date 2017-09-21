@@ -9,7 +9,7 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-controller {model} {--path=}';
+    protected $signature = 'laravel-api:generate-controller {name} {--path=}';
 
     /**
      * The console command description.
@@ -35,12 +35,10 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
      */
     public function handle()
     {
-        $this->name = $this->argument('model');
+        $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
         $this->overridePath();
-
-        $this->call('infyom.api:controller', ['model' => $this->name]);
-        $this->renameController();
+        $this->generateClass('Controller', 'controller');
     }
 
     public function getModelName()
@@ -55,6 +53,6 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.api_controller';
+        return 'laravel_api.path.controller';
     }
 }

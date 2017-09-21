@@ -37,8 +37,8 @@ class GenerateModelCommand extends BaseGenerateCommand
     {
         $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
-
-        $this->call('infyom:model', ['model' => $this->name]);
+        $this->overridePath();
+        $this->generateClass('', 'model');
     }
 
     public function getModelName()
@@ -53,6 +53,6 @@ class GenerateModelCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.model';
+        return 'laravel_api.path.model';
     }
 }

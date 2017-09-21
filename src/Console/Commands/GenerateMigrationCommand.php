@@ -9,14 +9,14 @@ class GenerateMigrationCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-migration {model} {--path=}';
+    protected $signature = 'laravel-api:generate-migration {name} {--path=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Creates an API controller.';
+    protected $description = 'Creates an API migration.';
 
     protected $name;
 
@@ -35,10 +35,10 @@ class GenerateMigrationCommand extends BaseGenerateCommand
      */
     public function handle()
     {
-        $this->name = $this->argument('model');
+        $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
-
-        $this->call('infyom:migration', ['model' => $this->name]);
+        $this->overridePath();
+        $this->generateClass('Migration', 'migration');
     }
 
     public function getModelName()
@@ -53,6 +53,6 @@ class GenerateMigrationCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.migration';
+        return 'laravel_api.path.path.migration';
     }
 }

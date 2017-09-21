@@ -52,7 +52,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
             }
 
             $this->modelName = $schema;
-            $this->generateSchema();
+            $this->generateClass('Schema', 'schema');
         }
     }
 

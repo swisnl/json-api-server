@@ -1,0 +1,21 @@
+<?php
+
+namespace $NAMESPACE_CONTROLLER$;
+
+use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Swis\LaravelApi\Http\Controllers\Api\BaseApiController;
+use Swis\LaravelApi\Repositories\RepositoryInterface;
+
+class $MODEL_NAME$Controller extends BaseApiController
+{
+    /** @var RepositoryInterface $repository */
+    private $repository;
+
+    public function __construct($MODEL_NAME$Repository $repository, Request $request, Route $route)
+    {
+        $this->repository = $repository;
+        parent::__construct($this->repository, $request, $route);
+    }
+}

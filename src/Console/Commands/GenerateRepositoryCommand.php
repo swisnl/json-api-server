@@ -9,7 +9,7 @@ class GenerateRepositoryCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-repository {model} {--path=}';
+    protected $signature = 'laravel-api:generate-repository {name} {--path=}';
 
     /**
      * The console command description.
@@ -35,10 +35,10 @@ class GenerateRepositoryCommand extends BaseGenerateCommand
      */
     public function handle()
     {
-        $this->name = $this->argument('model');
+        $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
-
-        $this->call('infyom:repository', ['model' => $this->name]);
+        $this->overridePath();
+        $this->generateClass('Repository', 'repository');
     }
 
     public function getModelName()
@@ -53,6 +53,6 @@ class GenerateRepositoryCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'infyom.laravel_generator.path.repository';
+        return 'laravel_api.path.repository';
     }
 }

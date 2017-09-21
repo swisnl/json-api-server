@@ -33,7 +33,6 @@ class LaravelApiServiceProvider extends ServiceProvider
         $router->aliasMiddleware('inspect_content_type', InspectContentType::class);
 
         $this->publishes([
-            __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator.php'),
              __DIR__ . '/../../config/laravel_api.php' => base_path('config/laravel_api.php'),
         ], 'laravel-api');
     }
@@ -60,11 +59,6 @@ class LaravelApiServiceProvider extends ServiceProvider
             GenerateRepositoryCommand::class,
             GenerateMigrationCommand::class,
         ]);
-
-        $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravel_generator.php',
-            'infyom.laravel_generator'
-        );
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/laravel_api.php',

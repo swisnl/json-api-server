@@ -17,13 +17,13 @@ class CustomFileGeneratorTest extends TestCase
         config(['laravel_api.path.policy' => $path.'policies/']);
         config(['laravel_api.path.schema' => $path.'schemas/']);
         config(['laravel_api.path.translation' => $path]);
-        config(['infyom.laravel_generator.path.templates_dir' => $templatesDir]);
+        config(['laravel_api.path.templates' => $templatesDir]);
 
         $generator = new CustomFileGenerator();
         $generator->setModelName($modelName);
-        $generator->generateSchema();
-        $generator->generatePolicy();
-        $generator->generateTranslation();
+        $generator->generate('Schema', 'schema', $path.'schemas/');
+        $generator->generate('Policy', 'policy', $path.'policies/');
+        $generator->generate('Translation', 'translation', $path);
 
         $this->assertTrue(file_exists(config('laravel_api.path.policy').'ExamplePolicy.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.schema').'ExampleSchema.php'));

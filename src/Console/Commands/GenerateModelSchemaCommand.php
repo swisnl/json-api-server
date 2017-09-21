@@ -9,7 +9,7 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-schema {model} {--path=}';
+    protected $signature = 'laravel-api:generate-schema {name} {--path=}';
 
     /**
      * The console command description.
@@ -35,14 +35,15 @@ class GenerateModelSchemaCommand extends BaseGenerateCommand
      */
     public function handle()
     {
+        $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
         $this->overridePath();
-        $this->generateSchema();
+        $this->generateClass('Schema', 'schema');
     }
 
     public function getModelName()
     {
-        return $this->argument('model');
+        return $this->name;
     }
 
     public function getOverridePath()

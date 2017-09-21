@@ -3,9 +3,9 @@
 namespace $NAMESPACE_REPOSITORY$;
 
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use Swis\LaravelApi\Repositories\Repository;
+use Swis\LaravelApi\Repositories\BaseApiRepository;
 
-class $MODEL_NAME$Repository extends Repository
+class $MODEL_NAME$Repository extends BaseApiRepository
 {
     public function getModelName(): string
     {
