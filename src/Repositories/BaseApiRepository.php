@@ -55,7 +55,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     {
     }
 
-    public function makeModel()
+    public function makeModel(): Model
     {
         $model = app()->make($this->getModelName());
 

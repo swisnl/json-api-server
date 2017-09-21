@@ -86,13 +86,13 @@ You'll be able to do the basic CRUD actions without writing anything.
 
 You also have the ability to generate the files separately:
 ``` bash
-$ php artisan laravel-api:generate-controller {Model}
-$ php artisan laravel-api:generate-model {Model}
-$ php artisan laravel-api:generate-translation {Model}
-$ php artisan laravel-api:generate-schema {Model}
-$ php artisan laravel-api:generate-policy {Model}
-$ php artisan laravel-api:generate-repository {Model}
-$ php artisan laravel-api:generate-migration {Model}
+$ php artisan laravel-api:generate-controller {Name}
+$ php artisan laravel-api:generate-model {Name}
+$ php artisan laravel-api:generate-translation {Name}
+$ php artisan laravel-api:generate-schema {Name}
+$ php artisan laravel-api:generate-policy {Name}
+$ php artisan laravel-api:generate-repository {Name}
+$ php artisan laravel-api:generate-migration {Name}
 ```
 
 
@@ -100,7 +100,7 @@ $ php artisan laravel-api:generate-migration {Model}
 If you would like to override the configuration files, you can add `--tag=laravel-api` to your artisan publish call. There are two configuration files:
 * infyom.laravel_generator
     * This is for the basic generator classes provided by InfyOmLabs
-* laravel_api_config
+* laravel_api
     * This is for the config of the generator classes added by this package
 ### Requests and responses
 All requests and responses are formatted according to the format specified by http://jsonapi.org/.

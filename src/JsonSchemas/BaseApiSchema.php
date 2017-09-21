@@ -5,11 +5,11 @@ namespace Swis\LaravelApi\JsonSchemas;
 use Neomerx\JsonApi\Contracts\Schema\SchemaFactoryInterface;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 use Swis\LaravelApi\Exceptions\RepositoryNotFoundException;
-use Swis\LaravelApi\Repositories\BaseApiRepository;
+use Swis\LaravelApi\Repositories\RepositoryInterface;
 
 abstract class BaseApiSchema extends SchemaProvider
 {
-    /** @var BaseApiRepository $repository */
+    /** @var RepositoryInterface $repository */
     protected $repository;
 
     public function __construct(SchemaFactoryInterface $factory)

@@ -131,7 +131,7 @@ class JsonEncoder
             return $schemaInModelFolder;
         }
 
-        $schemaInSchemasFolder = config('laravel_api_config.namespace.schema').'\\'.class_basename($modelClass).'Schema';
+        $schemaInSchemasFolder = config('laravel_api.namespace.schema').'\\'.class_basename($modelClass).'Schema';
         if (class_exists($schemaInSchemasFolder)) {
             return $schemaInSchemasFolder;
         }

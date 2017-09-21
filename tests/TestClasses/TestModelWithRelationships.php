@@ -18,4 +18,9 @@ class TestModelWithRelationships extends Model
     {
         return $this->hasMany(TestModel::class);
     }
+
+    public function getRules($id = null)
+    {
+        return [];
+    }
 }

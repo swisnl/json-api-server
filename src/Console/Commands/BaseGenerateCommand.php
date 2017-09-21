@@ -18,19 +18,19 @@ abstract class BaseGenerateCommand extends Command
     protected function generateSchema()
     {
         $this->generator->setModelName($this->getModelName())->generateSchema();
-        $this->info('Schema generated');
+        $this->info('Schema generated in ' . $this->getConfigPath());
     }
 
     protected function generateTranslation()
     {
         $this->generator->setModelName($this->getModelName())->generateTranslation();
-        $this->info('ModelTranslation generated');
+        $this->info('ModelTranslation generated in ' . $this->getConfigPath());
     }
 
     protected function generatePolicy()
     {
         $this->generator->setModelName($this->getModelName())->generatePolicy();
-        $this->info('Policy generated');
+        $this->info('Policy generated in ' . $this->getConfigPath());
     }
 
     protected function generateNewControllerName(): string

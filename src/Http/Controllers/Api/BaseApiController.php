@@ -30,7 +30,7 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $this->validateUser();
+        $this->checkUsersPermissions();
 
         if ($this->request->exists('ids')) {
             return $this->getByUrlInputIds();
@@ -62,7 +62,7 @@ abstract class BaseApiController extends Controller
     public function show($id)
     {
         $item = $this->repository->findById($id);
-        $this->validateUser($item);
+        $this->checkUsersPermissions($item);
 
         return $this->respondWithOK($item);
     }
@@ -74,8 +74,8 @@ abstract class BaseApiController extends Controller
      */
     public function create()
     {
-        $this->validateUser();
-        $createdResource = $this->repository->create($this->validateResource($this->request));
+//        $this->checkUsersPermissions();
+        $createdResource = $this->repository->create($this->validateResource());
 
         return $this->respondWithCreated($createdResource);
     }
@@ -89,8 +89,8 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-        $this->validateUser($this->repository->findById($id));
-        $updated = $this->repository->update($this->validateResource($this->request, $id), $id);
+//        $this->checkUsersPermissions($this->repository->findById($id));
+        $updated = $this->repository->update($this->validateResource($id), $id);
         if (!$updated) {
             throw new NotFoundHttpException();
         }
@@ -107,7 +107,7 @@ abstract class BaseApiController extends Controller
     {
     }
 
-    protected function validateUser($requestedObject = null, $policyActionName = null)
+    protected function checkUsersPermissions($requestedObject = null, $policyActionName = null)
     {
         if ($this->checkForPermissions()) {
             $this->checkIfUserHasPermissions(
@@ -119,7 +119,11 @@ abstract class BaseApiController extends Controller
         }
     }
 
-    abstract public function validateResource(Request $request, $id = null);
+    public function validateResource($id = null)
+    {
+        $this->validate($this->request, $this->repository->makeModel()->getRules($id));
 
+        return $this->request->all();
+    }
     abstract public function checkForPermissions(): bool;
 }

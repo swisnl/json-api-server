@@ -17,7 +17,8 @@ class $MODEL_NAME$ extends Model
         $FIELDS$
     ];
 
-    public static $rules = [
-        $RULES$
-    ];
+    public function getRules()
+    {
+       return [$RULES$];
+    }
 }

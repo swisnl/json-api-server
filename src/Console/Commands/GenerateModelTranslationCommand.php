@@ -53,6 +53,6 @@ class GenerateModelTranslationCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'laravel_api_config.path.translation';
+        return 'laravel_api.path.translation';
     }
 }

@@ -18,17 +18,17 @@ class CustomFileGenerator extends BaseGenerator
 
     public function generateSchema()
     {
-        $this->generate('Schema', 'schema', config('laravel_api_config.path.schema'));
+        $this->generate('Schema', 'schema', config('laravel_api.path.schema'));
     }
 
     public function generateTranslation()
     {
-        $this->generate('Translation', 'model_translation', config('laravel_api_config.path.translation'));
+        $this->generate('Translation', 'model_translation', config('laravel_api.path.translation'));
     }
 
     public function generatePolicy()
     {
-        $this->generate('Policy', 'policy', config('laravel_api_config.path.policy'));
+        $this->generate('Policy', 'policy', config('laravel_api.path.policy'));
     }
 
     protected function generate($classExtensionName, $stubName, $path)
@@ -51,8 +51,8 @@ class CustomFileGenerator extends BaseGenerator
             '$NAMESPACE_MODEL$' => config('infyom.laravel_generator.namespace.model'),
             '$NAMESPACE_MODEL_EXTEND$' => config('infyom.laravel_generator.model_extend_class'),
             '$NAME_SPACE_REPOSITORY$' => config('infyom.laravel_generator.namespace.repository'),
-            '$NAMESPACE_SCHEMA$' => config('laravel_api_config.namespace.schema'),
-            '$NAME_SPACE_POLICY$' => config('laravel_api_config.namespace.policy'),
+            '$NAMESPACE_SCHEMA$' => config('laravel_api.namespace.schema'),
+            '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$FIELDS$' => '', //TODO,
         ];
 
@@ -61,12 +61,12 @@ class CustomFileGenerator extends BaseGenerator
 
     protected function generateNewDir()
     {
-        $schemaPath = config('laravel_api_config.path.schema');
+        $schemaPath = config('laravel_api.path.schema');
         if (!is_dir($schemaPath)) {
             mkdir($schemaPath);
         }
 
-        $policyPath = config('laravel_api_config.path.policy');
+        $policyPath = config('laravel_api.path.policy');
         if (!is_dir($policyPath)) {
             mkdir($policyPath);
         }
