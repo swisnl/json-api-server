@@ -8,4 +8,5 @@ interface RepositoryInterface
 {
     public function getModelRelationships(): array;
     public function makeModel(): Model;
+    public function getModelName();
 }

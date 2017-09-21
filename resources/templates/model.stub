@@ -4,8 +4,9 @@ namespace $NAMESPACE_MODEL$;
 
 use $NAMESPACE_MODEL_EXTEND$;
 use Dimsav\Translatable\Translatable;
+use Swis\LaravelApi\Models\ModelContract;
 
-class $MODEL_NAME$ extends Model
+class $MODEL_NAME$ extends Model implements ModelContract
 {
     use Translatable;
 
@@ -17,8 +18,28 @@ class $MODEL_NAME$ extends Model
         $FIELDS$
     ];
 
-    public function getRules()
+    public function getRules($id = null)
     {
        return [$RULES$];
+    }
+
+    public function getRelationships()
+    {
+        // TODO: Implement getRelationships() method.
+    }
+
+    public function getSchema()
+    {
+        // TODO: Implement getSchema() method.
+    }
+
+    public function getRepository()
+    {
+        // TODO: Implement getRepository() method.
+    }
+
+    public function getTranslatable()
+    {
+        // TODO: Implement getTranslatable() method.
     }
 }

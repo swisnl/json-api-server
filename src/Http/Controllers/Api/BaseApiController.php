@@ -7,6 +7,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Route;
+use Swis\LaravelApi\Repositories\RepositoryInterface;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +21,7 @@ abstract class BaseApiController extends Controller
     protected $request;
     protected $route;
 
-    public function __construct($repository, Request $request, Route $route)
+    public function __construct(RepositoryInterface $repository, Request $request, Route $route)
     {
         $this->repository = $repository;
         $this->request = $request;
@@ -74,7 +75,7 @@ abstract class BaseApiController extends Controller
      */
     public function create()
     {
-//        $this->checkUsersPermissions();
+        $this->checkUsersPermissions();
         $createdResource = $this->repository->create($this->validateResource());
 
         return $this->respondWithCreated($createdResource);
@@ -89,7 +90,7 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-//        $this->checkUsersPermissions($this->repository->findById($id));
+        $this->checkUsersPermissions($this->repository->findById($id));
         $updated = $this->repository->update($this->validateResource($id), $id);
         if (!$updated) {
             throw new NotFoundHttpException();
@@ -109,7 +110,7 @@ abstract class BaseApiController extends Controller
 
     protected function checkUsersPermissions($requestedObject = null, $policyActionName = null)
     {
-        if ($this->checkForPermissions()) {
+        if (config('laravel_api.checkForPermissions')) {
             $this->checkIfUserHasPermissions(
                 $this->route,
                 $this->repository->getModelName(),
@@ -125,5 +126,4 @@ abstract class BaseApiController extends Controller
 
         return $this->request->all();
     }
-    abstract public function checkForPermissions(): bool;
 }

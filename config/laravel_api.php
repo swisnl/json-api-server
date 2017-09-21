@@ -16,4 +16,6 @@ return [
 
         'policy' => 'App\Policies'
     ],
+
+    'checkForPermissions' => true,
 ];
