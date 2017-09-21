@@ -10,3 +10,4 @@
 /LICENSE.md export-ignore
 /shippable.yml export-ignore
 /.php_cs export-ignore
+/sample export-ignore
