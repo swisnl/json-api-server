@@ -21,7 +21,7 @@ class CustomFileGenerator
             '$NAMESPACE_SCHEMA$' => config('laravel_api.namespace.schema'),
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
-            '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller')
+            '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller'),
         ];
 
         return $this;

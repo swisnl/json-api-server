@@ -2,7 +2,6 @@
 
 namespace Swis\LaravelApi\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -34,7 +33,6 @@ trait HandlesRelationships
 
         if ($model instanceof ModelContract) {
             return $model->getRelationships();
-
         }
 
         //TODO: ook op permissies checken welke relaties ze mogen zien.

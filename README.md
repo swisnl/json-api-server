@@ -86,15 +86,14 @@ You'll be able to do the basic CRUD actions without writing anything.
 
 You also have the ability to generate the files separately:
 ``` bash
-$ php artisan laravel-api:generate-controller {Name}
-$ php artisan laravel-api:generate-model {Name}
-$ php artisan laravel-api:generate-translation {Name}
-$ php artisan laravel-api:generate-schema {Name}
-$ php artisan laravel-api:generate-policy {Name}
-$ php artisan laravel-api:generate-repository {Name}
-$ php artisan laravel-api:generate-migration {Name}
+$ php artisan laravel-api:generate-controller {name}
+$ php artisan laravel-api:generate-model {name}
+$ php artisan laravel-api:generate-translation {name}
+$ php artisan laravel-api:generate-schema {name}
+$ php artisan laravel-api:generate-policy {name}
+$ php artisan laravel-api:generate-repository {name}
+$ php artisan laravel-api:generate-migration {name}
 ```
-
 
 ### Configuration
 If you would like to override the configuration files, you can add `--tag=laravel-api` or `--tag=laravel-api-templates` to your artisan publish call. If you decide to override the templates, make sure you override the laravel api config too. You have to define where your own templates are in the config. There is a configuration file:

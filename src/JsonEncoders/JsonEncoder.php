@@ -121,7 +121,7 @@ class JsonEncoder
     protected function createSchemaName($modelClass)
     {
         $model = app()->make($modelClass);
-        if($model instanceof ModelContract) {
+        if ($model instanceof ModelContract) {
             return $model->getSchema();
         }
 
