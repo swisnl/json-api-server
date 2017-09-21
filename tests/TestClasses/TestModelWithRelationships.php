@@ -4,23 +4,40 @@ namespace Tests\TestClasses;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Swis\LaravelApi\Models\ModelContract;
 
-class TestModelWithRelationships extends Model
+class TestModelWithRelationships extends Model implements ModelContract
 {
     protected $fillable = [
         'title', 'body',
     ];
-
-    public $schema = TestSchema::class;
-    public $repository = TestRepositoryWithRelationships::class;
 
     public function testModels(): HasMany
     {
         return $this->hasMany(TestModel::class);
     }
 
-    public function getRules($id = null)
+    public function getRules($id = null): array
     {
         return [];
+    }
+
+    public function getRelationships(): array
+    {
+        return ['testModels'];
+    }
+
+    public function getSchema(): string
+    {
+        return TestSchema::class;
+    }
+
+    public function getRepository(): string
+    {
+        return TestRepositoryWithRelationships::class;
+    }
+
+    public function getTranslatable()
+    {
     }
 }

@@ -3,9 +3,9 @@ namespace Swis\LaravelApi\Models;
 
 interface ModelContract
 {
-    public function getRelationships();
-    public function getSchema();
-    public function getRepository();
+    public function getRelationships(): array;
+    public function getSchema(): string;
+    public function getRepository(): string;
     public function getTranslatable();
-    public function getRules($id = null);
+    public function getRules($id = null): array;
 }
