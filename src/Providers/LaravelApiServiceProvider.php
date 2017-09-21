@@ -6,10 +6,6 @@ use Collective\Html\HtmlServiceProvider;
 use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider;
-use InfyOm\Generator\InfyOmGeneratorServiceProvider;
-use Laracasts\Flash\FlashServiceProvider;
-use Prettus\Repository\Providers\RepositoryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
 use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
@@ -42,10 +38,6 @@ class LaravelApiServiceProvider extends ServiceProvider
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(TranslatableServiceProvider::class);
-        $this->app->register(FlashServiceProvider::class);
-        $this->app->register(RepositoryServiceProvider::class);
-        $this->app->register(InfyOmGeneratorServiceProvider::class);
-        $this->app->register(AdminLTETemplatesServiceProvider::class);
         $this->app->register(htmlServiceProvider::class);
 
         $this->commands([

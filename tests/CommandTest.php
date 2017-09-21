@@ -7,7 +7,7 @@ class CommandTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        config(['laravel_api.path.templates_dir' => 'resources/templates/']);
+        config(['laravel_api.path.templates' => 'resources/templates/']);
     }
 
     /** @test */
