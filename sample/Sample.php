@@ -31,8 +31,13 @@ class Sample extends Model
         return $this->translatable;
     }
 
-    public function getRelations()
+    public function getRelationships()
     {
         return ['samples1', 'samples2'];
+    }
+
+    public function getRules($id = null)
+    {
+        return [];
     }
 }

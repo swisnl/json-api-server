@@ -9,6 +9,7 @@ use Neomerx\JsonApi\Encoder\Parameters\EncodingParameters;
 use Swis\LaravelApi\Exceptions\RepositoryNotFoundException;
 use Swis\LaravelApi\Exceptions\SchemaNotFoundException;
 use Swis\LaravelApi\Exceptions\TypeException;
+use Swis\LaravelApi\Models\ModelContract;
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class JsonEncoder
@@ -119,9 +120,9 @@ class JsonEncoder
 
     protected function createSchemaName($modelClass)
     {
-        $modelSchema = app()->make($modelClass)->schema;
-        if (null !== $modelSchema) {
-            return $modelSchema;
+        $model = app()->make($modelClass);
+        if ($model instanceof ModelContract) {
+            return $model->getSchema();
         }
 
         // TODO: Met Arnaud bespreken of we niet gewoon altijd willen configureren in de Model.
@@ -131,7 +132,7 @@ class JsonEncoder
             return $schemaInModelFolder;
         }
 
-        $schemaInSchemasFolder = config('laravel_api_config.namespace.schema').'\\'.class_basename($modelClass).'Schema';
+        $schemaInSchemasFolder = config('laravel_api.namespace.schema').'\\'.class_basename($modelClass).'Schema';
         if (class_exists($schemaInSchemasFolder)) {
             return $schemaInSchemasFolder;
         }

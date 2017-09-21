@@ -2,22 +2,46 @@
 
 namespace $NAMESPACE_MODEL$;
 
-use $NAMESPACE_MODEL_EXTEND$;
+use Illuminate\Database\Eloquent\Model;
 use Dimsav\Translatable\Translatable;
+use Swis\LaravelApi\Models\ModelContract;
 
-class $MODEL_NAME$ extends Model
+class $MODEL_NAME$ extends Model implements ModelContract
 {
     use Translatable;
 
     public $fillable = [
-        $FIELDS$
+        // TODO: Write down fillables
     ];
 
     public $translatedAttributes = [
-        $FIELDS$
+        // TODO: Write down translatable values
     ];
 
-    public static $rules = [
-        $RULES$
-    ];
+    public function getRules($id = null): array
+    {
+       return [
+        //TODO write down rules
+       ];
+    }
+
+    public function getRelationships(): array
+    {
+        // TODO: Implement getRelationships() method.
+    }
+
+    public function getSchema(): string
+    {
+        // TODO: Implement getSchema() method.
+    }
+
+    public function getRepository(): string
+    {
+        // TODO: Implement getRepository() method.
+    }
+
+    public function getTranslatable()
+    {
+        // TODO: Implement getTranslatable() method.
+    }
 }

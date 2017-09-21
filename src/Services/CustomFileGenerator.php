@@ -2,76 +2,42 @@
 
 namespace Swis\LaravelApi\Services;
 
-use InfyOm\Generator\Generators\BaseGenerator;
-use InfyOm\Generator\Utils\FileUtil;
-use InfyOm\Generator\Utils\TemplateUtil;
-
-class CustomFileGenerator extends BaseGenerator
+class CustomFileGenerator
 {
     private $modelName;
-    private $dynamicVars;
+    private $stubVariables;
 
     public function __construct()
     {
-        $this->generateNewDir();
     }
 
-    public function generateSchema()
+    protected function setStubVars()
     {
-        $this->generate('Schema', 'schema', config('laravel_api_config.path.schema'));
-    }
-
-    public function generateTranslation()
-    {
-        $this->generate('Translation', 'model_translation', config('laravel_api_config.path.translation'));
-    }
-
-    public function generatePolicy()
-    {
-        $this->generate('Policy', 'policy', config('laravel_api_config.path.policy'));
-    }
-
-    protected function generate($classExtensionName, $stubName, $path)
-    {
-        if (file_exists($path.$this->modelName.$classExtensionName.'.php')) {
-            return;
-        }
-
-        $this->setDynamicVars();
-
-        $templateData = TemplateUtil::getTemplate($stubName, 'laravel-generator');
-        $templateData = TemplateUtil::fillTemplate($this->dynamicVars, $templateData);
-        FileUtil::createFile($path, $this->modelName.$classExtensionName.'.php', $templateData);
-    }
-
-    protected function setDynamicVars()
-    {
-        $this->dynamicVars = [
+        $this->stubVariables = [
             '$MODEL_NAME$' => $this->modelName,
             '$NAMESPACE_MODEL$' => config('infyom.laravel_generator.namespace.model'),
             '$NAMESPACE_MODEL_EXTEND$' => config('infyom.laravel_generator.model_extend_class'),
             '$NAME_SPACE_REPOSITORY$' => config('infyom.laravel_generator.namespace.repository'),
-            '$NAMESPACE_SCHEMA$' => config('laravel_api_config.namespace.schema'),
-            '$NAME_SPACE_POLICY$' => config('laravel_api_config.namespace.policy'),
-            '$FIELDS$' => '', //TODO,
+            '$NAMESPACE_SCHEMA$' => config('laravel_api.namespace.schema'),
+            '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
+            '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
+            '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller'),
         ];
 
         return $this;
     }
 
-    protected function generateNewDir()
+    public function generate($classExtensionName, $stubName, $path)
     {
-        $schemaPath = config('laravel_api_config.path.schema');
-        if (!is_dir($schemaPath)) {
-            mkdir($schemaPath);
+        if (file_exists($path.$this->modelName.$classExtensionName.'.php')) {
+            return;
         }
 
-        $policyPath = config('laravel_api_config.path.policy');
-        if (!is_dir($policyPath)) {
-            mkdir($policyPath);
-        }
+        $this->setStubVars();
 
-        return $this;
+        $filledStub = $this->getStub($stubName);
+        $filledStub = $this->fillStub($this->stubVariables, $filledStub);
+        $this->createFile($path, $this->modelName.$classExtensionName.'.php', $filledStub);
     }
 
     public function setModelName($modelName)
@@ -79,5 +45,39 @@ class CustomFileGenerator extends BaseGenerator
         $this->modelName = $modelName;
 
         return $this;
+    }
+
+    public static function createFile($path, $classExtensionName, $filledStub)
+    {
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        $path = $path.$classExtensionName;
+
+        file_put_contents($path, $filledStub);
+    }
+
+    protected function getStubDir($stub)
+    {
+        $stubName = str_replace('.', '/', $stub);
+
+        return config('laravel_api.path.templates').$stubName.'.stub';
+    }
+
+    protected function getStub($templateName)
+    {
+        $path = $this->getStubDir($templateName);
+
+        return file_get_contents($path);
+    }
+
+    protected function fillStub($variables, $stub)
+    {
+        foreach ($variables as $variable => $value) {
+            $stub = str_replace($variable, $value, $stub);
+        }
+
+        return $stub;
     }
 }

@@ -86,22 +86,19 @@ You'll be able to do the basic CRUD actions without writing anything.
 
 You also have the ability to generate the files separately:
 ``` bash
-$ php artisan laravel-api:generate-controller {Model}
-$ php artisan laravel-api:generate-model {Model}
-$ php artisan laravel-api:generate-translation {Model}
-$ php artisan laravel-api:generate-schema {Model}
-$ php artisan laravel-api:generate-policy {Model}
-$ php artisan laravel-api:generate-repository {Model}
-$ php artisan laravel-api:generate-migration {Model}
+$ php artisan laravel-api:generate-controller {name}
+$ php artisan laravel-api:generate-model {name}
+$ php artisan laravel-api:generate-translation {name}
+$ php artisan laravel-api:generate-schema {name}
+$ php artisan laravel-api:generate-policy {name}
+$ php artisan laravel-api:generate-repository {name}
+$ php artisan laravel-api:generate-migration {name}
 ```
 
-
 ### Configuration
-If you would like to override the configuration files, you can add `--tag=laravel-api` to your artisan publish call. There are two configuration files:
-* infyom.laravel_generator
-    * This is for the basic generator classes provided by InfyOmLabs
-* laravel_api_config
-    * This is for the config of the generator classes added by this package
+If you would like to override the configuration files, you can add `--tag=laravel-api` or `--tag=laravel-api-templates` to your artisan publish call. If you decide to override the templates, make sure you override the laravel api config too. You have to define where your own templates are in the config. There is a configuration file:
+* laravel_api
+    * This is for the config of the package. The generator config and permission config
 ### Requests and responses
 All requests and responses are formatted according to the format specified by http://jsonapi.org/.
 
@@ -176,14 +173,6 @@ Keep in mind that this schema will also needs a repository. In the future this c
 
 ##### Laravel framework
 * https://laravel.com/docs/5.4/
-
-##### InfyOmLabs / laravel-generator
-* http://labs.infyom.com/laravelgenerator/docs/5.4/introduction
-    * laravelcollective / html
-    * infyomlabs / adminlte-templates
-    * infyomlabs / swagger-generator
-    * jlapp / swaggervel
-    
 
 ##### Dimsav / laravel-translatable
 * https://github.com/dimsav/laravel-translatable#tutorials

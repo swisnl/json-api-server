@@ -9,7 +9,7 @@ class GeneratePolicyCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-policy {model} {--path=}';
+    protected $signature = 'laravel-api:generate-policy {name} {--path=}';
 
     /**
      * The console command description.
@@ -35,15 +35,15 @@ class GeneratePolicyCommand extends BaseGenerateCommand
      */
     public function handle()
     {
+        $this->name = $this->argument('name');
         $this->overridePath = $this->option('path');
         $this->overridePath();
-
-        $this->generatePolicy();
+        $this->generateClass('Policy', 'policy');
     }
 
     public function getModelName()
     {
-        return $this->argument('model');
+        return $this->name;
     }
 
     public function getOverridePath()
@@ -53,6 +53,6 @@ class GeneratePolicyCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'laravel_api_config.path.policy';
+        return 'laravel_api.path.policy';
     }
 }

@@ -52,7 +52,7 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
             }
 
             $this->modelName = $schema;
-            $this->generateSchema();
+            $this->generateClass('Schema', 'schema');
         }
     }
 
@@ -73,6 +73,6 @@ class GenerateMissingSchemaCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'laravel_api_config.path.schema';
+        return 'laravel_api.path.schema';
     }
 }

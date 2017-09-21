@@ -6,10 +6,6 @@ use Collective\Html\HtmlServiceProvider;
 use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider;
-use InfyOm\Generator\InfyOmGeneratorServiceProvider;
-use Laracasts\Flash\FlashServiceProvider;
-use Prettus\Repository\Providers\RepositoryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
 use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
@@ -33,9 +29,12 @@ class LaravelApiServiceProvider extends ServiceProvider
         $router->aliasMiddleware('inspect_content_type', InspectContentType::class);
 
         $this->publishes([
-            __DIR__.'/../../config/laravel_generator.php' => base_path('config/infyom/laravel_generator.php'),
-             __DIR__.'/../../config/laravel_api_config.php' => base_path('config/laravel_api_config.php'),
+             __DIR__.'/../../config/laravel_api.php' => base_path('config/laravel_api.php'),
         ], 'laravel-api');
+
+        $this->publishes([
+            __DIR__.'/../../resources/templates' => base_path('resources/templates'),
+        ], 'laravel-api-templates');
     }
 
     public function register()
@@ -43,10 +42,6 @@ class LaravelApiServiceProvider extends ServiceProvider
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(PermissionServiceProvider::class);
         $this->app->register(TranslatableServiceProvider::class);
-        $this->app->register(FlashServiceProvider::class);
-        $this->app->register(RepositoryServiceProvider::class);
-        $this->app->register(InfyOmGeneratorServiceProvider::class);
-        $this->app->register(AdminLTETemplatesServiceProvider::class);
         $this->app->register(htmlServiceProvider::class);
 
         $this->commands([
@@ -62,13 +57,8 @@ class LaravelApiServiceProvider extends ServiceProvider
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravel_generator.php',
-            'infyom.laravel_generator'
-        );
-
-        $this->mergeConfigFrom(
-            __DIR__.'/../../config/laravel_api_config.php',
-            'laravel_api_config'
+            __DIR__.'/../../config/laravel_api.php',
+            'laravel_api'
         );
     }
 }

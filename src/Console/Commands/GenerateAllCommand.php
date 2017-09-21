@@ -9,7 +9,7 @@ class GenerateAllCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-all {model} {--path=}';
+    protected $signature = 'laravel-api:generate-all {name} {--path=} {--skip=}';
 
     /**
      * The console command description.
@@ -17,11 +17,13 @@ class GenerateAllCommand extends BaseGenerateCommand
      * @var string
      */
     protected $description =
-        'Creates the following classes with implementation: Model, Controller, BaseApiRepository, Schema, Tests';
+        'Creates the following classes with implementation: Model, Controller, BaseApiRepository, Schema';
 
     protected $modelName;
 
     protected $overridePath;
+
+    protected $callsToSkip;
 
     /**
      * Create a new command instance.
@@ -36,37 +38,40 @@ class GenerateAllCommand extends BaseGenerateCommand
      */
     public function handle()
     {
-        $this->modelName = $this->argument('model');
+        $this->modelName = $this->argument('name');
         $this->overridePath = $this->option('path');
+        $this->callsToSkip = explode(',', $this->option('skip'));
 
-        $this->overrideArtisanCallPaths();
-
-        $this->call('infyom:api', [
-            'model' => $this->modelName,
-            '--skip' => 'requests, api_requests, routes, api_routes, test_trait',
-        ]);
-
-        $this->call('laravel-api:generate-schema', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
-        $this->call('laravel-api:generate-translation', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
-        $this->call('laravel-api:generate-policy', ['model' => $this->modelName, '--path' => $this->getOverridePath()]);
-
-        $this->renameController();
+        $this->makeGeneratorCalls();
     }
 
-    protected function overrideArtisanCallPaths()
+    public function makeGeneratorCalls()
     {
-        $overridePath = $this->getOverridePath();
-        if (!isset($overridePath)) {
-            return;
+        $skip = $this->callsToSkip;
+
+        if (!in_array('controller', $skip)) {
+            $this->call('laravel-api:generate-controller', ['name' => $this->modelName, '--path' => $this->overridePath]);
         }
 
-        config(['infyom.laravel_generator.path.api_controller' => $overridePath]);
-        config(['infyom.laravel_generator.path.model' => $overridePath]);
-        config(['infyom.laravel_generator.path.repository' => $overridePath]);
-        config(['infyom.laravel_generator.path.migration' => $overridePath]);
+        if (!in_array('model', $skip)) {
+            $this->call('laravel-api:generate-model', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        }
 
-        config(['infyom.laravel_generator.path.api_test' => $overridePath]);
-        config(['infyom.laravel_generator.path.repository_test' => $overridePath]);
+        if (!in_array('repository', $skip)) {
+            $this->call('laravel-api:generate-repository', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        }
+
+        if (!in_array('schema', $skip)) {
+            $this->call('laravel-api:generate-schema', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        }
+
+        if (!in_array('translation', $skip)) {
+            $this->call('laravel-api:generate-translation', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        }
+
+        if (!in_array('policy', $skip)) {
+            $this->call('laravel-api:generate-policy', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        }
     }
 
     public function getModelName()
