@@ -4,7 +4,6 @@ namespace Tests\TestClasses;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Swis\LaravelApi\Models\ModelContract;
 
 class TestModelWithRelationships extends Model
 {
