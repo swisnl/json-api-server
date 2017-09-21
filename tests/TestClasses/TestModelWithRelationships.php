@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Swis\LaravelApi\Models\ModelContract;
 
-class TestModelWithRelationships extends Model implements ModelContract
+class TestModelWithRelationships extends Model
 {
     protected $fillable = [
         'title', 'body',
@@ -20,11 +20,6 @@ class TestModelWithRelationships extends Model implements ModelContract
     public function getRules($id = null): array
     {
         return [];
-    }
-
-    public function getRelationships(): array
-    {
-        return ['testModels'];
     }
 
     public function getSchema(): string
