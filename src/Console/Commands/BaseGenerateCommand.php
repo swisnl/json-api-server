@@ -18,8 +18,7 @@ abstract class BaseGenerateCommand extends Command
     protected function generateClass($classType, $stubName)
     {
         $configPath = config($this->getConfigPath());
-        $this->generator->setModelName($this->getModelName())->generate($classType, $stubName, $configPath);
-        $this->info('generated '.$configPath.$this->getModelName().$classType);
+        $this->generator->setModelName($this->getModelName())->generate($classType, $stubName, $configPath, $this);
     }
 
     protected function overridePath()

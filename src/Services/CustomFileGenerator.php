@@ -15,9 +15,9 @@ class CustomFileGenerator
     {
         $this->stubVariables = [
             '$MODEL_NAME$' => $this->modelName,
-            '$NAMESPACE_MODEL$' => config('infyom.laravel_generator.namespace.model'),
-            '$NAMESPACE_MODEL_EXTEND$' => config('infyom.laravel_generator.model_extend_class'),
-            '$NAME_SPACE_REPOSITORY$' => config('infyom.laravel_generator.namespace.repository'),
+            '$NAMESPACE_MODEL$' => config('laravel_api.namespace.model'),
+            '$NAMESPACE_MODEL_EXTEND$' => config('laravel_api.model_extend_class'),
+            '$NAME_SPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
             '$NAMESPACE_SCHEMA$' => config('laravel_api.namespace.schema'),
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
@@ -27,9 +27,10 @@ class CustomFileGenerator
         return $this;
     }
 
-    public function generate($classExtensionName, $stubName, $path)
+    public function generate($classExtensionName, $stubName, $path, $command)
     {
         if (file_exists($path.$this->modelName.$classExtensionName.'.php')) {
+            $command->error($path.$this->modelName.$classExtensionName.' already exists.');
             return;
         }
 
@@ -38,6 +39,7 @@ class CustomFileGenerator
         $filledStub = $this->getStub($stubName);
         $filledStub = $this->fillStub($this->stubVariables, $filledStub);
         $this->createFile($path, $this->modelName.$classExtensionName.'.php', $filledStub);
+        $command->info('generated '.$path.$this->modelName.$classExtensionName);
     }
 
     public function setModelName($modelName)
