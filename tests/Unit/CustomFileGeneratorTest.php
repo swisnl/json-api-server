@@ -32,7 +32,7 @@ class CustomFileGeneratorTest extends TestCase
         $generator->generate('', 'model', $path, $commandMock);
         $generator->generate('Repository', 'repository', $path.'Repositories/', $commandMock);
         $generator->generate('Schema', 'schema', $path.'schemas/', $commandMock);
-        $generator->generate('Policy', 'policy', $path.'policies/',$commandMock);
+        $generator->generate('Policy', 'policy', $path.'policies/', $commandMock);
         $generator->generate('Translation', 'translation', $path, $commandMock);
 
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));

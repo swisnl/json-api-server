@@ -31,6 +31,7 @@ class CustomFileGenerator
     {
         if (file_exists($path.$this->modelName.$classExtensionName.'.php')) {
             $command->error($path.$this->modelName.$classExtensionName.' already exists.');
+
             return;
         }
 
