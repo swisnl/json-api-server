@@ -53,9 +53,8 @@ The BaseApiRepository uses a trait to retrieve a models relationships. You can u
 #### BaseApiSchema
 Every model needs a schema to be mapped for Json Api response. This schema needs to inherit the BaseApiSchema. You can override the methods from the BaseApiSchema and if the existing implementation can't figure out the resource type, you can override that as well.
 
-#### Relationships
-If you don't like the magic that happens to figure out the relationships. You can override the getRelations() in your model to return an array with your relationships. It should be an array of strings. For example: ['posts', 'comments'].
-
+#### Model Contract
+If you like to have more configuration options for your model, you can implement the interface ModelContract. This interface will give you all the options currently available.
 ### Generating the required files
 After installing the package you can instantly generate all the required files by executing this command:
 
