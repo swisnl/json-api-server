@@ -76,7 +76,7 @@ abstract class BaseApiController extends Controller
     public function create()
     {
         $this->checkUsersPermissions();
-        $createdResource = $this->repository->create($this->validateResource());
+        $createdResource = $this->repository->create($this->validateObject());
 
         return $this->respondWithCreated($createdResource);
     }
@@ -91,7 +91,7 @@ abstract class BaseApiController extends Controller
     public function update($id)
     {
         $this->checkUsersPermissions($this->repository->findById($id));
-        $updated = $this->repository->update($this->validateResource($id), $id);
+        $updated = $this->repository->update($this->validateObject($id), $id);
         if (!$updated) {
             throw new NotFoundHttpException();
         }
@@ -120,7 +120,7 @@ abstract class BaseApiController extends Controller
         }
     }
 
-    public function validateResource($id = null)
+    public function validateObject($id = null)
     {
         $this->validate($this->request, $this->repository->makeModel()->getRules($id));
 

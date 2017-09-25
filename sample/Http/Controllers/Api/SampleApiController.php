@@ -3,22 +3,18 @@
 namespace Sample\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Swis\LaravelApi\Http\Controllers\Api\BaseApiController;
+use Swis\LaravelApi\Repositories\RepositoryInterface;
+use Tests\TestClasses\TestRepository;
 
 class SampleApiController extends BaseApiController
 {
-    public function validateResource(Request $request, $id = null)
-    {
-        $this->validate($request, [
-            'title' => 'required|string',
-            'body' => 'required|string',
-        ]);
+    /** @var RepositoryInterface $repository */
+    protected $repository;
 
-        return $request->all();
-    }
-
-    public function checkForPermissions(): bool
+    public function __construct(TestRepository $repository, Request $request, Route $route)
     {
-        return false;
+        parent::__construct($repository, $request, $route);
     }
 }
