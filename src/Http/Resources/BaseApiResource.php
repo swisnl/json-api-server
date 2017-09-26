@@ -16,6 +16,7 @@ class BaseApiResource extends Resource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request
+     * @param mixed $request
      *
      * @return array
      */
@@ -26,13 +27,13 @@ class BaseApiResource extends Resource
 
         $response = [];
         $response['type'] = $this->getResourceType();
-        $response[$this->getKeyName()] = (string)$this->resource->getKey();
+        $response[$this->getKeyName()] = (string) $this->resource->getKey();
         $response['attributes'] = $this->attributesToArray();
         $response['relationships'] = ['data' => $this->relationships()];
         $response['links'] = [
-            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
+            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
         ];
-        $includedRelationships === [] ? : $response['included'] = $includedRelationships;
+        $includedRelationships === [] ?: $response['included'] = $includedRelationships;
 
         return $response;
     }
@@ -65,6 +66,7 @@ class BaseApiResource extends Resource
     public function withIncludedRelationships($request)
     {
         $this->includes = explode(',', $request->get('include', null));
+
         return $this;
     }
 

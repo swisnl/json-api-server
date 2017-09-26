@@ -14,18 +14,21 @@ trait HandleResponses
     protected function respond($respondModel, $content)
     {
         $service = new ResponseService();
+
         return $service->response($respondModel, $content);
     }
 
     protected function respondWithResource($respondModel, $content)
     {
         $service = new ResponseService();
+
         return $service->responseWithResource($respondModel, $content);
     }
 
     protected function respondWithResourceCollection($respondModel, $content)
     {
         $service = new ResponseService();
+
         return $service->respondWithResourceCollection($respondModel, $content);
     }
 

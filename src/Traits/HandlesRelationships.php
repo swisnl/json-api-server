@@ -59,7 +59,6 @@ trait HandlesRelationships
         $relationshipResources = $this->handleIncludes($item, $includes);
 
         return $this->mergeInnerArrays($relationshipResources);
-
     }
 
     public function includeCollectionRelationships($items, $includes)
@@ -79,6 +78,7 @@ trait HandlesRelationships
      *
      * @param $item
      * @param $includes
+     *
      * @return array
      */
     protected function handleIncludes($item, $includes)
@@ -109,11 +109,11 @@ trait HandlesRelationships
     }
 
     /**
-     *
-     * Checks if there are nested includes. For example: permissions.users
+     * Checks if there are nested includes. For example: permissions.users.
      *
      * @param $includes
      * @param $include
+     *
      * @return array
      */
     protected function findNestedRelationships($includes, $include)
@@ -121,16 +121,19 @@ trait HandlesRelationships
         $nestedRelationships = [];
 
         foreach ($includes as $value) {
-            if (strpos($value, $include . '.') === 0) {
-                $nestedRelationships[] = str_replace($include . '.', '', $value);
+            if (0 === strpos($value, $include.'.')) {
+                $nestedRelationships[] = str_replace($include.'.', '', $value);
             }
         }
+
         return $nestedRelationships;
     }
 
     /**
      * Merges all arrays to be single level.
+     *
      * @param $array
+     *
      * @return array
      */
     protected function mergeInnerArrays($array)
@@ -144,6 +147,7 @@ trait HandlesRelationships
         }
 
         $mergedArray = $this->removeDuplicates($mergedArray);
+
         return $mergedArray;
     }
 

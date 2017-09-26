@@ -10,6 +10,7 @@ class IdentifierResource extends Resource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request
+     * @param mixed $request
      *
      * @return array
      */
@@ -17,7 +18,7 @@ class IdentifierResource extends Resource
     {
         return [
             'type' => $this->getResourceType(),
-            $this->resource->getKeyName() => (string)$this->resource->getKey(),
+            $this->resource->getKeyName() => (string) $this->resource->getKey(),
         ];
     }
 
@@ -26,6 +27,7 @@ class IdentifierResource extends Resource
         $resourceClass = class_basename($this->resource);
         $resourcePlural = str_plural($resourceClass);
         $lowerCaseResourceType = strtolower($resourcePlural);
+
         return $lowerCaseResourceType;
     }
 }

@@ -14,6 +14,7 @@ class BaseApiCollectionResource extends ResourceCollection
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request
+     * @param mixed $request
      *
      * @return array
      */
@@ -25,7 +26,7 @@ class BaseApiCollectionResource extends ResourceCollection
         $response = [];
 
         $response['data'] = $items;
-        $includedRelationships === [] ? : $response['included'] = $includedRelationships;
+        $includedRelationships === [] ?: $response['included'] = $includedRelationships;
 
         return $response;
     }
@@ -36,7 +37,7 @@ class BaseApiCollectionResource extends ResourceCollection
             return [];
         }
 
-        $includes =  $includes = explode(',', $request->get('include', null));
+        $includes = $includes = explode(',', $request->get('include', null));
 
         $relations = $this->includeCollectionRelationships($items, $includes);
 

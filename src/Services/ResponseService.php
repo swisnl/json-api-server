@@ -8,7 +8,6 @@ use Swis\LaravelApi\Models\Responses\RespondError;
 
 class ResponseService
 {
-
     public function __construct()
     {
     }
@@ -26,7 +25,7 @@ class ResponseService
             $error = ['errors' => [
                 'status_code' => $responseModel->getStatusCode(),
                 'message' => $responseModel->getMessage(),
-                'detail' => $content
+                'detail' => $content,
             ]];
 
             return response($error, $responseModel->getStatusCode());
