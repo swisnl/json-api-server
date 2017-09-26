@@ -3,7 +3,6 @@
 namespace Swis\LaravelApi\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
-use Swis\LaravelApi\JsonEncoders\JsonEncoder;
 use Swis\LaravelApi\Models\Responses\RespondHttpCreated;
 use Swis\LaravelApi\Models\Responses\RespondHttpNoContent;
 use Swis\LaravelApi\Models\Responses\RespondHttpOk;
@@ -12,35 +11,42 @@ use Swis\LaravelApi\Services\ResponseService;
 
 trait HandleResponses
 {
-    protected $repository;
-    protected $jsonEncoder;
-
-    protected function respond(string $strResponseModel, string $content)
+    protected function respond($respondModel, $content)
     {
-        $responseService = new ResponseService();
+        $service = new ResponseService();
+        return $service->response($respondModel, $content);
+    }
 
-        return $responseService->response($strResponseModel, $content);
+    protected function respondWithResource($respondModel, $content)
+    {
+        $service = new ResponseService();
+        return $service->responseWithResource($respondModel, $content);
+    }
+
+    protected function respondWithResourceCollection($respondModel, $content)
+    {
+        $service = new ResponseService();
+        return $service->respondWithResourceCollection($respondModel, $content);
     }
 
     public function respondWithOK($content)
     {
-        $jsonObject = $this->encodeObjectToJson($content);
-
-        return $this->respond(RespondHttpOk::class, $jsonObject);
+        return $this->respondWithResource(RespondHttpOk::class, $content);
     }
 
     public function respondWithPartialContent($content)
     {
-        $jsonObject = $this->encodeObjectToJson($content);
+        return $this->respondWithResourceCollection(RespondHttpPartialContent::class, $content);
+    }
 
-        return $this->respond(RespondHttpPartialContent::class, $jsonObject);
+    protected function respondWithCollectionOK($content)
+    {
+        return $this->respondWithResourceCollection(RespondHttpOk::class, $content);
     }
 
     public function respondWithCreated($content)
     {
-        $jsonObject = $this->encodeObjectToJson($content);
-
-        return $this->respond(RespondHttpCreated::class, $jsonObject);
+        return $this->respondWithResource(RespondHttpCreated::class, $content);
     }
 
     public function respondWithNoContent()
@@ -54,27 +60,6 @@ trait HandleResponses
             return $this->respondWithPartialContent($content);
         }
 
-        return $this->respondWithOK($content);
-    }
-
-    public function setResponseRepository($repository)
-    {
-        $this->repository = $repository;
-        $this->setJsonEncoder();
-
-        return $this;
-    }
-
-    public function setJsonEncoder()
-    {
-        $this->jsonEncoder = new JsonEncoder();
-        $this->jsonEncoder->setRepository($this->repository);
-
-        return $this;
-    }
-
-    public function encodeObjectToJson($object)
-    {
-        return $this->jsonEncoder->encodeToJson($object);
+        return $this->respondWithCollectionOK($content);
     }
 }
