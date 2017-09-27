@@ -17,7 +17,7 @@ trait HasPermissionChecks
     ) {
         $actionName = $this->extractActionName($route, $policyActionName);
 
-        if ($requestedObject == !null) {
+        if ($requestedObject !== null) {
             $this->authorize($actionName, $requestedObject);
 
             return;
@@ -28,7 +28,7 @@ trait HasPermissionChecks
 
     protected function extractActionName(Route $route, $policyActionName)
     {
-        if ($policyActionName == !null) {
+        if ($policyActionName !== null) {
             return $policyActionName;
         }
 

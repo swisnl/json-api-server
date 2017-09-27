@@ -47,30 +47,20 @@ class GenerateAllCommand extends BaseGenerateCommand
 
     public function makeGeneratorCalls()
     {
-        $skip = $this->callsToSkip;
+        $generatorCalls = [
+            'controller' => 'laravel-api:generate-controller',
+            'model' => 'laravel-api:generate-model',
+            'repository' => 'laravel-api:generate-repository',
+            'schema' => 'laravel-api:generate-schema',
+            'translation' => 'laravel-api:generate-translation',
+            'policy' => 'laravel-api:generate-policy',
+        ];
 
-        if (!in_array('controller', $skip)) {
-            $this->call('laravel-api:generate-controller', ['name' => $this->modelName, '--path' => $this->overridePath]);
-        }
-
-        if (!in_array('model', $skip)) {
-            $this->call('laravel-api:generate-model', ['name' => $this->modelName, '--path' => $this->overridePath]);
-        }
-
-        if (!in_array('repository', $skip)) {
-            $this->call('laravel-api:generate-repository', ['name' => $this->modelName, '--path' => $this->overridePath]);
-        }
-
-        if (!in_array('schema', $skip)) {
-            $this->call('laravel-api:generate-schema', ['name' => $this->modelName, '--path' => $this->overridePath]);
-        }
-
-        if (!in_array('translation', $skip)) {
-            $this->call('laravel-api:generate-translation', ['name' => $this->modelName, '--path' => $this->overridePath]);
-        }
-
-        if (!in_array('policy', $skip)) {
-            $this->call('laravel-api:generate-policy', ['name' => $this->modelName, '--path' => $this->overridePath]);
+        foreach($generatorCalls as $type => $generatorCall) {
+            if (in_array($type, $this->callsToSkip)) {
+                continue;
+            }
+            $this->call($generatorCall, ['name' => $this->modelName, '--path' => $this->overridePath]);
         }
     }
 
