@@ -56,7 +56,7 @@ class GenerateAllCommand extends BaseGenerateCommand
             'policy' => 'laravel-api:generate-policy',
         ];
 
-        foreach($generatorCalls as $type => $generatorCall) {
+        foreach ($generatorCalls as $type => $generatorCall) {
             if (in_array($type, $this->callsToSkip)) {
                 continue;
             }

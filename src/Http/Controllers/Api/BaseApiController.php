@@ -102,6 +102,7 @@ abstract class BaseApiController extends Controller
      * Deletes an item in the db. Will probably not be implemented.
      *
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function delete($id)

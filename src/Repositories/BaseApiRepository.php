@@ -54,6 +54,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     public function destroy($id)//TODO
     {
         $this->model->id = $id;
+
         return $this->model->delete();
     }
 
