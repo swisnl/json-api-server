@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE_MODEL$;
 
-use $NAMESPACE_MODEL_EXTEND$;
+use Illuminate\Database\Eloquent\Model;
 
 class $MODEL_NAME$Translation extends Model
 {

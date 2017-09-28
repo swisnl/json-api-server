@@ -30,11 +30,6 @@ class $MODEL_NAME$ extends Model implements ModelContract
         // TODO: Implement getRelationships() method.
     }
 
-    public function getSchema(): string
-    {
-        // TODO: Implement getSchema() method.
-    }
-
     public function getRepository(): string
     {
         // TODO: Implement getRepository() method.

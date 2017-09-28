@@ -51,8 +51,11 @@ abstract class BaseApiRepository implements RepositoryInterface
         return $this->model->where($this->model->getKeyName(), $objectKey)->update($data);
     }
 
-    public function destroy($id)
+    public function destroy($id)//TODO
     {
+        $this->model->id = $id;
+
+        return $this->model->delete();
     }
 
     public function makeModel(): Model

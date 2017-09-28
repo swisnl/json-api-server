@@ -2,16 +2,14 @@
 
 namespace Swis\LaravelApi\Services;
 
-use Swis\LaravelApi\JsonEncoders\ErrorsJsonEncoder;
+use Swis\LaravelApi\Http\Resources\BaseApiCollectionResource;
+use Swis\LaravelApi\Http\Resources\BaseApiResource;
 use Swis\LaravelApi\Models\Responses\RespondError;
 
 class ResponseService
 {
-    protected $errorEncoder;
-
     public function __construct()
     {
-        $this->errorEncoder = new ErrorsJsonEncoder();
     }
 
     public function response($strResponseModel, $content = null)
@@ -23,12 +21,35 @@ class ResponseService
 
     protected function createResponse($responseModel, $content)
     {
-        if ($responseModel instanceof RespondError) {
-            $error = $this->errorEncoder->encodeError($responseModel, $content);
+        if ($responseModel instanceof RespondError) { //TODO: tijdelijk snel hier geformat
+            $error = ['errors' => [
+                'status_code' => $responseModel->getStatusCode(),
+                'message' => $responseModel->getMessage(),
+                'detail' => $content,
+            ]];
 
             return response($error, $responseModel->getStatusCode());
         }
 
         return response($content, $responseModel->getStatusCode());
+    }
+
+    public function respondWithResourceCollection($strResponseModel, $content)
+    {
+        $responseModel = new $strResponseModel();
+
+        return (new BaseApiCollectionResource($content))
+            ->response()
+            ->setStatusCode($responseModel->getStatusCode());
+    }
+
+    public function responseWithResource($strResponseModel, $content)
+    {
+        $responseModel = new $strResponseModel();
+
+        return (new BaseApiResource($content))
+            ->withIncludedRelationships(request())
+            ->response()
+            ->setStatusCode($responseModel->getStatusCode());
     }
 }

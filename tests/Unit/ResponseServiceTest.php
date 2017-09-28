@@ -10,7 +10,6 @@ use Swis\LaravelApi\Services\ResponseService;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
-use Tests\TestClasses\TestRepository;
 
 class ResponseServiceTest extends TestCase
 {
@@ -26,7 +25,6 @@ class ResponseServiceTest extends TestCase
     {
         parent::setUp();
         $this->responseService = new ResponseService();
-        $this->setResponseRepository(new TestRepository());
         $this->testModel = new TestModel();
     }
 
@@ -45,8 +43,9 @@ class ResponseServiceTest extends TestCase
     public function it_creates_a_partial_content_response()
     {
         $this->testModel->body = 'PARTIAL';
-        $response = $this->respondWithPartialContent($this->testModel);
-        $responseBody = json_decode($response->getContent())->data->attributes->body;
+        $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
+        $response = $this->respondWithPartialContent($paginator);
+        $responseBody = json_decode($response->getContent())->data[0]->attributes->body;
 
         $this->assertEquals(206, $response->getStatusCode());
         $this->assertEquals('PARTIAL', $responseBody);
@@ -75,8 +74,9 @@ class ResponseServiceTest extends TestCase
     public function it_creates_a_collection_response_with_OK()
     {
         $this->testModel->body = 'OK';
-        $response = $this->respondWithCollection($this->testModel);
-        $responseBody = json_decode($response->getContent())->data->attributes->body;
+        $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
+        $response = $this->respondWithCollectionOK($paginator);
+        $responseBody = json_decode($response->getContent())->data[0]->attributes->body;
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('OK', $responseBody);
@@ -102,7 +102,7 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpForbidden::class, $message);
 
         $this->assertEquals(403, $response->getStatusCode());
-        $this->assertEquals('FORBIDDEN', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('FORBIDDEN', json_decode($response->getContent())->errors->detail);
     }
 
     /** @test */
@@ -112,7 +112,7 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpNotFound::class, $message);
 
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals('NOT FOUND', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('NOT FOUND', json_decode($response->getContent())->errors->detail);
     }
 
     /** @test */
@@ -122,6 +122,6 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpUnauthorized::class, $message);
 
         $this->assertEquals(401, $response->getStatusCode());
-        $this->assertEquals('UNAUTHORIZED', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('UNAUTHORIZED', json_decode($response->getContent())->errors->detail);
     }
 }
