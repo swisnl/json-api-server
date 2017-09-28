@@ -21,11 +21,6 @@ class TestModel extends Model implements ModelContract
         return [];
     }
 
-    public function getSchema(): string
-    {
-        return TestSchema::class;
-    }
-
     public function getRepository(): string
     {
         return TestRepository::class;

@@ -6,8 +6,6 @@ interface ModelContract
 {
     public function getRelationships(): array;
 
-    public function getSchema(): string;
-
     public function getRepository(): string;
 
     public function getTranslatable();

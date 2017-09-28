@@ -26,7 +26,6 @@ abstract class BaseApiController extends Controller
         $this->repository = $repository;
         $this->request = $request;
         $this->route = $route;
-        $this->setResponseRepository($this->repository);
     }
 
     public function index()
@@ -103,21 +102,32 @@ abstract class BaseApiController extends Controller
      * Deletes an item in the db. Will probably not be implemented.
      *
      * @param $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function delete($id)
     {
+        $this->checkUsersPermissions($this->repository->destroy($id));
+        $destroyed = $this->repository->destroy($id);
+        if (!$destroyed) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->respondWithNoContent();
     }
 
     protected function checkUsersPermissions($requestedObject = null, $policyActionName = null)
     {
-        if (config('laravel_api.checkForPermissions')) {
-            $this->checkIfUserHasPermissions(
-                $this->route,
-                $this->repository->getModelName(),
-                $requestedObject,
-                $policyActionName
-            );
+        if (!config('laravel_api.checkForPermissions')) {
+            return;
         }
+
+        $this->checkIfUserHasPermissions(
+            $this->route,
+            $this->repository->getModelName(),
+            $requestedObject,
+            $policyActionName
+        );
     }
 
     public function validateObject($id = null)
