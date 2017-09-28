@@ -103,7 +103,7 @@ trait HandlesRelationships
                 $includedNestedRelationships =
                     $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
             } else {
-                $included = new BaseApiResource($item->$include);
+                $included = BaseApiResource::make($item->$include);
                 // Find nested relationship. For example: user->permissions->users
                 $includedNestedRelationships =
                     $this->includeRelationships($included, $this->findNestedRelationships($includes, $include));

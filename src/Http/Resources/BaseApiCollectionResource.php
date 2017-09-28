@@ -36,7 +36,11 @@ class BaseApiCollectionResource extends ResourceCollection
             return [];
         }
 
-        $includes = $includes = explode(',', $request->get('include', null));
+        $includes = explode(',', $request->get('include', null));
+
+        if ($includes === []) {
+            return [];
+        }
 
         $relations = $this->includeCollectionRelationships($items, $includes);
 
