@@ -109,7 +109,6 @@ trait HandlesRelationships
                     $this->includeRelationships($included, $this->findNestedRelationships($includes, $include));
             }
 
-
             if ($included->toArray('') !== []) {
                 $relationshipResources[] = $included;
             }
@@ -135,8 +134,8 @@ trait HandlesRelationships
         $nestedRelationships = [];
 
         foreach ($includes as $value) {
-            if (0 === strpos($value, $include . '.')) {
-                $nestedRelationships[] = str_replace($include . '.', '', $value);
+            if (0 === strpos($value, $include.'.')) {
+                $nestedRelationships[] = str_replace($include.'.', '', $value);
             }
         }
 
@@ -155,7 +154,7 @@ trait HandlesRelationships
         $mergedArray = [];
 
         foreach ($array as $items) {
-            if($items instanceof ResourceCollection) {
+            if ($items instanceof ResourceCollection) {
                 foreach ($items as $item) {
                     $mergedArray[] = $item;
                 }
