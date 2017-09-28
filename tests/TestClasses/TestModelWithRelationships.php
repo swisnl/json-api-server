@@ -21,11 +21,6 @@ class TestModelWithRelationships extends Model
         return [];
     }
 
-    public function getSchema(): string
-    {
-        return TestSchema::class;
-    }
-
     public function getRepository(): string
     {
         return TestRepositoryWithRelationships::class;

@@ -2,6 +2,9 @@
 
 namespace Swis\LaravelApi\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Swis\LaravelApi\Http\Resources\BaseApiResource;
 use Swis\LaravelApi\Models\ModelContract;
 
@@ -26,6 +30,8 @@ trait HandlesRelationships
         MorphOne::class,
         MorphPivot::class,
         MorphTo::class,
+        BelongsToMany::class,
+        BelongsTo::class,
     ];
 
     public function getRelationships($model): array//TODO: Skipt dit geen relaties die geen return type hebben?
@@ -90,18 +96,26 @@ trait HandlesRelationships
                 continue;
             }
 
-            $included = BaseApiResource::collection($item->$include);
+            if ($item->$include instanceof Collection) {
+                $included = BaseApiResource::collection($item->$include);
 
-            // Find nested relationship. For example: user->permissions->users
-            $includedRelationships =
-                $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
-
-            if ($includedRelationships !== []) {
-                $relationshipResources[] = $includedRelationships;
+                // Find nested relationship. For example: user->permissions->users
+                $includedNestedRelationships =
+                    $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
+            } else {
+                $included = new BaseApiResource($item->$include);
+                // Find nested relationship. For example: user->permissions->users
+                $includedNestedRelationships =
+                    $this->includeRelationships($included, $this->findNestedRelationships($includes, $include));
             }
+
 
             if ($included->toArray('') !== []) {
                 $relationshipResources[] = $included;
+            }
+
+            if ($includedNestedRelationships !== []) {
+                $relationshipResources[] = $includedNestedRelationships;
             }
         }
 
@@ -121,8 +135,8 @@ trait HandlesRelationships
         $nestedRelationships = [];
 
         foreach ($includes as $value) {
-            if (0 === strpos($value, $include.'.')) {
-                $nestedRelationships[] = str_replace($include.'.', '', $value);
+            if (0 === strpos($value, $include . '.')) {
+                $nestedRelationships[] = str_replace($include . '.', '', $value);
             }
         }
 
@@ -140,10 +154,15 @@ trait HandlesRelationships
     {
         $mergedArray = [];
 
-        foreach ($array as $items) { //TODO: Teveel foreaches, zoek betere manier om collections te mergen naar array
-            foreach ($items as $item) {
-                $mergedArray[] = $item;
+        foreach ($array as $items) {
+            if($items instanceof ResourceCollection) {
+                foreach ($items as $item) {
+                    $mergedArray[] = $item;
+                }
+                continue;
             }
+
+            $mergedArray[] = $items;
         }
 
         $mergedArray = $this->removeDuplicates($mergedArray);
@@ -157,8 +176,12 @@ trait HandlesRelationships
         $relations = [];
 
         foreach ($items as $item) {
+            if (!isset($item->resource)) {
+                continue;
+            }
+
             $type = class_basename($item->resource);
-            $id = $item->id;
+            $id = $item->getKey();
 
             if (in_array([$type => $id], $tempArray, true)) {
                 continue;

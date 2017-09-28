@@ -11,7 +11,7 @@ use Swis\LaravelApi\Repositories\RepositoryInterface;
 class $MODEL_NAME$Controller extends BaseApiController
 {
     /** @var RepositoryInterface $repository */
-    private $repository;
+    protected $repository;
 
     public function __construct($MODEL_NAME$Repository $repository, Request $request, Route $route)
     {

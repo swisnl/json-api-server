@@ -4,6 +4,7 @@ namespace Swis\LaravelApi\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Collection;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
 class BaseApiResource extends Resource
@@ -29,7 +30,7 @@ class BaseApiResource extends Resource
         $response['type'] = $this->getResourceType();
         $response[$this->getKeyName()] = (string) $this->resource->getKey();
         $response['attributes'] = $this->attributesToArray();
-        $response['relationships'] = ['data' => $this->relationships()];
+        $response['relationships'] = $this->relationships();
         $response['links'] = [
             'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
         ];
@@ -44,8 +45,17 @@ class BaseApiResource extends Resource
         $relationshipsIdentifiers = [];
 
         foreach ($relationships as $relationship) {
+            $data = $this->resource->$relationship;
+
+            if ($data instanceof Collection) {
+                $relationshipsIdentifiers[$relationship] = [
+                    'data' => IdentifierResource::collection($data),
+                ];
+                continue;
+            }
+
             $relationshipsIdentifiers[$relationship] = [
-                'data' => IdentifierResource::collection($this->resource->$relationship),
+                'data' => IdentifierResource::make($data),
             ];
         }
 

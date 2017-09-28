@@ -22,7 +22,6 @@ class BaseApiCollectionResource extends ResourceCollection
     {
         $items = BaseApiResource::collection($this->collection);
         $includedRelationships = $this->getIncludedRelationships($items, $request);
-
         $response = [];
 
         $response['data'] = $items;
