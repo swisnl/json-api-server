@@ -11,9 +11,9 @@ return [
 
         'repository' => app_path('Repositories/'),
 
-        'schema' => app_path('Schemas/'),
-
         'policy' => app_path('Policies/'),
+
+        'migration' => base_path('database/migrations'),
 
         'templates' => 'vendor/swisnl/laravel-api/resources/templates/',
     ],
@@ -26,8 +26,6 @@ return [
         'repository' => 'App\Repositories',
 
         'translation' => 'App',
-
-        'schema' => 'App\Schemas',
 
         'policy' => 'App\Policies'
     ],

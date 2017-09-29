@@ -53,6 +53,6 @@ class GenerateMigrationCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'laravel_api.path.path.migration';
+        return 'laravel_api.path.migration';
     }
 }

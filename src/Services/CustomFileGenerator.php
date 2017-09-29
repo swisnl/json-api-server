@@ -15,10 +15,9 @@ class CustomFileGenerator
     {
         $this->stubVariables = [
             '$MODEL_NAME$' => $this->modelName,
+            '$CAMEL_CASE_MODEL_NAME$' => camel_case($this->modelName),
             '$NAMESPACE_MODEL$' => config('laravel_api.namespace.model'),
-            '$NAMESPACE_MODEL_EXTEND$' => config('laravel_api.model_extend_class'),
             '$NAME_SPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
-            '$NAMESPACE_SCHEMA$' => config('laravel_api.namespace.schema'),
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
             '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller'),

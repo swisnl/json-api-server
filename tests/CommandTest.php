@@ -11,14 +11,6 @@ class CommandTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_a_schema()
-    {
-        $this->artisan('laravel-api:generate-schema', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('laravel_api.path.schema').'ExampleSchema.php'));
-        unlink('tests/Data/Output/'.'ExampleSchema.php');
-    }
-
-    /** @test */
     public function it_generates_a_policy()
     {
         $this->artisan('laravel-api:generate-policy', ['name' => 'Example', '--path' => 'tests/Data/Output/']);

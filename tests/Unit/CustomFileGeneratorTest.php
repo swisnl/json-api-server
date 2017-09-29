@@ -31,7 +31,6 @@ class CustomFileGeneratorTest extends TestCase
         $generator->generate('Controller', 'controller', $path, $commandMock);
         $generator->generate('', 'model', $path, $commandMock);
         $generator->generate('Repository', 'repository', $path.'Repositories/', $commandMock);
-        $generator->generate('Schema', 'schema', $path.'schemas/', $commandMock);
         $generator->generate('Policy', 'policy', $path.'policies/', $commandMock);
         $generator->generate('Translation', 'translation', $path, $commandMock);
 
@@ -39,7 +38,6 @@ class CustomFileGeneratorTest extends TestCase
         $this->assertTrue(file_exists(config('laravel_api.path.model').'Example.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.policy').'ExamplePolicy.php'));
-        $this->assertTrue(file_exists(config('laravel_api.path.schema').'ExampleSchema.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.translation').'ExampleTranslation.php'));
 
         // Rolls back creations
@@ -47,11 +45,9 @@ class CustomFileGeneratorTest extends TestCase
         unlink(config('laravel_api.path.model').'Example.php');
         unlink(config('laravel_api.path.repository').'ExampleRepository.php');
         unlink(config('laravel_api.path.policy').'ExamplePolicy.php');
-        unlink(config('laravel_api.path.schema').'ExampleSchema.php');
         unlink(config('laravel_api.path.translation').'ExampleTranslation.php');
 
         rmdir(config('laravel_api.path.repository'));
         rmdir(config('laravel_api.path.policy'));
-        rmdir(config('laravel_api.path.schema'));
     }
 }

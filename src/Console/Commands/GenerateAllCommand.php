@@ -51,7 +51,6 @@ class GenerateAllCommand extends BaseGenerateCommand
             'controller' => 'laravel-api:generate-controller',
             'model' => 'laravel-api:generate-model',
             'repository' => 'laravel-api:generate-repository',
-            'schema' => 'laravel-api:generate-schema',
             'translation' => 'laravel-api:generate-translation',
             'policy' => 'laravel-api:generate-policy',
         ];
