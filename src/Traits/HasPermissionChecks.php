@@ -19,10 +19,11 @@ trait HasPermissionChecks //TODO: route weghalen en method mee geven verplicht
         $actionName = $this->extractActionName($route, $policyActionName);
 
         if (null !== $requestedObject) {
-            if($requestedObject instanceof Paginator) {
+            if ($requestedObject instanceof Paginator) {
                 foreach ($requestedObject->items() as $item) {
                     $this->authorize($actionName, $item);
                 }
+
                 return;
             }
 
