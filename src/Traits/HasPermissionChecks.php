@@ -2,10 +2,11 @@
 
 namespace Swis\LaravelApi\Traits;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Route;
 
-trait HasPermissionChecks
+trait HasPermissionChecks //TODO: route weghalen en method mee geven verplicht
 {
     use AuthorizesRequests;
 
@@ -18,6 +19,13 @@ trait HasPermissionChecks
         $actionName = $this->extractActionName($route, $policyActionName);
 
         if (null !== $requestedObject) {
+            if($requestedObject instanceof Paginator) {
+                foreach ($requestedObject->items() as $item) {
+                    $this->authorize($actionName, $item);
+                }
+                return;
+            }
+
             $this->authorize($actionName, $requestedObject);
 
             return;

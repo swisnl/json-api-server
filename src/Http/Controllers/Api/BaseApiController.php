@@ -107,7 +107,7 @@ abstract class BaseApiController extends Controller
      */
     public function delete($id)
     {
-        $this->checkUsersPermissions($this->repository->destroy($id));
+        $this->checkUsersPermissions($this->repository->findById($id), 'delete');
 
         $this->repository->destroy($id);
 
