@@ -36,8 +36,8 @@ abstract class BaseApiController extends Controller
             return $this->getByUrlInputIds();
         }
 
-        $items = $this->repository->paginate($this->request->get('page', null),
-            $this->request->get('per_page', null));
+        $items = $this->repository->paginate($this->request->get('per_page', null),
+            $this->request->get('page', null));
 
         return $this->respondWithCollection($items);
     }
