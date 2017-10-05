@@ -154,7 +154,7 @@ trait HandlesRelationships
         $mergedArray = [];
 
         foreach ($array as $items) {
-            if ($items instanceof ResourceCollection) {
+            if ($items instanceof ResourceCollection || is_array($items)) {
                 foreach ($items as $item) {
                     $mergedArray[] = $item;
                 }
