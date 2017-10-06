@@ -175,18 +175,16 @@ trait HandlesRelationships
         $relations = [];
 
         foreach ($items as $item) {
+
             if (!isset($item->resource)) {
                 continue;
             }
 
-            $type = class_basename($item->resource);
-            $id = $item->getKey();
-
-            if (in_array([$type => $id], $tempArray, true)) {
+            if (in_array($item->attributesToArray(), $tempArray, true)) {
                 continue;
             }
 
-            $tempArray[] = [$type => $id];
+            $tempArray[] = [$item->attributesToArray()];
             $relations[] = $item;
         }
 
