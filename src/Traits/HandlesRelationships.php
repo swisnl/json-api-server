@@ -175,7 +175,6 @@ trait HandlesRelationships
         $relations = [];
 
         foreach ($items as $item) {
-
             if (!isset($item->resource)) {
                 continue;
             }
