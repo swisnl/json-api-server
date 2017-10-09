@@ -30,6 +30,11 @@ class BaseApiResource extends Resource
         $response['type'] = $this->getResourceType();
         $response[$this->getKeyName()] = (string) $this->resource->getKey();
         $response['attributes'] = $this->attributesToArray();
+
+        if ($this->resource->pivot) {
+            $response['attributes']['pivot'] = $this->resource->pivot->attributesToArray();
+        }
+
         $response['relationships'] = $this->relationships();
         $response['links'] = [
             'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
