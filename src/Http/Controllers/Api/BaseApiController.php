@@ -84,8 +84,7 @@ abstract class BaseApiController extends Controller
      * Updates an item in the db.
      *
      * @param $id
-     *
-     * @return bool
+     * @return $this
      */
     public function update($id)
     {
@@ -93,7 +92,9 @@ abstract class BaseApiController extends Controller
 
         $this->repository->update($this->validateObject($id), $id);
 
-        return $this->respondwithNoContent();
+        $updatedItem = $this->repository->findById($id);
+
+        return $this->respondWithOK($updatedItem);
     }
 
     /**
