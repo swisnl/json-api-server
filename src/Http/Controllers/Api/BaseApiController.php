@@ -10,7 +10,6 @@ use Illuminate\Routing\Route;
 use Swis\LaravelApi\Repositories\RepositoryInterface;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class BaseApiController extends Controller
 {
@@ -84,6 +83,7 @@ abstract class BaseApiController extends Controller
      * Updates an item in the db.
      *
      * @param $id
+     *
      * @return $this
      */
     public function update($id)
