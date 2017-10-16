@@ -89,11 +89,9 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-        $this->checkUsersPermissions($this->repository->findById($id));
-        $updated = $this->repository->update($this->validateObject($id), $id);
-        if (!$updated) {
-            throw new NotFoundHttpException();
-        }
+        $this->checkUsersPermissions($this->repository->findById($id), 'update');
+
+        $this->repository->update($this->validateObject($id), $id);
 
         return $this->respondwithNoContent();
     }
