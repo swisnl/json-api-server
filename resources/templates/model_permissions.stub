@@ -1,0 +1,12 @@
+<?php
+
+namespace App;
+
+class $ModelName$Permissions
+{
+    const RETRIEVE_$UPPER_CASED_MODEL_NAME$ = 'retrieve_$CAMEL_CASE_MODEL_NAME$';
+    const RETRIEVE_ALL_OFFERS = 'retrieve_all_$PLURAL_LOWER_CASED_MODEL_NAME$';
+    const CREATE_OFFER = 'create_$CAMEL_CASE_MODEL_NAME$';
+    const UPDATE_OFFER = 'update_$CAMEL_CASE_MODEL_NAME$';
+    const DELETE_OFFER = 'delete_$CAMEL_CASE_MODEL_NAME$';
+}

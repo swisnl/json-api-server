@@ -7,4 +7,39 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class $MODEL_NAME$Policy
 {
     use HandlesAuthorization;
+
+    //todo: add extra checks. For example: user->id === $requestedItem->owner->id
+
+    public function index(User $user)
+    {
+        if (!$user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function show(User $user, $requestedItem)
+    {
+        if ($user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$)) {
+            return true;
+        }
+
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_$UPPER_CASED_MODEL_NAME$);
+    }
+
+    public function create(User $user)
+    {
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::CREATE_$UPPER_CASED_MODEL_NAME$);
+    }
+
+    public function update(User $user, $requestedItem)
+    {
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::UPDATE_$UPPER_CASED_MODEL_NAME$);
+    }
+
+    public function delete(User $user, $requestedItem)
+    {
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::DELETE_$UPPER_CASED_MODEL_NAME$);
+    }
 }

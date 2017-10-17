@@ -50,6 +50,7 @@ class GenerateAllCommand extends BaseGenerateCommand
         $generatorCalls = [
             'controller' => 'laravel-api:generate-controller',
             'model' => 'laravel-api:generate-model',
+            'model-permissions' => 'laravel-api:generate-model-permissions',
             'repository' => 'laravel-api:generate-repository',
             'translation' => 'laravel-api:generate-translation',
             'policy' => 'laravel-api:generate-policy',

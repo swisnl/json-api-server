@@ -5,6 +5,8 @@ return [
     'path' => [
         'model' => app_path('/'),
 
+        'model_permissions' => app_path('Permissions'),
+
         'translation' => app_path('/'),
 
         'controller' => app_path('Http/Controllers/Api/'),
@@ -20,6 +22,8 @@ return [
 
     'namespace' => [
         'model' => 'App',
+
+        'model_permissions' => 'App',
 
         'controller' => 'App\Http\Controllers\Api',
 
