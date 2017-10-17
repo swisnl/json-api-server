@@ -51,7 +51,7 @@ class LaravelApiServiceProvider extends ServiceProvider
             GeneratePolicyCommand::class,
             GenerateRepositoryCommand::class,
             GenerateMigrationCommand::class,
-            GenerateModelPermissionsCommand::class
+            GenerateModelPermissionsCommand::class,
         ]);
 
         $this->mergeConfigFrom(
