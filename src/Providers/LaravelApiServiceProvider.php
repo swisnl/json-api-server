@@ -11,6 +11,7 @@ use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
 use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
 use Swis\LaravelApi\Console\Commands\GenerateMigrationCommand;
 use Swis\LaravelApi\Console\Commands\GenerateModelCommand;
+use Swis\LaravelApi\Console\Commands\GenerateModelPermissionsCommand;
 use Swis\LaravelApi\Console\Commands\GenerateModelTranslationCommand;
 use Swis\LaravelApi\Console\Commands\GeneratePolicyCommand;
 use Swis\LaravelApi\Console\Commands\GenerateRepositoryCommand;
@@ -50,6 +51,7 @@ class LaravelApiServiceProvider extends ServiceProvider
             GeneratePolicyCommand::class,
             GenerateRepositoryCommand::class,
             GenerateMigrationCommand::class,
+            GenerateModelPermissionsCommand::class
         ]);
 
         $this->mergeConfigFrom(
