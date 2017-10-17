@@ -18,7 +18,7 @@ class CustomFileGenerator
             '$CAMEL_CASE_MODEL_NAME$' => camel_case($this->modelName),
             '$PLURAL_UPPER_CASED_MODEL_NAME$' => strtoupper(str_plural($this->modelName)),
             '$PLURAL_LOWER_CASED_MODEL_NAME$' => strtolower(str_plural($this->modelName)),
-            '$UPPER_CASED_MODEL_NAME$' => str_plural($this->modelName),
+            '$UPPER_CASED_MODEL_NAME$' => strtoupper($this->modelName),
             '$NAMESPACE_MODEL$' => config('laravel_api.namespace.model'),
             '$NAME_SPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
