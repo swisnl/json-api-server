@@ -25,16 +25,6 @@ class $MODEL_NAME$ extends Model implements ModelContract
        ];
     }
 
-    public function getRelationships(): array
-    {
-        // TODO: Implement getRelationships() method.
-    }
-
-    public function getRepository(): string
-    {
-        // TODO: Implement getRepository() method.
-    }
-
     public function getTranslatable()
     {
         // TODO: Implement getTranslatable() method.
