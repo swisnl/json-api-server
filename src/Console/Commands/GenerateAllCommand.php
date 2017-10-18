@@ -54,6 +54,7 @@ class GenerateAllCommand extends BaseGenerateCommand
             'repository' => 'laravel-api:generate-repository',
             'translation' => 'laravel-api:generate-translation',
             'policy' => 'laravel-api:generate-policy',
+            'auth_test' => 'laravel-api:generate-test',
         ];
 
         foreach ($generatorCalls as $type => $generatorCall) {
