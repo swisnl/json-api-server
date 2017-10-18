@@ -29,7 +29,7 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $this->checkUsersPermissions();
+        $this->checkUsersPermissions('index');
 
         if ($this->request->exists('ids')) {
             return $this->getByUrlInputIds();
@@ -61,7 +61,7 @@ abstract class BaseApiController extends Controller
     public function show($id)
     {
         $item = $this->repository->findById($id);
-        $this->checkUsersPermissions($item);
+        $this->checkUsersPermissions('show', $item);
 
         return $this->respondWithOK($item);
     }
@@ -73,7 +73,7 @@ abstract class BaseApiController extends Controller
      */
     public function create()
     {
-        $this->checkUsersPermissions();
+        $this->checkUsersPermissions('create');
         $createdResource = $this->repository->create($this->validateObject());
 
         return $this->respondWithCreated($createdResource);
@@ -88,7 +88,7 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-        $this->checkUsersPermissions($this->repository->findById($id), 'update');
+        $this->checkUsersPermissions('update', $this->repository->findById($id));
 
         $this->repository->update($this->validateObject($id), $id);
 
@@ -106,24 +106,23 @@ abstract class BaseApiController extends Controller
      */
     public function delete($id)
     {
-        $this->checkUsersPermissions($this->repository->findById($id), 'delete');
+        $this->checkUsersPermissions('delete', $this->repository->findById($id));
 
         $this->repository->destroy($id);
 
         return $this->respondWithNoContent();
     }
 
-    protected function checkUsersPermissions($requestedObject = null, $policyActionName = null)
+    protected function checkUsersPermissions($policyMethod, $requestedObject = null)
     {
         if (!config('laravel_api.checkForPermissions')) {
             return;
         }
 
         $this->checkIfUserHasPermissions(
-            $this->route,
+            $policyMethod,
             $this->repository->getModelName(),
-            $requestedObject,
-            $policyActionName
+            $requestedObject
         );
     }
 
