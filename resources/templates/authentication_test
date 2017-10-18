@@ -1,0 +1,128 @@
+<?php
+
+namespace Tests\Unit;
+
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use $NAMESPACE_MODEL$\$MODEL_NAME$Permissions;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Tests\TestCase;
+
+class $MODEL_NAME$AuthenticationTest extends TestCase
+{
+    use DatabaseTransactions, WithoutMiddleware;
+
+    protected $user;
+    protected $baseUrl;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->user = factory(User::class)->create();
+
+        $this->user->givePermissionTo($MODEL_NAME$Permissions::RETRIEVE_$UPPER_CASED_MODEL_NAME$);
+        $this->user->givePermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$);
+        $this->user->givePermissionTo($MODEL_NAME$Permissions::CREATE_$UPPER_CASED_MODEL_NAME$);
+        $this->user->givePermissionTo($MODEL_NAME$Permissions::UPDATE_$UPPER_CASED_MODEL_NAME$);
+        $this->user->givePermissionTo($MODEL_NAME$Permissions::DELETE_$UPPER_CASED_MODEL_NAME$);
+
+        $this->baseUrl = env('API_URL').'/'.$PLURAL_LOWER_CASED_MODEL_NAME$.'/';
+    }
+
+    /** @test */
+    public function it_creates_an_$CAMEL_CASE_MODEL_NAME$_unauthenticated()
+    {
+        $response = $this->post($this->baseUrl);
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_creates_an_$CAMEL_CASE_MODEL_NAME$_authenticated()
+    {
+        Passport::actingAs($this->user);
+
+        $response = $this->post($this->baseUrl);
+        $response->assertStatus(201);
+    }
+
+    /** @test */
+    public function it_updates_an_$CAMEL_CASE_MODEL_NAME$_unauthenticated()
+    {
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->put($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_updates_an_$CAMEL_CASE_MODEL_NAME_authenticated()
+    {
+        Passport::actingAs($this->user);
+
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->put($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_retrieves_an_$CAMEL_CASE_MODEL_NAME_unauthenticated()
+    {
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->get($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id);
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_retrieves_an_$CAMEL_CASE_MODEL_NAME_authenticated()
+    {
+        Passport::actingAs($this->user);
+
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->get($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id);
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_retrieves_all_$PLURAL_LOWER_CASED_MODEL_NAME$_unauthenticated()
+    {
+        factory($MODEL_NAME$::class, 3)->create();
+
+        $response = $this->get($this->baseUrl);
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_retrieves_all_$PLURAL_LOWER_CASED_MODEL_NAME$_authenticated()
+    {
+        Passport::actingAs($this->user);
+
+        factory($MODEL_NAME$::class, 3)->create();
+
+        $response = $this->get($this->baseUrl);
+        $response->assertStatus(206);
+    }
+
+    /** @test */
+    public function it_deletes_an_$CAMEL_CASE_MODEL_NAME$_unauthenticated()
+    {
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->delete($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id);
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_deletes_an_$CAMEL_CASE_MODEL_NAME$_authenticated()
+    {
+        Passport::actingAs($this->user);
+
+        $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
+
+        $response = $this->delete($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id);
+        $response->assertStatus(204);
+    }
+}

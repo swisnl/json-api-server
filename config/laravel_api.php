@@ -15,6 +15,8 @@ return [
 
         'policy' => app_path('Policies/'),
 
+        'auth_test' => base_path('tests/Authentication'),
+
         'migration' => base_path('database/migrations'),
 
         'templates' => 'vendor/swisnl/laravel-api/resources/templates/',
@@ -31,7 +33,9 @@ return [
 
         'translation' => 'App',
 
-        'policy' => 'App\Policies'
+        'policy' => 'App\Policies',
+
+        'auth_test' => 'App\Tests\Authentication'
     ],
 
     // Permissions configuration

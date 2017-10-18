@@ -34,7 +34,7 @@ trait HandlesRelationships
         BelongsTo::class,
     ];
 
-    public function getRelationships($model): array//TODO: Skipt dit geen relaties die geen return type hebben?
+    public function getRelationships($model): array//TODO: Skipt relaties die geen return type hebben
     {
         $relations = [];
 
