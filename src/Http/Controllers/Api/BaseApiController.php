@@ -6,7 +6,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Routing\Route;
 use Swis\LaravelApi\Repositories\RepositoryInterface;
 use Swis\LaravelApi\Traits\HandleResponses;
 use Swis\LaravelApi\Traits\HasPermissionChecks;
@@ -18,13 +17,11 @@ abstract class BaseApiController extends Controller
     protected $respondController;
     protected $repository;
     protected $request;
-    protected $route;
 
-    public function __construct(RepositoryInterface $repository, Request $request, Route $route)
+    public function __construct(RepositoryInterface $repository, Request $request)
     {
         $this->repository = $repository;
         $this->request = $request;
-        $this->route = $route;
     }
 
     public function index()
