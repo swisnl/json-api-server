@@ -24,7 +24,7 @@ class CustomFileGenerator
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
             '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller'),
-            '$NAMESPACE_AUTH_TEST$' => config('laravel_api.namespace.auth_test')
+            '$NAMESPACE_AUTH_TEST$' => config('laravel_api.namespace.auth_test'),
         ];
 
         return $this;
