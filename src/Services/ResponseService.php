@@ -48,7 +48,6 @@ class ResponseService
         $responseModel = new $strResponseModel();
 
         return (new BaseApiResource($content))
-            ->withIncludedRelationships(request())
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
     }

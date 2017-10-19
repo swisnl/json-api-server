@@ -183,7 +183,7 @@ trait HandlesRelationships
                 continue;
             }
 
-            $tempArray[] = [$item->attributesToArray()];
+            $tempArray[] = $item->attributesToArray();
             $relations[] = $item;
         }
 
