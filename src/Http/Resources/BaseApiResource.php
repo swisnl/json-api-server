@@ -135,14 +135,25 @@ class BaseApiResource extends Resource
 
             if ($data instanceof Collection) {
                 $relationshipData = IdentifierResource::collection($data);
+                foreach ($relationshipData as $key => $relation) {
+                    if (!$this->checkIfDataIsSet($relation)) {
+                        unset($relationshipData[$key]);
+                    }
+                }
             } elseif ($data instanceof Model) {
                 $relationshipData = IdentifierResource::make($data);
+                $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
             }
 
-            !isset($relationshipData->resource->id) ?: $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
+            empty($relationshipData) ?: $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
         }
 
         return $relationshipsIdentifiers;
+    }
+
+    protected function checkIfDataIsSet($relationshipData): bool
+    {
+        return isset($relationshipData->resource->id);
     }
 
     protected function getIncludedRelationships($request)
