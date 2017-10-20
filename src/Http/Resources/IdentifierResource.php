@@ -26,7 +26,8 @@ class IdentifierResource extends Resource
     {
         $resourceClass = class_basename($this->resource);
         $resourcePlural = str_plural($resourceClass);
-        $lowerCaseResourceType = strtolower($resourcePlural);
+        // Converts camelcase to dash
+        $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
 
         return $lowerCaseResourceType;
     }

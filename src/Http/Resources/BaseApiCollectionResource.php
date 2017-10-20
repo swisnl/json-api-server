@@ -25,7 +25,7 @@ class BaseApiCollectionResource extends ResourceCollection
         $response = [];
 
         $response['data'] = $items;
-        $includedRelationships === [] ?: $response['included'] = $includedRelationships;
+        !empty($includedRelationships) ?: $response['included'] = $includedRelationships;
 
         return $response;
     }

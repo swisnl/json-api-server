@@ -19,21 +19,26 @@ class BaseApiResource extends Resource
      * Transform the resource into an array.
      *
      * @param mixed $request
-     * @param bool  $isCollection
      *
+     * @param bool $isCollection
      * @return array
-     *
      * @internal param $ \Illuminate\Http\Request
      */
     public function toArray($request, $isCollection = false)
     {
         $response = [];
 
-        if (!$isCollection && !is_string($request) && strpos($request->getPathInfo(), $this->getResourceType())) {
+        if (is_string($request) || $isCollection) {
+            return $this->mapToJsonApi($response);
+        }
+
+        $masterResource = $this->findMasterResource($request->getPathInfo());
+
+        if ($masterResource == $this->getResourceType()) {
             $response['data'] = $this->mapToJsonApi($response);
 
             $this->includedRelationships = $this->getIncludedRelationships($request);
-            $this->includedRelationships === [] ?: $response['included'] = $this->includedRelationships;
+            !empty($this->includedRelationships) ?: $response['included'] = $this->includedRelationships;
 
             return $response;
         }
@@ -43,19 +48,58 @@ class BaseApiResource extends Resource
 
     public function mapToJsonApi($response)
     {
+        if (!isset($this->id)) {
+            return;
+        }
+
         $this->resource->addHidden($this->resource->getKeyName());
         $pivotAttributes = $this->getPivotAttributes();
+        $relationships = $this->relationships();
 
         $response['type'] = $this->getResourceType();
-        $response[$this->getKeyName()] = (string) $this->resource->getKey();
+        $response[$this->getKeyName()] = (string)$this->resource->getKey();
 
-        $response['attributes'] = $this->attributesToArray();
+        $response['attributes'] = $this->filterTypeFromAttributes();
         $pivotAttributes === [] ?: $response['attributes']['pivot'] = $pivotAttributes;
 
-        $response['relationships'] = $this->relationships();
+        $relationships === [] ?: $response['relationships'] = $relationships;
         $response['links'] = $this->getLinks();
 
         return $response;
+    }
+
+    protected function findMasterResource($str)
+    {
+        if (empty($str)) {
+            return;
+        }
+
+        $masterResource = substr($str, strrpos($str, '/') + 1);
+
+        if (is_numeric($masterResource)) {
+            $str = str_replace('/' . $masterResource, '', $str);
+            $masterResource = $this->findMasterResource($str);
+        }
+
+        return $masterResource;
+    }
+
+    protected function filterTypeFromAttributes()
+    {
+        $attributes = $this->attributesToArray();
+
+        if (!isset($attributes['type'])) {
+            return $attributes;
+        }
+
+        if (!method_exists($this->resource, 'getTypeAlias')) {
+            throw new \Exception('Your model lacks the method getTypeAlias');
+        }
+
+        $attributes[$this->getTypeAlias()] = $attributes['type'];
+        unset($attributes['type']);
+
+        return $attributes;
     }
 
     protected function getPivotAttributes()
@@ -72,7 +116,7 @@ class BaseApiResource extends Resource
     protected function getLinks()
     {
         return [
-            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
+            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
         ];
     }
 
@@ -83,21 +127,19 @@ class BaseApiResource extends Resource
 
         foreach ($relationships as $relationship) {
             $data = $this->resource->$relationship;
+            $relationshipData = [];
 
-            if (0 == count($data)) {
+            if (count($data) == 0) {
                 continue;
             }
 
             if ($data instanceof Collection) {
-                $relationshipsIdentifiers[$relationship] = [
-                    'data' => IdentifierResource::collection($data),
-                ];
-                continue;
+                $relationshipData = IdentifierResource::collection($data);
             } elseif ($data instanceof Model) {
-                $relationshipsIdentifiers[$relationship] = [
-                    'data' => IdentifierResource::make($data),
-                ];
+                $relationshipData = IdentifierResource::make($data);
             }
+
+            !isset($relationshipData->resource->id) ?: $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
         }
 
         return $relationshipsIdentifiers;
@@ -111,7 +153,7 @@ class BaseApiResource extends Resource
 
         $this->includes = explode(',', $request->get('include', null));
 
-        if (null == $this->includes) {
+        if ($this->includes == null) {
             return [];
         }
 
@@ -124,7 +166,8 @@ class BaseApiResource extends Resource
     {
         $resourceClass = class_basename($this->resource);
         $resourcePlural = str_plural($resourceClass);
-        $lowerCaseResourceType = strtolower($resourcePlural);
+        // Converts camelcase to dash
+        $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
 
         return $lowerCaseResourceType;
     }
@@ -132,13 +175,13 @@ class BaseApiResource extends Resource
     /**
      * Create new anonymous resource collection.
      *
-     * @param mixed $resource
-     *
+     * @param  mixed $resource
      * @return mixed
      */
     public static function collection($resource)
     {
-        return new class($resource, get_called_class()) extends AnonymousResourceCollection {
+        return new class($resource, get_called_class()) extends AnonymousResourceCollection
+        {
             /**
              * @var string
              */
@@ -147,8 +190,8 @@ class BaseApiResource extends Resource
             /**
              * Create a new anonymous resource collection.
              *
-             * @param mixed  $resource
-             * @param string $collects
+             * @param  mixed $resource
+             * @param  string $collects
              */
             public function __construct($resource, $collects)
             {
