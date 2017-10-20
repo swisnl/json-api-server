@@ -38,7 +38,7 @@ class BaseApiResource extends Resource
             $response['data'] = $this->mapToJsonApi($response);
 
             $this->includedRelationships = $this->getIncludedRelationships($request);
-            !empty($this->includedRelationships) ?: $response['included'] = $this->includedRelationships;
+            empty($this->includedRelationships) ?: $response['included'] = $this->includedRelationships;
 
             return $response;
         }
