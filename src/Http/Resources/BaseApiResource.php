@@ -140,6 +140,11 @@ class BaseApiResource extends Resource
                         unset($relationshipData[$key]);
                     }
                 }
+
+                if ($relationshipData->toArray(true) == []) {
+                    $relationshipData = [];
+                }
+
             } elseif ($data instanceof Model) {
                 $relationshipData = IdentifierResource::make($data);
                 $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
