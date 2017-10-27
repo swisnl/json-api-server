@@ -26,24 +26,11 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $this->checkUsersPermissions('index');
+        $perPage = $this->request->get('per_page', null);
+        $page = $this->request->get('page', null);
+        $items = $this->repository->paginate($perPage, $page, null, $this->request->query());
 
-        if ($this->request->exists('ids')) {
-            return $this->getByUrlInputIds();
-        }
-
-        $items = $this->repository->paginate($this->request->get('per_page', null),
-            $this->request->get('page', null));
-
-        return $this->respondWithCollection($items);
-    }
-
-    private function getByUrlInputIds()
-    {
-        $ids = explode(',', $this->request->get('ids', null));
-        $items = $this->repository->findByIds($ids,
-            $this->request->get('per_page'),
-            $this->request->get('page'));
+        $this->checkUsersPermissions('showCollection', $items);
 
         return $this->respondWithCollection($items);
     }
