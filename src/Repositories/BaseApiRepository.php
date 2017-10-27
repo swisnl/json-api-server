@@ -45,11 +45,6 @@ abstract class BaseApiRepository implements RepositoryInterface
         return $this->model->findOrFail($value, $columns);
     }
 
-    public function findByIds(array $ids, $per_page = 15, $page = 1, $columns = ['*'])
-    {
-        return $this->model->whereIn('id', $ids)->paginate($per_page, $columns, 'page', $page);
-    }
-
     public function create(array $data)
     {
         foreach ($data as &$item) { //TODO: nulls zijn niet toegestaan maar er worden wel lege velden mee gegeven van client
