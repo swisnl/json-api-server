@@ -30,24 +30,22 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function paginate($perPage = 15, $page = 1, $columns = ['*'], $parameters = [])
     {
-        $this->query = $this->model->newQuery();
+        if (!isset($this->query)) {
+            $this->query = $this->model->newQuery();
+        }
+
         $this->parameters = $parameters;
         $this->perPage = $perPage;
         $this->page = $page;
 
         $this->setFilters();
 
-        return $this->query->paginate($perPage, $page, null, $page);
+        return $this->query->paginate($perPage, $columns, null, $page);
     }
 
     public function findById($value, $columns = ['*'])
     {
         return $this->model->findOrFail($value, $columns);
-    }
-
-    public function findByIds(array $ids, $per_page = 15, $page = 1, $columns = ['*'])
-    {
-        return $this->model->whereIn('id', $ids)->paginate($per_page, $columns, 'page', $page);
     }
 
     public function create(array $data)
@@ -90,8 +88,8 @@ abstract class BaseApiRepository implements RepositoryInterface
     protected function setFilters()
     {
         $this->setIds();
-        $this->sortByAsc();
-        $this->sortByDesc();
+        $this->orderByAsc();
+        $this->orderByDesc();
     }
 
     public function setIds()
@@ -103,22 +101,22 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->query->whereIn('id', explode(',', $this->parameters['ids']));
     }
 
-    public function sortByAsc()
+    public function orderByAsc()
     {
         if (!isset($this->parameters['sort_by_asc'])) {
             return;
         }
 
-        $this->query->sortBy($this->parameters['sort_by_asc']);
+        $this->query->orderBy($this->parameters['sort_by_asc']);
     }
 
-    public function sortByDesc()
+    public function orderByDesc()
     {
         if (!isset($this->parameters['sort_by_desc'])) {
             return;
         }
 
-        $this->query->sortByDesc($this->parameters['sort_by_desc']);
+        $this->query->orderByDesc($this->parameters['sort_by_desc']);
     }
 
     abstract public function getModelName(): string;
