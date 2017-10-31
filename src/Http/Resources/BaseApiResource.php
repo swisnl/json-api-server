@@ -66,6 +66,12 @@ class BaseApiResource extends Resource
             $response['attributes'] += $this->getExtraValues();
         }
 
+        if ($this->resource->translatedAttributes) {
+            foreach ($this->resource->translatedAttributes as $translation) {
+                $response['attributes'][$translation] = $this->resource->$translation;
+            }
+        }
+
         $pivotAttributes === [] ?: $response['attributes']['pivot'] = $pivotAttributes;
 
         $relationships === [] ?: $response['relationships'] = $relationships;

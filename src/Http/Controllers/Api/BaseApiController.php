@@ -30,7 +30,7 @@ abstract class BaseApiController extends Controller
         $page = $this->request->get('page', null);
         $items = $this->repository->paginate($perPage, $page, null, $this->request->query());
 
-        $this->checkUsersPermissions('showCollection', $items);
+        $this->authorizeAction('index');
 
         return $this->respondWithCollection($items);
     }
@@ -45,7 +45,7 @@ abstract class BaseApiController extends Controller
     public function show($id)
     {
         $item = $this->repository->findById($id);
-        $this->checkUsersPermissions('show', $item);
+        $this->authorizeAction('show', $item);
 
         return $this->respondWithOK($item);
     }
@@ -57,7 +57,7 @@ abstract class BaseApiController extends Controller
      */
     public function create()
     {
-        $this->checkUsersPermissions('create');
+        $this->authorizeAction('create');
         $createdResource = $this->repository->create($this->validateObject());
 
         return $this->respondWithCreated($createdResource);
@@ -72,7 +72,7 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-        $this->checkUsersPermissions('update', $this->repository->findById($id));
+        $this->authorizeAction('update', $this->repository->findById($id));
 
         $this->repository->update($this->validateObject($id), $id);
 
@@ -90,14 +90,14 @@ abstract class BaseApiController extends Controller
      */
     public function delete($id)
     {
-        $this->checkUsersPermissions('delete', $this->repository->findById($id));
+        $this->authorizeAction('delete', $this->repository->findById($id));
 
         $this->repository->destroy($id);
 
         return $this->respondWithNoContent();
     }
 
-    protected function checkUsersPermissions($policyMethod, $requestedObject = null)
+    protected function authorizeAction($policyMethod, $requestedObject = null)
     {
         if (!config('laravel_api.checkForPermissions')) {
             return;
