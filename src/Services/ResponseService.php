@@ -22,13 +22,17 @@ class ResponseService
     protected function createResponse($responseModel, $content)
     {
         if ($responseModel instanceof RespondError) { //TODO: tijdelijk snel hier geformat
-            $error = ['errors' => [
-                'status_code' => $responseModel->getStatusCode(),
-                'message' => $responseModel->getMessage(),
-                'detail' => $content,
-            ]];
+            $errors = [];
 
-            return response($error, $responseModel->getStatusCode());
+            $errors['errors'] = [
+                0 => [
+                    'status' => (string) $responseModel->getStatusCode(),
+                    'title' => (string) $responseModel->getMessage(),
+                    'detail' => (string) $content,
+                ]
+            ];
+
+            return response($errors, $responseModel->getStatusCode());
         }
 
         return response($content, $responseModel->getStatusCode());
