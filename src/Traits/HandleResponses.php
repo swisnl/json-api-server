@@ -3,6 +3,7 @@
 namespace Swis\LaravelApi\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Model;
 use Swis\LaravelApi\Models\Responses\RespondHttpCreated;
 use Swis\LaravelApi\Models\Responses\RespondHttpNoContent;
 use Swis\LaravelApi\Models\Responses\RespondHttpOk;
@@ -61,6 +62,10 @@ trait HandleResponses
     {
         if ($content instanceof Paginator) {
             return $this->respondWithPartialContent($content);
+        }
+
+        if ($content instanceof Model) {
+            return $this->respondWithOK($content);
         }
 
         return $this->respondWithCollectionOK($content);
