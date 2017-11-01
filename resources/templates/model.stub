@@ -9,10 +9,15 @@ use Swis\LaravelApi\Models\ModelContract;
 class $MODEL_NAME$ extends Model implements ModelContract
 {
     use Translatable;
+    public $translationModel = $MODEL_NAME$.'Translation';
 
     public $fillable = [
         // TODO: Write down fillables
     ];
+
+    public $hidden = [
+            // TODO: Write down hidden
+        ];
 
     public $translatedAttributes = [
         // TODO: Write down translatable values
@@ -23,10 +28,5 @@ class $MODEL_NAME$ extends Model implements ModelContract
        return [
         //TODO write down rules
        ];
-    }
-
-    public function getTranslatable()
-    {
-        // TODO: Implement getTranslatable() method.
     }
 }
