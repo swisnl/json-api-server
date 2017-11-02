@@ -68,6 +68,10 @@ class BaseApiResource extends Resource
 
         if ($this->resource->translatedAttributes) {
             foreach ($this->resource->translatedAttributes as $translation) {
+                if ($this->resource->$translation == '') {// temp while there are still empty values in translations table
+                    continue;
+                }
+
                 $response['attributes'][$translation] = $this->resource->$translation;
             }
         }
