@@ -4,7 +4,7 @@ namespace Swis\LaravelApi\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -39,6 +39,8 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->page = $page;
 
         $this->setFilters();
+
+        $this->query->with($this->getRelationships($this->model));
 
         return $this->query->paginate($perPage, $columns, null, $page);
     }
@@ -117,6 +119,14 @@ abstract class BaseApiRepository implements RepositoryInterface
         }
 
         $this->query->orderByDesc($this->parameters['sort_by_desc']);
+    }
+
+    function dumpQueryWithBindings(){
+        $sql = $this->query->toSql();
+        foreach($this->query->getBindings() as $key => $binding){
+            $sql = preg_replace('/\?/', "'$binding'", $sql, 1);
+        }
+        dd($sql);
     }
 
     abstract public function getModelName(): string;
