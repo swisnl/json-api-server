@@ -105,20 +105,20 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function orderByAsc()
     {
-        if (!isset($this->parameters['sort_by_asc'])) {
+        if (!isset($this->parameters['order_by_asc'])) {
             return;
         }
 
-        $this->query->orderBy($this->parameters['sort_by_asc']);
+        $this->query->orderBy($this->parameters['order_by_asc']);
     }
 
     public function orderByDesc()
     {
-        if (!isset($this->parameters['sort_by_desc'])) {
+        if (!isset($this->parameters['order_by_desc'])) {
             return;
         }
 
-        $this->query->orderByDesc($this->parameters['sort_by_desc']);
+        $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
 
     function dumpQueryWithBindings(){
