@@ -61,8 +61,7 @@ trait HandleResponses
     public function respondWithCollection($content)
     {
         if ($content instanceof Paginator) {
-            return $content->total() == 1 ?
-                $this->respondWithOK(array_first($content->items())) : $this->respondWithPartialContent($content);
+            return $this->respondWithPartialContent($content);
         }
 
         if ($content instanceof Model) {
