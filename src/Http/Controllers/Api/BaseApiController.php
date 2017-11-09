@@ -28,7 +28,8 @@ abstract class BaseApiController extends Controller
     {
         $perPage = $this->request->get('per_page', null);
         $page = $this->request->get('page', null);
-        $items = $this->repository->paginate($perPage, $page, null, $this->request->query());
+        $items = $this->repository->setUser($this->request->user())
+            ->paginate($perPage, $page, null, $this->request->query());
 
         $this->authorizeAction('index');
 
@@ -114,6 +115,6 @@ abstract class BaseApiController extends Controller
     {
         $this->validate($this->request, $this->repository->makeModel()->getRules($id));
 
-        return $this->request->all();
+        return json_decode($this->request->getContent(), true);
     }
 }

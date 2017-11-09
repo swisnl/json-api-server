@@ -5,6 +5,7 @@ namespace Swis\LaravelApi\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\User;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -13,6 +14,8 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     /** @var Model $model */
     protected $model;
+    protected $user;
+
     protected $page;
     protected $perPage;
     protected $parameters;
@@ -127,6 +130,22 @@ abstract class BaseApiRepository implements RepositoryInterface
             $sql = preg_replace('/\?/', "'$binding'", $sql, 1);
         }
         dd($sql);
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    protected function nullToEmptyString($value)
+    {
+        if ($value !== null) {
+            return $value;
+        }
+
+        return '';
     }
 
     abstract public function getModelName(): string;
