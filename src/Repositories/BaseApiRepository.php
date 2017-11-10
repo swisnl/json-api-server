@@ -43,7 +43,12 @@ abstract class BaseApiRepository implements RepositoryInterface
 
         $this->setFilters();
 
-        $this->query->with($this->getRelationships($this->model));
+        if (array_key_exists('include', $this->parameters)) {
+            $includes = explode(',', $this->parameters['include']);
+            $includes = array_merge($includes, $this->getRelationships($this->model));
+
+            $this->query->with(array_unique($includes));
+        }
 
         return $this->query->paginate($perPage, $columns, null, $page);
     }

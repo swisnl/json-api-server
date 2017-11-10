@@ -55,7 +55,6 @@ class BaseApiResource extends Resource
 
         $this->resource->addHidden($this->resource->getKeyName());
         $pivotAttributes = $this->getPivotAttributes();
-        $relationships = $this->relationships();
 
         $response['type'] = $this->getResourceType();
         $response[$this->getKeyName()] = (string) $this->resource->getKey();
@@ -78,7 +77,12 @@ class BaseApiResource extends Resource
 
         $pivotAttributes === [] ?: $response['attributes']['pivot'] = $pivotAttributes;
 
-        $relationships === [] ?: $response['relationships'] = $relationships;
+        if (!is_string($this->request) &&
+            $this->findMasterResource($this->request->getPathInfo()) == $this->getResourceType()) {
+
+            $relationships = $this->relationships();
+            $relationships === [] ?: $response['relationships'] = $relationships;
+        }
         $response['links'] = $this->getLinks();
 
         return $response;
