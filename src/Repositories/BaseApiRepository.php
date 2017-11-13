@@ -151,14 +151,22 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     protected function eagerLoadRelationships()
     {
-        $relations = $this->getRelationships($this->model);
+        //$relations = $this->getRelationships($this->model);
+        $relations = [];
 
         if (!empty($this->parameters) && array_key_exists('include', $this->parameters)) {
-            $includes = explode(',', $this->parameters['include']);
-            $relations = array_merge($includes, $relations);
+            $relations = explode(',', $this->parameters['include']);
+        //$relations = array_merge($includes, $relations);
         }
 
         $this->query->with(array_unique($relations));
+    }
+
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
     }
 
     abstract public function getModelName(): string;

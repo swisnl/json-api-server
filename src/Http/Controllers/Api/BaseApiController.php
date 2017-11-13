@@ -22,6 +22,8 @@ abstract class BaseApiController extends Controller
     {
         $this->repository = $repository;
         $this->request = $request;
+
+        $this->repository->setParameters($request->query());
     }
 
     public function index()
