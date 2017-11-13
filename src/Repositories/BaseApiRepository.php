@@ -43,13 +43,6 @@ abstract class BaseApiRepository implements RepositoryInterface
 
         $this->setFilters();
 
-        if (array_key_exists('include', $this->parameters)) {
-            $includes = explode(',', $this->parameters['include']);
-            $includes = array_merge($includes, $this->getRelationships($this->model));
-
-            $this->query->with(array_unique($includes));
-        }
-
         return $this->query->paginate($perPage, $columns, null, $page);
     }
 
@@ -100,6 +93,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->setIds();
         $this->orderByAsc();
         $this->orderByDesc();
+        $this->eagerLoadRelationships();
     }
 
     public function setIds()
@@ -151,6 +145,18 @@ abstract class BaseApiRepository implements RepositoryInterface
         }
 
         return '';
+    }
+
+    protected function eagerLoadRelationships()
+    {
+        $relations = $this->getRelationships($this->model);
+
+        if (array_key_exists('include', $this->parameters)) {
+            $includes = explode(',', $this->parameters['include']);
+            $relations = array_merge($includes, $relations);
+        }
+
+        $this->query->with(array_unique($relations));
     }
 
     abstract public function getModelName(): string;
