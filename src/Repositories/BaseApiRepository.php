@@ -59,11 +59,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function create(array $data)
     {
-        foreach ($data as &$item) { //TODO: nulls zijn niet toegestaan maar er worden wel lege velden mee gegeven van client
-            if (null == $item) {
-                $item = '';
-            }
-        }
+        $data = array_map([$this, 'nullToEmptyString'], $data);
 
         return $this->model->create($data);
     }
