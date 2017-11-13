@@ -153,7 +153,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     {
         $relations = $this->getRelationships($this->model);
 
-        if (array_key_exists('include', $this->parameters)) {
+        if (!empty($this->parameters) && array_key_exists('include', $this->parameters)) {
             $includes = explode(',', $this->parameters['include']);
             $relations = array_merge($includes, $relations);
         }
