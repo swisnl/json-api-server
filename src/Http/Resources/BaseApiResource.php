@@ -142,9 +142,9 @@ class BaseApiResource extends Resource
         $relationshipsIdentifiers = [];
 
         foreach ($relationships as $relationship) {
-//            if (!$this->resource->relationLoaded($relationship)) {
-//                continue;
-//            }
+            if (!$this->resource->relationLoaded($relationship)) {
+                continue;
+            }
 
             $data = $this->resource->$relationship;
             $relationshipData = [];
