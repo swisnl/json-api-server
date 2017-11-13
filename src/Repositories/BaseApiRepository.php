@@ -48,7 +48,13 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function findById($value, $columns = ['*'])
     {
-        return $this->model->findOrFail($value, $columns);
+        if (!isset($this->query)) {
+            $this->query = $this->model->newQuery();
+        }
+
+        $this->eagerLoadRelationships();
+
+        return $this->query->findOrFail($value, $columns);
     }
 
     public function create(array $data)
