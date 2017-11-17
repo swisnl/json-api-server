@@ -142,7 +142,7 @@ class BaseApiResource extends Resource
         $relationshipsIdentifiers = [];
 
         foreach ($relationships as $relationship) {
-            if (!$this->resource->relationLoaded($relationship)) {
+            if (!config('laravel_api.loadAllJsonApiRelationships') && !$this->resource->relationLoaded($relationship)) {
                 continue;
             }
 
