@@ -133,7 +133,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         dd($sql);
     }
 
-    public function setUser(User $user)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
