@@ -135,6 +135,10 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function setUser(User $user = null)
     {
+        if (!isset($user)) {
+            return $this;
+        }
+
         $this->user = $user;
 
         return $this;
