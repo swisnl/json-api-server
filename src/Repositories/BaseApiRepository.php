@@ -113,6 +113,7 @@ abstract class BaseApiRepository implements RepositoryInterface
             return;
         }
 
+        $this->query->getQuery()->orders = null;
         $this->query->orderBy($this->parameters['order_by_asc']);
     }
 
@@ -122,6 +123,7 @@ abstract class BaseApiRepository implements RepositoryInterface
             return;
         }
 
+        $this->query->getQuery()->orders = null;
         $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
 
