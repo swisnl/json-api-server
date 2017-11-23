@@ -96,6 +96,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->orderByAsc();
         $this->orderByDesc();
         $this->eagerLoadRelationships();
+        $this->setPagination();
     }
 
     public function setIds()
@@ -174,6 +175,17 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->parameters = $parameters;
 
         return $this;
+    }
+
+    public function setPagination()
+    {
+        if (array_key_exists('page', $this->parameters)) {
+            $this->page = $this->parameters['page'];
+        }
+
+        if (array_key_exists('per_page', $this->parameters)) {
+            $this->perPage = $this->parameters['per_page'];
+        }
     }
 
     abstract public function getModelName(): string;
