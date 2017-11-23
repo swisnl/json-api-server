@@ -29,7 +29,7 @@ class ResponseService
                     'status' => (string) $responseModel->getStatusCode(),
                     'title' => (string) $responseModel->getMessage(),
                     'detail' => (string) $content,
-                ]
+                ],
             ];
 
             return response($errors, $responseModel->getStatusCode());

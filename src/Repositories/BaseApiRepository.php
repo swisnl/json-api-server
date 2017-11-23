@@ -2,9 +2,9 @@
 
 namespace Swis\LaravelApi\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
@@ -127,9 +127,10 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
 
-    function dumpQueryWithBindings(){
+    public function dumpQueryWithBindings()
+    {
         $sql = $this->query->toSql();
-        foreach($this->query->getBindings() as $key => $binding){
+        foreach ($this->query->getBindings() as $key => $binding) {
             $sql = preg_replace('/\?/', "'$binding'", $sql, 1);
         }
         dd($sql);
@@ -148,7 +149,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     protected function nullToEmptyString($value)
     {
-        if ($value !== null) {
+        if (null !== $value) {
             return $value;
         }
 
@@ -162,7 +163,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
         if (!empty($this->parameters) && array_key_exists('include', $this->parameters)) {
             $relations = explode(',', $this->parameters['include']);
-        //$relations = array_merge($includes, $relations);
+            //$relations = array_merge($includes, $relations);
         }
 
         $this->query->with(array_unique($relations));
