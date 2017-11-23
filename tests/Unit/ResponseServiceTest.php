@@ -33,10 +33,10 @@ class ResponseServiceTest extends TestCase
     {
         $this->testModel->body = 'OK';
         $response = $this->respondWithOK($this->testModel);
-        $responseBody = json_decode($response->getContent())->data->attributes->body;
+        $responseBody = json_decode($response->getContent())->data;
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('OK', $responseBody);
+        $this->assertEquals('OK', $responseBody->attributes->body);
     }
 
     /** @test */
@@ -102,7 +102,7 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpForbidden::class, $message);
 
         $this->assertEquals(403, $response->getStatusCode());
-        $this->assertEquals('FORBIDDEN', json_decode($response->getContent())->errors->detail);
+        $this->assertEquals('FORBIDDEN', json_decode($response->getContent())->errors[0]->detail);
     }
 
     /** @test */
@@ -112,7 +112,7 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpNotFound::class, $message);
 
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals('NOT FOUND', json_decode($response->getContent())->errors->detail);
+        $this->assertEquals('NOT FOUND', json_decode($response->getContent())->errors[0]->detail);
     }
 
     /** @test */
@@ -122,6 +122,6 @@ class ResponseServiceTest extends TestCase
         $response = $this->responseService->response(RespondHttpUnauthorized::class, $message);
 
         $this->assertEquals(401, $response->getStatusCode());
-        $this->assertEquals('UNAUTHORIZED', json_decode($response->getContent())->errors->detail);
+        $this->assertEquals('UNAUTHORIZED', json_decode($response->getContent())->errors[0]->detail);
     }
 }

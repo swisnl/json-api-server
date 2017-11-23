@@ -7,6 +7,7 @@ use Swis\LaravelApi\Models\ModelContract;
 
 class TestModel extends Model implements ModelContract
 {
+    public $id = 0;
     protected $fillable = [
         'title', 'body',
     ];
