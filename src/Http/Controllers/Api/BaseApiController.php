@@ -77,11 +77,7 @@ abstract class BaseApiController extends Controller
     {
         $this->authorizeAction('update', $this->repository->findById($id));
 
-        $this->repository->update($this->validateObject($id), $id);
-
-        $updatedItem = $this->repository->findById($id);
-
-        return $this->respondWithOK($updatedItem);
+        return $this->respondWithOK($this->repository->update($this->validateObject($id), $id));
     }
 
     /**

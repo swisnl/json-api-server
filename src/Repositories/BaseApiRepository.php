@@ -66,7 +66,10 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function update(array $data, $objectKey)
     {
-        return $this->model->where($this->model->getKeyName(), $objectKey)->update($data);
+        $this->model = $this->model->where($this->model->getKeyName(), $objectKey)->first();
+        $this->model->update($data);
+
+        return $this->model;
     }
 
     public function destroy($id)
