@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Dimsav\Translatable\Translatable;
 use Swis\LaravelApi\Models\ModelContract;
 
-class $MODEL_NAME$ extends Model implements ModelContract
+class $MODEL_NAME$ extends Model
 {
     use Translatable;
     public $translationModel = $MODEL_NAME$.'Translation';
