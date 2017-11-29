@@ -67,18 +67,17 @@ class BaseApiResource extends Resource
             'attributes' => $this->jsonApiModel->getAttributes(),
             'links' => $this->jsonApiModel->getLinks(),
             'relationships' => $this->jsonApiModel->getRelationships(),
+            'included' => $this->jsonApiModel->getIncluded(),
         ];
 
         foreach ($jsonApiArray as $key => $value) {
-            if ($wrap) {
+            if ($wrap && 'included' != $key) {
                 $response['data'] = $this->addToResponse($response['data'], $key, $value);
                 continue;
             }
 
             $response = $this->addToResponse($response, $key, $value);
         }
-
-        $response = $this->addToResponse($response, 'included', $this->jsonApiModel->getIncluded());
 
         return $response;
     }
