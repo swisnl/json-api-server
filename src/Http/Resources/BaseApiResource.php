@@ -14,74 +14,110 @@ class BaseApiResource extends Resource
 
     protected $includes = [];
     protected $includedRelationships = [];
+    protected $jsonApiModel;
 
-    /**
-     * Transform the resource into an array.
-     *
-     * @param mixed $request
-     * @param bool  $isCollection
-     *
-     * @return array
-     *
-     * @internal param $ \Illuminate\Http\Request
-     */
+    public function __construct($resource)
+    {
+        parent::__construct($resource);
+
+        $this->jsonApiModel = new JsonApiResource();
+        $this->setValues();
+    }
+
     public function toArray($request, $isCollection = false)
     {
         $response = [];
+        $wrap = false;
 
-        if (is_string($request) || $isCollection) {
-            return $this->mapToJsonApi($response);
+        if (!is_string($request) && !$isCollection &&
+            $this->findMasterResource($request->getPathInfo()) == $this->getResourceType()) {
+            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
+            $wrap = true;
+            $response['data'] = [];
         }
 
-        $masterResource = $this->findMasterResource($request->getPathInfo());
-
-        if ($masterResource == $this->getResourceType()) {
-            $response['data'] = $this->mapToJsonApi($response);
-
-            $this->includedRelationships = $this->getIncludedRelationships($request);
-            empty($this->includedRelationships) ?: $response['included'] = $this->includedRelationships;
-
-            return $response;
-        }
-
-        return $this->mapToJsonApi($response);
+        return $this->mapToJsonApi($response, $wrap);
     }
 
-    public function mapToJsonApi($response)
+    public function setValues()
     {
-        if (!isset($this->id)) {
+        $this->resource->addHidden($this->resource->getKeyName());
+
+        $this->jsonApiModel->setId((string) $this->resource->getKey());
+        $this->jsonApiModel->setType($this->getResourceType());
+        $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
+        $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
+        $this->jsonApiModel->setRelationships($this->relationships());
+        $this->jsonApiModel->setLinks($this->getLinks());
+
+        $this->translateAttributes();
+        $this->setExtraValues();
+        $this->filterTypeFromAttributes();
+    }
+
+    public function mapToJsonApi($response, bool $wrap)
+    {
+        if (!isset($this->id)) { // This doesn't happen anymore, at least I hope it doesn't
             return;
         }
 
-        $this->resource->addHidden($this->resource->getKeyName());
-        $pivotAttributes = $this->getPivotAttributes();
-        $relationships = $this->relationships();
+        $jsonApiArray = [
+            'id' => $this->jsonApiModel->getId(),
+            'type' => $this->jsonApiModel->getType(),
+            'attributes' => $this->jsonApiModel->getAttributes(),
+            'links' => $this->jsonApiModel->getLinks(),
+            'relationships' => $this->jsonApiModel->getRelationships(),
+        ];
 
-        $response['type'] = $this->getResourceType();
-        $response[$this->getKeyName()] = (string) $this->resource->getKey();
-
-        $response['attributes'] = $this->filterTypeFromAttributes();
-
-        if (method_exists($this->resource, 'getExtraValues')) {
-            $response['attributes'] += $this->getExtraValues();
-        }
-
-        if ($this->resource->translatedAttributes) {
-            foreach ($this->resource->translatedAttributes as $translation) {
-                if ($this->resource->$translation == '') {// temp while there are still empty values in translations table
-                    continue;
-                }
-
-                $response['attributes'][$translation] = $this->resource->$translation;
+        foreach ($jsonApiArray as $key => $value) {
+            if ($wrap) {
+                $response['data'] = $this->addToResponse($response['data'], $key, $value);
+                continue;
             }
+
+            $response = $this->addToResponse($response, $key, $value);
         }
 
-        $pivotAttributes === [] ?: $response['attributes']['pivot'] = $pivotAttributes;
-        $relationships === [] ?: $response['relationships'] = $relationships;
-
-        $response['links'] = $this->getLinks();
+        $response = $this->addToResponse($response, 'included', $this->jsonApiModel->getIncluded());
 
         return $response;
+    }
+
+    protected function addToResponse($response, $key, $value)
+    {
+        if (!isset($value) || empty($value)) {
+            return $response;
+        }
+
+        $response[$key] = $value;
+
+        return $response;
+    }
+
+    protected function translateAttributes()
+    {
+        if (!$this->resource->translatedAttributes) {
+            return;
+        }
+
+        $attributes = $this->jsonApiModel->getAttributes();
+
+        foreach ($this->resource->translatedAttributes as $key => $translation) {
+            if ($this->resource->$translation == '') {// temp while there are still empty values in translations table
+                continue;
+            }
+
+            $attributes[$translation] = $this->resource->$translation;
+        }
+
+        $this->jsonApiModel->setAttributes($attributes);
+    }
+
+    protected function setExtraValues()
+    {
+        if (method_exists($this->resource, 'getExtraValues')) {
+            $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getExtraValues());
+        }
     }
 
     protected function findMasterResource($str)
@@ -102,20 +138,15 @@ class BaseApiResource extends Resource
 
     protected function filterTypeFromAttributes()
     {
-        $attributes = $this->attributesToArray();
-
-        if (!isset($attributes['type'])) {
-            return $attributes;
+        if (!array_key_exists('type', $this->jsonApiModel->getAttributes())) {
+            return;
         }
 
         if (!method_exists($this->resource, 'getTypeAlias')) {
             throw new \Exception('Your model lacks the method getTypeAlias');
         }
 
-        $attributes[$this->getTypeAlias()] = $attributes['type'];
-        unset($attributes['type']);
-
-        return $attributes;
+        $this->jsonApiModel->changeTypeInAttributes($this->getTypeAlias());
     }
 
     protected function getPivotAttributes()
@@ -147,32 +178,44 @@ class BaseApiResource extends Resource
             }
 
             $data = $this->resource->$relationship;
-            $relationshipData = [];
 
             if (0 == count($data)) {
                 continue;
             }
 
-            if ($data instanceof Collection) {
-                $relationshipData = IdentifierResource::collection($data);
-                foreach ($relationshipData as $key => $relation) {
-                    if (!$this->checkIfDataIsSet($relation)) {
-                        unset($relationshipData[$key]);
-                    }
-                }
+            $relationshipData = $this->getRelationshipData($data);
 
-                if ($relationshipData->toArray(true) == []) {
-                    $relationshipData = [];
-                }
-            } elseif ($data instanceof Model) {
-                $relationshipData = IdentifierResource::make($data);
-                $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
+            if (empty($relationshipData) || !$relationshipData) {
+                continue;
             }
 
-            empty($relationshipData) ?: $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
+            $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
         }
 
         return $relationshipsIdentifiers;
+    }
+
+    protected function getRelationshipData($data)
+    {
+        $relationshipData = [];
+
+        if ($data instanceof Collection) {
+            $relationshipData = IdentifierResource::collection($data);
+            foreach ($relationshipData as $key => $relation) {
+                if (!$this->checkIfDataIsSet($relation)) {
+                    unset($relationshipData[$key]);
+                }
+            }
+
+            if ($relationshipData->toArray(true) == []) {
+                $relationshipData = [];
+            }
+        } elseif ($data instanceof Model) {
+            $relationshipData = IdentifierResource::make($data);
+            $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
+        }
+
+        return $relationshipData;
     }
 
     protected function checkIfDataIsSet($relationshipData): bool
