@@ -50,9 +50,6 @@ If you want to use your own BaseRepository, you have to implement the Repository
 
 The BaseApiRepository uses a trait to retrieve a models relationships. You can use this trait if you want to use the existing implementation.
 
-#### BaseApiSchema
-Every model needs a schema to be mapped for Json Api response. This schema needs to inherit the BaseApiSchema. You can override the methods from the BaseApiSchema and if the existing implementation can't figure out the resource type, you can override that as well.
-
 #### Model Contract
 If you like to have more configuration options for your model, you can implement the interface ModelContract. This interface will give you all the options currently available.
 ### Generating the required files
@@ -88,7 +85,6 @@ You also have the ability to generate the files separately:
 $ php artisan laravel-api:generate-controller {name}
 $ php artisan laravel-api:generate-model {name}
 $ php artisan laravel-api:generate-translation {name}
-$ php artisan laravel-api:generate-schema {name}
 $ php artisan laravel-api:generate-policy {name}
 $ php artisan laravel-api:generate-repository {name}
 $ php artisan laravel-api:generate-migration {name}
@@ -159,15 +155,6 @@ There are 3 optional middlewares:
 * route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 
-### Generating missing schemas 
-If by chance you are in need of a schema but you don't have a model for that schema in your own repository. You can use the following command to generate schemas based on the relationships of the given model:
-
-``` bash
-$ php artisan laravel-api:generate-missing-schemas {Model}
-```
-
-Keep in mind that this schema will also needs a repository. In the future this command will also generate this for you.
-
 ## Packages Laravel-Api uses
 
 ##### Laravel framework
@@ -178,10 +165,6 @@ Keep in mind that this schema will also needs a repository. In the future this c
 
 ##### spatie / laravel-permission
 * https://github.com/spatie/laravel-permission
-
-##### neomerx / json-api
-* https://github.com/neomerx/json-api
-
 
 
 ## Change log
