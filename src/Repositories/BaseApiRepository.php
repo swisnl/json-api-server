@@ -96,6 +96,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     protected function setFilters()
     {
         $this->setIds();
+        $this->excludeIds();
         $this->orderByAsc();
         $this->orderByDesc();
         $this->eagerLoadRelationships();
@@ -109,6 +110,15 @@ abstract class BaseApiRepository implements RepositoryInterface
         }
 
         $this->query->whereIn('id', explode(',', $this->parameters['ids']));
+    }
+
+    public function excludeIds()
+    {
+        if (!isset($this->parameters['exclude_ids'])) {
+            return;
+        }
+
+        $this->query->whereNotIn('id', explode(',', $this->parameters['exclude_ids']));
     }
 
     public function orderByAsc()
