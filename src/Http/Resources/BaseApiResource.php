@@ -41,6 +41,10 @@ class BaseApiResource extends Resource
 
     public function setValues()
     {
+        if (!$this->resource) {
+            return;
+        }
+
         $this->resource->addHidden($this->resource->getKeyName());
 
         $this->jsonApiModel->setId((string) $this->resource->getKey());
