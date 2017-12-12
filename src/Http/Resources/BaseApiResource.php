@@ -158,6 +158,10 @@ class BaseApiResource extends Resource
 
         if ($this->resource->pivot) {
             $attributes = $this->resource->pivot->attributesToArray();
+            if (array_key_exists('id', $attributes)) {
+                $attributes['pivot_id'] = $attributes['id'];
+                unset($attributes['id']);
+            }
         }
 
         return $attributes;
