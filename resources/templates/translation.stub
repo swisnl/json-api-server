@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class $MODEL_NAME$Translation extends Model
 {
-    protected $table = $MODEL_NAME.'_translations';
+    protected $table = '$MODEL_NAME$_translations';
 
     public $fillable = [
         //TODO: Same as model's translatedAttributes

@@ -4,12 +4,11 @@ namespace $NAMESPACE_MODEL$;
 
 use Illuminate\Database\Eloquent\Model;
 use Dimsav\Translatable\Translatable;
-use Swis\LaravelApi\Models\ModelContract;
 
 class $MODEL_NAME$ extends Model
 {
     use Translatable;
-    public $translationModel = $MODEL_NAME$.'Translation';
+    public $translationModel = '$MODEL_NAME$Translation';
 
     public $fillable = [
         // TODO: Write down fillables
