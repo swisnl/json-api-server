@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Swis\LaravelApi\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -42,6 +43,13 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->page = $page;
 
         $this->setFilters();
+
+        if (array_key_exists('all', $this->parameters)) {
+            $collection = $this->query->get();
+            $total = count($collection);
+
+            return new LengthAwarePaginator($collection, $total, $total);
+        }
 
         return $this->query->paginate($perPage, $columns, null, $page);
     }
