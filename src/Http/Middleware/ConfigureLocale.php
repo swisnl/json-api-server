@@ -16,7 +16,12 @@ class ConfigureLocale
      */
     public function handle($request, Closure $next)
     {
-        app()->setLocale($request->get('lang', $request->user()->locale));
+        $defaultLocale = env('APP_DEFAULT_LOCALE', 'en');
+        $user = $request->user();
+        if($user && property_exists($user, 'locale')) {
+            $defaultLocale = $user->locale;
+        }
+        app()->setLocale($request->get('lang', $defaultLocale));
 
         return $next($request);
     }
