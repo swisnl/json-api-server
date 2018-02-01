@@ -1,10 +1,14 @@
 <?php
 
-namespace Sample;
+namespace App;
 
-class SampleTranslation
+use Illuminate\Database\Eloquent\Model;
+
+class SampleTranslation extends Model
 {
+    protected $table = 'sample_translations';
+
     public $fillable = [
-        'title', 'body',
+        //TODO: Same as model's translatedAttributes
     ];
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sample\Repositories;
+namespace App\Repositories;
 
-use sample\Sample;
+use App\Sample;
 use Swis\LaravelApi\Repositories\BaseApiRepository;
 
 class SampleRepository extends BaseApiRepository

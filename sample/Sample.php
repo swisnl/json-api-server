@@ -1,43 +1,31 @@
 <?php
 
-namespace sample;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Sample\Repositories\SampleRepository;
-use Sample\Schemas\SampleSchema;
+use Dimsav\Translatable\Translatable;
 
 class Sample extends Model
 {
-    protected $fillable = [
-        'title', 'body',
+    use Translatable;
+    public $translationModel = 'SampleTranslation';
+
+    public $fillable = [
+        // TODO: Write down fillables
     ];
 
-    protected $schema = SampleSchema::class;
-    protected $repository = SampleRepository::class;
-    protected $translatable = SampleTranslation::class;
+    public $hidden = [
+            // TODO: Write down hidden
+        ];
 
-    public function getSchema()
-    {
-        return $this->schema;
-    }
+    public $translatedAttributes = [
+        // TODO: Write down translatable values
+    ];
 
-    public function getRepository()
+    public function getRules($id = null): array
     {
-        return $this->repository;
-    }
-
-    public function getTranslatable()
-    {
-        return $this->translatable;
-    }
-
-    public function getRelationships()
-    {
-        return ['samples1', 'samples2'];
-    }
-
-    public function getRules($id = null)
-    {
-        return [];
+       return [
+        //TODO write down rules
+       ];
     }
 }
