@@ -51,7 +51,7 @@ abstract class BaseApiRepository implements RepositoryInterface
             return new LengthAwarePaginator($collection, $total, $total);
         }
 
-        return $this->query->paginate($perPage, $columns, null, $page);
+        return $this->query->paginate($perPage, $columns, 'page', $page);
     }
 
     public function findById($value, $columns = ['*'])
