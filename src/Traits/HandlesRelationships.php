@@ -44,13 +44,16 @@ trait HandlesRelationships
         //TODO: ook op permissies checken welke relaties ze mogen zien.
         $class = new \ReflectionClass(get_class($model));
         foreach ($class->getMethods() as $method) {
+            /**
+             * @var \ReflectionType
+             */
             $returnType = $method->getReturnType();
             //TODO: niet alleen op ! checken maar beter afvangen
-            if (!$returnType) {
+            if (!$returnType || !($returnType instanceof \ReflectionType)) {
                 continue;
             }
-            var_dump($method);
-            if (in_array(pathinfo($returnType)['basename'], $this->relationshipTypes)) {
+
+            if (in_array($returnType->__toString(), $this->relationshipTypes)) {
                 $relations[] = $method->getName();
             }
         }
