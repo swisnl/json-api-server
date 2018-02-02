@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Swis\LaravelApi\Http\Resources\BaseApiResource;
-use Swis\LaravelApi\Models\ModelContract;
 
 trait HandlesRelationships
 {
@@ -37,8 +37,7 @@ trait HandlesRelationships
     public function getRelationships($model): array//TODO: Skipt relaties die geen return type hebben
     {
         $relations = [];
-
-        if ($model instanceof ModelContract) {
+        if ($model instanceof Relation) {
             return $model->getRelationships();
         }
 
@@ -46,12 +45,11 @@ trait HandlesRelationships
         $class = new \ReflectionClass(get_class($model));
         foreach ($class->getMethods() as $method) {
             $returnType = $method->getReturnType();
-
             //TODO: niet alleen op ! checken maar beter afvangen
             if (!$returnType) {
                 continue;
             }
-
+            var_dump($method);
             if (in_array(pathinfo($returnType)['basename'], $this->relationshipTypes)) {
                 $relations[] = $method->getName();
             }

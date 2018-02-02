@@ -13,7 +13,7 @@ class RepositoryTest extends TestCase
     public function model_has_relationships()
     {
         $repository = new TestRepositoryWithRelationships();
-        $this->assertEquals($repository->getModelRelationships(), ['0' => 'testModels']);
+        $this->assertEquals(['0' => 'testModels'], $repository->getModelRelationships());
     }
 
     /** @test */

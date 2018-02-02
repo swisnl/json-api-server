@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Dimsav\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Model;
 
 class Sample extends Model
 {
@@ -24,7 +24,7 @@ class Sample extends Model
 
     public function getRules($id = null): array
     {
-       return [
+        return [
         //TODO write down rules
        ];
     }

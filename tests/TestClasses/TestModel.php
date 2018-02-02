@@ -3,9 +3,8 @@
 namespace Tests\TestClasses;
 
 use Illuminate\Database\Eloquent\Model;
-use Swis\LaravelApi\Models\ModelContract;
 
-class TestModel extends Model implements ModelContract
+class TestModel extends Model
 {
     public $id = 0;
     protected $fillable = [
@@ -13,11 +12,6 @@ class TestModel extends Model implements ModelContract
     ];
 
     public function getRules($id = null): array
-    {
-        return [];
-    }
-
-    public function getRelationships(): array
     {
         return [];
     }

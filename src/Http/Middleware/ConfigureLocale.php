@@ -18,7 +18,7 @@ class ConfigureLocale
     {
         $defaultLocale = env('APP_DEFAULT_LOCALE', 'en');
         $user = $request->user();
-        if($user && property_exists($user, 'locale')) {
+        if ($user && property_exists($user, 'locale')) {
             $defaultLocale = $user->locale;
         }
         app()->setLocale($request->get('lang', $defaultLocale));
