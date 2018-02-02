@@ -53,6 +53,6 @@ class GenerateAuthenticationTestCommand extends BaseGenerateCommand
 
     public function getConfigPath()
     {
-        return 'laravel_api.path.controller';
+        return 'laravel_api.path.auth_test';
     }
 }

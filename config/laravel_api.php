@@ -5,9 +5,9 @@ return [
     'path' => [
         'model' => app_path('/'),
 
-        'model_permissions' => app_path('Permissions'),
+        'model_permissions' => app_path('Permissions/'),
 
-        'translation' => app_path('/'),
+        'translation' => app_path('Translations/'),
 
         'controller' => app_path('Http/Controllers/Api/'),
 
@@ -15,9 +15,7 @@ return [
 
         'policy' => app_path('Policies/'),
 
-        'auth_test' => base_path('tests/Authentication'),
-
-        'migration' => base_path('database/migrations'),
+        'auth_test' => base_path('tests/Authentication/'),
 
         'templates' => 'vendor/swisnl/laravel-api/resources/templates/',
     ],
@@ -25,13 +23,13 @@ return [
     'namespace' => [
         'model' => 'App',
 
-        'model_permissions' => 'App',
+        'model_permissions' => 'App\Permissions',
 
         'controller' => 'App\Http\Controllers\Api',
 
         'repository' => 'App\Repositories',
 
-        'translation' => 'App',
+        'translation' => 'App\Translations',
 
         'policy' => 'App\Policies',
 

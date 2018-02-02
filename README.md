@@ -84,10 +84,11 @@ You also have the ability to generate the files separately:
 ``` bash
 $ php artisan laravel-api:generate-controller {name}
 $ php artisan laravel-api:generate-model {name}
-$ php artisan laravel-api:generate-translation {name}
+$ php artisan laravel-api:generate-model-permissions {name}
 $ php artisan laravel-api:generate-policy {name}
 $ php artisan laravel-api:generate-repository {name}
-$ php artisan laravel-api:generate-migration {name}
+$ php artisan laravel-api:generate-test {name}
+$ php artisan laravel-api:generate-translation {name}
 ```
 
 ### Configuration
@@ -200,4 +201,3 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-code-quality]: https://scrutinizer-ci.com/g/swisnl/laravel-api
 [link-downloads]: https://packagist.org/packages/swisnl/laravel-api
 [link-author]: https://github.com/DylandeWit
-[link-contributors]: ../../contributors
