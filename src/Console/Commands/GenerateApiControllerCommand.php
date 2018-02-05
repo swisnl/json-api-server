@@ -23,14 +23,6 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
     protected $overridePath;
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
     public function handle()
