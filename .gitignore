@@ -11,3 +11,4 @@ npm-debug.log
 yarn-error.log
 .env
 composer.lock
+.php_cs_cache

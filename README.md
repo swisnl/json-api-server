@@ -50,8 +50,6 @@ If you want to use your own BaseRepository, you have to implement the Repository
 
 The BaseApiRepository uses a trait to retrieve a models relationships. You can use this trait if you want to use the existing implementation.
 
-#### Model Contract
-If you like to have more configuration options for your model, you can implement the interface ModelContract. This interface will give you all the options currently available.
 ### Generating the required files
 After installing the package you can instantly generate all the required files by executing this command:
 
@@ -68,13 +66,12 @@ This generates the following files:
 
 * An eloquent model
 * A translation model: not mandatory. If you won't use it. You can just delete it after generating
-* A schema for your model: used to convert your model to a json api format
 * An API controller
     * Should extend the BaseApiController
 * A repository for your model
     * Could extend the BaseApiRepository
 * A policy for checking permissions
-* 2 tests and a testing trait
+* 1 test
 
 If everything is generated, all you have to do is write some endpoints for your new controller and you're good to go.
 
@@ -159,7 +156,7 @@ There are 3 optional middlewares:
 ## Packages Laravel-Api uses
 
 ##### Laravel framework
-* https://laravel.com/docs/5.4/
+* https://laravel.com/docs/5.5/
 
 ##### Dimsav / laravel-translatable
 * https://github.com/dimsav/laravel-translatable#tutorials
