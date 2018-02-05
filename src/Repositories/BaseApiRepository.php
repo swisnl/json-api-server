@@ -146,7 +146,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
 
-    public function setUser(User $user = null)
+    /*public function setUser(User $user = null)
     {
         if (!isset($user)) {
             return $this;
@@ -155,7 +155,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->user = $user;
 
         return $this;
-    }
+    }*/
 
     public function initQuery()
     {

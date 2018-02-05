@@ -28,7 +28,7 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $items = $this->repository->setUser($this->request->user())
+        $items = $this->repository
             ->paginate(null, $this->request->query());
 
         $this->authorizeAction('index');
@@ -115,6 +115,7 @@ abstract class BaseApiController extends Controller
         $attributes = $model->getFillable();
         $values = json_decode($this->request->getContent(), true);
 
+        //TODO Check if $values exist
         foreach ($values as $value => $data) {
             if (in_array($value, $attributes)) {
                 continue;
