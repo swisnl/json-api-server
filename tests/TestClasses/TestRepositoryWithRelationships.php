@@ -10,4 +10,9 @@ class TestRepositoryWithRelationships extends BaseApiRepository
     {
         return TestModelWithRelationships::class;
     }
+
+    public function getQuery()
+    {
+        return $this->query;
+    }
 }

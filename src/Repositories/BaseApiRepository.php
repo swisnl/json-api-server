@@ -13,12 +13,15 @@ abstract class BaseApiRepository implements RepositoryInterface
 {
     use HandlesRelationships;
 
+    const PAGE = 1;
+    const PER_PAGE = 15;
+
     /** @var Model $model */
     protected $model;
     protected $user;
 
-    protected $page;
-    protected $perPage;
+    protected $page = self::PAGE;
+    protected $perPage = self::PER_PAGE;
     protected $parameters;
 
     /** @var Builder $query */
@@ -30,18 +33,14 @@ abstract class BaseApiRepository implements RepositoryInterface
     public function __construct()
     {
         $this->model = $this->makeModel();
+        $this->initQuery();
     }
 
-    public function paginate($perPage = 15, $page = 1, $columns = ['*'], $parameters = [])
+    public function paginate($columns = ['*'], $parameters = [])
     {
-        if (!isset($this->query)) {
-            $this->query = $this->model->newQuery();
-        }
+        $this->initQuery();
 
         $this->parameters = $parameters;
-        $this->perPage = $perPage;
-        $this->page = $page;
-
         $this->setFilters();
 
         if (array_key_exists('all', $this->parameters)) {
@@ -51,14 +50,12 @@ abstract class BaseApiRepository implements RepositoryInterface
             return new LengthAwarePaginator($collection, $total, $total);
         }
 
-        return $this->query->paginate($perPage, $columns, 'page', $page);
+        return $this->query->paginate($this->perPage, $columns, 'page', $this->page);
     }
 
     public function findById($value, $columns = ['*'])
     {
-        if (!isset($this->query)) {
-            $this->query = $this->model->newQuery();
-        }
+        $this->initQuery();
 
         $this->eagerLoadRelationships();
 
@@ -149,15 +146,6 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
 
-    public function dumpQueryWithBindings()
-    {
-        $sql = $this->query->toSql();
-        foreach ($this->query->getBindings() as $key => $binding) {
-            $sql = preg_replace('/\?/', "'$binding'", $sql, 1);
-        }
-        dd($sql);
-    }
-
     public function setUser(User $user = null)
     {
         if (!isset($user)) {
@@ -167,6 +155,13 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->user = $user;
 
         return $this;
+    }
+
+    public function initQuery()
+    {
+        if (!isset($this->query)) {
+            $this->query = $this->model->newQuery();
+        }
     }
 
     protected function nullToEmptyString($value)
@@ -180,14 +175,10 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     protected function eagerLoadRelationships()
     {
-        //$relations = $this->getRelationships($this->model);
         $relations = [];
-
         if (!empty($this->parameters) && array_key_exists('include', $this->parameters)) {
             $relations = explode(',', $this->parameters['include']);
-            //$relations = array_merge($includes, $relations);
         }
-
         $this->query->with(array_unique($relations));
     }
 
@@ -200,11 +191,11 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     public function setPagination()
     {
-        if (array_key_exists('page', $this->parameters)) {
+        if (isset($this->parameters['page'])) {
             $this->page = $this->parameters['page'];
         }
 
-        if (array_key_exists('per_page', $this->parameters)) {
+        if (isset($this->parameters['per_page'])) {
             $this->perPage = $this->parameters['per_page'];
         }
     }

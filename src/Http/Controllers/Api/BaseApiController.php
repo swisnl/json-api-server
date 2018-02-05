@@ -28,10 +28,8 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
-        $perPage = $this->request->get('per_page', null);
-        $page = $this->request->get('page', null);
         $items = $this->repository->setUser($this->request->user())
-            ->paginate($perPage, $page, null, $this->request->query());
+            ->paginate(null, $this->request->query());
 
         $this->authorizeAction('index');
 

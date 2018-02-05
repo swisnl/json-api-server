@@ -1,4 +1,5 @@
 /public/hot
+build
 /public/storage
 /storage/*.key
 /vendor

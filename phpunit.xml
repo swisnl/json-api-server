@@ -23,13 +23,14 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="DB_CONNECTION" value="testing"/>
     </php>
     <!-- ensure build/logs directory exists on your repo -->
     <logging>
         <log type="coverage-html" target="./build/logs/report/"
              charset="UTF-8" yui="true" highlight="true"
-             lowUpperBound="35" highLowerBound="70" showUncoveredFiles="true" />
-        <log type="testdox-html" target="./build/logs/testdox.html" />
+             lowUpperBound="35" highLowerBound="70" showUncoveredFiles="true"/>
+        <log type="testdox-html" target="./build/logs/testdox.html"/>
         <log type="coverage-clover" target="./build/logs/clover.xml"/>
     </logging>
 </phpunit>

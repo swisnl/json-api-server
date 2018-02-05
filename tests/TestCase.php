@@ -2,9 +2,10 @@
 
 namespace Tests;
 
+use Orchestra\Testbench\TestCase as Orchestra;
 use Swis\LaravelApi\Providers\LaravelApiServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {

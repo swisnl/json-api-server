@@ -17,4 +17,9 @@ class TestRepository extends BaseApiRepository
     {
         $this->modelName = $model;
     }
+
+    public function getQuery()
+    {
+        return $this->query->getQuery();
+    }
 }
