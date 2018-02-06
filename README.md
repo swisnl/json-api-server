@@ -10,6 +10,7 @@ It already has the basic features an API should have, like:
 
 * A generator to generate your needed files for each model
 * An abstract layer to handle your basic CRUD actions
+* Creates routes for all your endpoints
 * Support for a few useful URL parameters
 * Permission and route permission handling
 * Responses in json api format (http://jsonapi.org/)
@@ -68,12 +69,11 @@ This generates the following files:
 * A translation model: not mandatory. If you won't use it. You can just delete it after generating
 * An API controller
     * Should extend the BaseApiController
+* A routes file where the all the CRUD actions are defined
 * A repository for your model
     * Could extend the BaseApiRepository
 * A policy for checking permissions
-* 1 test
-
-If everything is generated, all you have to do is write some endpoints for your new controller and you're good to go.
+* 1 test for checking if a user has permissions for the endpoint
 
 You'll be able to do the basic CRUD actions without writing anything.
 
@@ -147,13 +147,17 @@ The following URL parameters are supported after installing this package:
 * ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
 * ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
 
-### Optional middleware
-There are 3 optional middlewares:
-
+### Mandatory middleware
 * inspect_content_type: Required. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
+
+### Optional middleware
+There are 2 optional middleware:
+
 * route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 
+## Passport explanation
+TODO
 ## Packages Laravel-Api uses
 
 ##### Laravel framework
