@@ -2,7 +2,9 @@
 
 namespace Swis\LaravelApi\Console\Commands;
 
-class GenerateAllCommand extends BaseGenerateCommand
+use Illuminate\Console\Command;
+
+class GenerateAllCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -24,7 +26,6 @@ class GenerateAllCommand extends BaseGenerateCommand
     protected $overridePath;
 
     protected $callsToSkip;
-
 
     /**
      * Execute the console command.
@@ -48,6 +49,7 @@ class GenerateAllCommand extends BaseGenerateCommand
             'translation' => 'laravel-api:generate-translation',
             'policy' => 'laravel-api:generate-policy',
             'test' => 'laravel-api:generate-test',
+            'routes' => 'laravel-api:generate-routes',
         ];
 
         foreach ($generatorCalls as $type => $generatorCall) {
@@ -56,19 +58,5 @@ class GenerateAllCommand extends BaseGenerateCommand
             }
             $this->call($generatorCall, ['name' => $this->modelName, '--path' => $this->overridePath]);
         }
-    }
-
-    public function getModelName()
-    {
-        return $this->modelName;
-    }
-
-    public function getOverridePath()
-    {
-        return $this->overridePath;
-    }
-
-    public function getConfigPath()
-    {
     }
 }

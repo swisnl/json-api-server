@@ -1,0 +1,11 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\$MODEL_NAME$Controller as Controller;
+
+Route::prefix('$SNAKE_CASED_MODEL_NAME$')->group(function () {
+    Route::get('', Controller::class . '@index');
+    Route::get('/{id}', Controller::class . '@show');
+    Route::delete('/{id}', Controller::class . '@destroy');
+    Route::post('', Controller::class . '@create');
+    Route::patch('/{id}', Controller::class . '@update');
+});

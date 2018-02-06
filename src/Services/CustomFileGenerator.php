@@ -7,10 +7,6 @@ class CustomFileGenerator
     private $modelName;
     private $stubVariables;
 
-    public function __construct()
-    {
-    }
-
     protected function setStubVars()
     {
         $this->stubVariables = [

@@ -18,6 +18,8 @@ return [
         'auth_test' => base_path('tests/Authentication/'),
 
         'templates' => 'vendor/swisnl/laravel-api/resources/templates/',
+
+        'routes' => app_path('Http/Routes/')
     ],
 
     'namespace' => [

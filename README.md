@@ -84,6 +84,7 @@ $ php artisan laravel-api:generate-model {name}
 $ php artisan laravel-api:generate-model-permissions {name}
 $ php artisan laravel-api:generate-policy {name}
 $ php artisan laravel-api:generate-repository {name}
+$ php artisan laravel-api:generate-routes {name}
 $ php artisan laravel-api:generate-test {name}
 $ php artisan laravel-api:generate-translation {name}
 ```
@@ -149,7 +150,7 @@ The following URL parameters are supported after installing this package:
 ### Optional middleware
 There are 3 optional middlewares:
 
-* inspect_content_type: Highly recommended. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
+* inspect_content_type: Required. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
 * route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 

@@ -9,6 +9,8 @@ class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {
+        config(['laravel_api.path.routes' => 'tests/TestClasses/Routes']);
+
         return [LaravelApiServiceProvider::class];
     }
 
