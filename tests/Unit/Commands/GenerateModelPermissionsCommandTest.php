@@ -16,7 +16,7 @@ class GenerateModelPermissionsCommandTest extends CommandTestCase
     public function it_generates_a_model_permissions()
     {
         $this->artisan('laravel-api:generate-model-permissions', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('laravel_api.path.model_permissions') . 'ExamplePermissions.php'));
-        unlink('tests/Data/Output/' . 'ExamplePermissions.php');
+        $this->assertTrue(file_exists(config('laravel_api.path.model_permissions').'ExamplePermissions.php'));
+        unlink('tests/Data/Output/'.'ExamplePermissions.php');
     }
 }

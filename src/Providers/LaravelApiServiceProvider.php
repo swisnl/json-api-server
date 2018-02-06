@@ -31,7 +31,7 @@ class LaravelApiServiceProvider extends ServiceProvider
         $router->aliasMiddleware('inspect_content_type', InspectContentType::class);
 
         $this->publishes([
-            __DIR__ . '/../../config/laravel_api.php' => base_path('config/laravel_api.php'),
+            __DIR__.'/../../config/laravel_api.php' => base_path('config/laravel_api.php'),
         ], 'laravel-api');
 
         $this->publishes([

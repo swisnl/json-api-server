@@ -16,7 +16,7 @@ class GenerateRoutesCommandTest extends CommandTestCase
     public function it_generates_routes()
     {
         $this->artisan('laravel-api:generate-routes', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
-        $this->assertTrue(file_exists(config('laravel_api.path.routes') . 'ExampleRoutes.php'));
-        unlink('tests/Data/Output/' . 'ExampleRoutes.php');
+        $this->assertTrue(file_exists(config('laravel_api.path.routes').'ExampleRoutes.php'));
+        unlink('tests/Data/Output/'.'ExampleRoutes.php');
     }
 }
