@@ -1,7 +1,7 @@
 /public/hot
 build
 /public/storage
-/storage/*.key
+/storage
 /vendor
 /.idea
 /.vagrant
@@ -11,4 +11,4 @@ npm-debug.log
 yarn-error.log
 .env
 composer.lock
-.php_cs_cache
+.php_cs.cache
