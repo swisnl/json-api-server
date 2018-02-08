@@ -3,12 +3,9 @@
 namespace Swis\LaravelApi\Exceptions;
 
 use Swis\LaravelApi\Constants\HttpCodes;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class ForbiddenException extends HttpException
+class ForbiddenException extends JsonException
 {
-    public function __construct($message = null, \Exception $previous = null, $code = 0)
-    {
-        parent::__construct(HttpCodes::HTTP_FORBIDDEN, $message, $previous, [], $code);
-    }
+    protected $code = HttpCodes::HTTP_NOT_FOUND;
+    protected $message = 'Not found';
 }

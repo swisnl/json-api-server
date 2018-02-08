@@ -2,6 +2,9 @@
 
 namespace Swis\LaravelApi\Exceptions;
 
-class ContentTypeNotSupportedException extends \Exception
+use Swis\LaravelApi\Constants\HttpCodes;
+
+class ContentTypeNotSupportedException extends JsonException
 {
+    protected $code = HttpCodes::HTTP_UNSUPPORTED_MEDIA_TYPE;
 }
