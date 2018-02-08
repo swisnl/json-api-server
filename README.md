@@ -24,16 +24,8 @@ Via Composer
 $ composer require swisnl/laravel-api
 ```
 
-Add the following to your config/app.php file:
+###Sample
 
-``` php
-'providers' => [
- // Other providers
- Swis\LaravelApi\Providers\LaravelApiServiceProvider::class,
- ],
-```
-
-## Sample 
 Please see the folder [sample](sample) for a sample of an application using this package.
 
 ## Usage
@@ -66,10 +58,10 @@ $ php artisan laravel-api:generate-all Test --path=app/temp/
 This generates the following files:
 
 * An eloquent model
-* A translation model: not mandatory. If you won't use it. You can just delete it after generating
+* A translation model
 * An API controller
     * Should extend the BaseApiController
-* A routes file where the all the CRUD actions are defined
+* A routes file where the all the endpoints are def
 * A repository for your model
     * Could extend the BaseApiRepository
 * A policy for checking permissions
@@ -90,9 +82,73 @@ $ php artisan laravel-api:generate-translation {name}
 ```
 
 ### Configuration
-If you would like to override the configuration files, you can add `--tag=laravel-api` or `--tag=laravel-api-templates` to your artisan publish call. If you decide to override the templates, make sure you override the laravel api config too. You have to define where your own templates are in the config. There is a configuration file:
-* laravel_api
-    * This is for the config of the package. The generator config and permission config
+If you would like to override the configuration files.
+``` bash
+$ php artisan vendor:publish --tag=laravel-api
+$ php artisan vendor:publish --tag=laravel-api-templates
+```
+If you decide to override the templates, make sure you override the laravel api config too. You have to define where your own templates are in the config.
+
+This is the default configuration:
+ ``` php
+ <?php
+ 
+ return [
+     // Generator configuration
+     'path' => [
+         'model' => app_path('/'),
+ 
+         'model_permissions' => app_path('Permissions/'),
+ 
+         'translation' => app_path('Translations/'),
+ 
+         'controller' => app_path('Http/Controllers/Api/'),
+ 
+         'repository' => app_path('Repositories/'),
+ 
+         'policy' => app_path('Policies/'),
+ 
+         'auth_test' => base_path('tests/Authentication/'),
+ 
+         'templates' => 'vendor/swisnl/laravel-api/resources/templates/',
+ 
+         'routes' => app_path('Http/Routes/')
+     ],
+ 
+     'namespace' => [
+         'model' => 'App',
+ 
+         'model_permissions' => 'App\Permissions',
+ 
+         'controller' => 'App\Http\Controllers\Api',
+ 
+         'repository' => 'App\Repositories',
+ 
+         'translation' => 'App\Translations',
+ 
+         'policy' => 'App\Policies',
+ 
+         'auth_test' => 'App\Tests\Authentication'
+     ],
+ 
+     // Permissions configuration
+     'permissions' => [
+         'checkDefaultIndexPermission' => false,
+ 
+         'checkDefaultShowPermission' => false,
+ 
+         'checkDefaultCreatePermission' => false,
+ 
+         'checkDefaultUpdatePermission' => false,
+ 
+         'checkDefaultDeletePermission' => false,
+     ],
+ 
+     // Load all relationships to have response exactly like json api. This slows down the API immensely.
+     'loadAllJsonApiRelationships' => true,
+ ];
+ ```
+
 ### Requests and responses
 All requests and responses are formatted according to the format specified by http://jsonapi.org/.
 
@@ -103,7 +159,7 @@ return $this->respondWithPartialContent($object);
 return $this->respondWithCreated($object);
 return $this->respondWithNoContent($object);
 return $this->respondWithCollection($object);
-``` 
+```
 
 These methods automatically converts your objects to json api format and creates a response with the correct status code and body.
 
@@ -121,21 +177,16 @@ If you decide to use policies to check for the user's pemissions you have to add
  }    
 ```
 
-You will also have to change the 'checkForPermissions()' method in your controllers to return true.
+If  you want to redirect the validation to a specific function in your policy.
 
-If you have methods in your own controller and you would like to check for permissions. Add the following line in your methods:
 ``` php
-$this->validateUser();
-``` 
-
-If you want to check if they can request a specific object you can add that object as the first parameter:
-``` php
-$this->validateUser($requestedObject);
+$this->authorizeAction('show');
 ```
 
-If  you want to redirect the validation to a specific function in your policy you can write that action as the second parameter:
+If you want to check if they can request a specific object you can add that object as the second parameter:
+
 ``` php
-$this->validateUser($requestedObject, 'show');
+$this->authorizeAction('show', $requestedObject);
 ```
 
 ### URL parameters out of the box
@@ -164,7 +215,7 @@ TODO
 * https://laravel.com/docs/5.5/
 
 ##### Dimsav / laravel-translatable
-* https://github.com/dimsav/laravel-translatable#tutorials
+* https://github.com/dimsav/laravel-translatable
 
 ##### spatie / laravel-permission
 * https://github.com/spatie/laravel-permission

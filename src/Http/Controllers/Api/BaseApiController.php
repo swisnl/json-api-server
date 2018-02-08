@@ -31,7 +31,9 @@ abstract class BaseApiController extends Controller
         $items = $this->repository
             ->paginate(null, $this->request->query());
 
-        $this->authorizeAction('index');
+        if (config('laravel_api.permissions.checkDefaultIndexPermission')) {
+            $this->authorizeAction('index');
+        }
 
         return $this->respondWithCollection($items);
     }
@@ -46,7 +48,9 @@ abstract class BaseApiController extends Controller
     public function show($id)
     {
         $item = $this->repository->findById($id);
-        $this->authorizeAction('show', $item);
+        if (config('laravel_api.permissions.checkDefaultShowPermission')) {
+            $this->authorizeAction('show', $item);
+        }
 
         return $this->respondWithOK($item);
     }
@@ -58,7 +62,9 @@ abstract class BaseApiController extends Controller
      */
     public function create()
     {
-        $this->authorizeAction('create');
+        if (config('laravel_api.permissions.checkDefaultCreatePermission')) {
+            $this->authorizeAction('create');
+        }
         $createdResource = $this->repository->create($this->validateObject());
 
         return $this->respondWithCreated($createdResource);
@@ -73,7 +79,9 @@ abstract class BaseApiController extends Controller
      */
     public function update($id)
     {
-        $this->authorizeAction('update', $this->repository->findById($id));
+        if (config('laravel_api.permissions.checkDefaultUpdatePermission')) {
+            $this->authorizeAction('update', $this->repository->findById($id));
+        }
 
         return $this->respondWithOK($this->repository->update($this->validateObject($id), $id));
     }
@@ -87,7 +95,9 @@ abstract class BaseApiController extends Controller
      */
     public function delete($id)
     {
-        $this->authorizeAction('delete', $this->repository->findById($id));
+        if (config('laravel_api.permissions.checkDefaultDeletePermission')) {
+            $this->authorizeAction('delete', $this->repository->findById($id));
+        }
 
         $this->repository->destroy($id);
 
@@ -96,10 +106,6 @@ abstract class BaseApiController extends Controller
 
     protected function authorizeAction($policyMethod, $requestedObject = null)
     {
-        if (!config('laravel_api.checkForPermissions')) {
-            return;
-        }
-
         $this->checkIfUserHasPermissions(
             $policyMethod,
             $this->repository->getModelName(),
@@ -110,7 +116,7 @@ abstract class BaseApiController extends Controller
     public function validateObject($id = null)
     {
         $model = $this->repository->makeModel();
-        $this->validate($this->request, $model->getRules($id));
+        $this->validate($this->request, $model->getRules($id), $model->getMessages());
 
         $attributes = $model->getFillable();
         $values = json_decode($this->request->getContent(), true);

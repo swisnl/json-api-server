@@ -3,6 +3,7 @@
 namespace Swis\LaravelApi\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Swis\LaravelApi\Exceptions\ForbiddenException;
@@ -31,7 +32,7 @@ class PermissionMiddleware
 
         try {
             if (!isset($routeName)) {
-                throw new ForbiddenException('You have to assign a name to the route');
+                throw new Exception('You have to assign a name to the route');
             }
 
             if (!$request->user()->hasPermissionTo($routeName)) {

@@ -39,7 +39,17 @@ return [
     ],
 
     // Permissions configuration
-    'checkForPermissions' => false,
+    'permissions' => [
+        'checkDefaultIndexPermission' => false,
+
+        'checkDefaultShowPermission' => false,
+
+        'checkDefaultCreatePermission' => false,
+
+        'checkDefaultUpdatePermission' => false,
+
+        'checkDefaultDeletePermission' => false,
+    ],
 
     // Load all relationships to have response exactly like json api. This slows down the API immensely.
     'loadAllJsonApiRelationships' => true,
