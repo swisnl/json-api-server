@@ -20,7 +20,7 @@ It already has the basic features an API should have, like:
 
 Via Composer
 
-``` bash
+```bash
 $ composer require swisnl/laravel-api
 ```
 
@@ -46,12 +46,13 @@ The BaseApiRepository uses a trait to retrieve a models relationships. You can u
 ### Generating the required files
 After installing the package you can instantly generate all the required files by executing this command:
 
-``` bash
+```bash
 $ php artisan laravel-api:generate-all {Model}
 ```
 
 To override the default path without overriding the laravel_generator config file, you can use the `--path={path}` option. For example:
-``` bash
+
+```bash
 $ php artisan laravel-api:generate-all Test --path=app/temp/
 ```
 
@@ -70,7 +71,8 @@ This generates the following files:
 You'll be able to do the basic CRUD actions without writing anything.
 
 You also have the ability to generate the files separately:
-``` bash
+
+```bash
 $ php artisan laravel-api:generate-controller {name}
 $ php artisan laravel-api:generate-model {name}
 $ php artisan laravel-api:generate-model-permissions {name}
@@ -83,15 +85,17 @@ $ php artisan laravel-api:generate-translation {name}
 
 ### Configuration
 If you would like to override the configuration files.
-``` bash
+
+```bash
 $ php artisan vendor:publish --tag=laravel-api
 $ php artisan vendor:publish --tag=laravel-api-templates
 ```
 If you decide to override the templates, make sure you override the laravel api config too. You have to define where your own templates are in the config.
 
 This is the default configuration:
- ``` php
- return [
+
+```php
+   return [
      // Generator configuration
      'path' => [
          'model' => app_path('/'),
@@ -144,14 +148,14 @@ This is the default configuration:
  
      // Load all relationships to have response exactly like json api. This slows down the API immensely.
      'loadAllJsonApiRelationships' => true,
- ];
+]; 
  ```
 
 ### Requests and responses
 All requests and responses are formatted according to the format specified by http://jsonapi.org/.
 
 There are several respond methods at your disposal in your controller. The following respond methods are implemented at this moment:
-``` php
+```php
 return $this->respondWithOk($object);
 return $this->respondWithPartialContent($object);
 return $this->respondWithCreated($object);
@@ -164,7 +168,7 @@ These methods automatically converts your objects to json api format and creates
 ### Using policies
 If you decide to use policies to check for the user's pemissions you have to add the policies to your Providers\AuthServicePorvider.
 
-``` php
+```php
  protected $policies = [
      Sample::class => SamplePolicy::class,
  ];
@@ -177,13 +181,13 @@ If you decide to use policies to check for the user's pemissions you have to add
 
 If  you want to redirect the validation to a specific function in your policy.
 
-``` php
+```php
 $this->authorizeAction('show');
 ```
 
 If you want to check if they can request a specific object you can add that object as the second parameter:
 
-``` php
+```php
 $this->authorizeAction('show', $requestedObject);
 ```
 
