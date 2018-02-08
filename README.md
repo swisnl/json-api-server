@@ -149,7 +149,7 @@ This is the default configuration:
      // Load all relationships to have response exactly like json api. This slows down the API immensely.
      'loadAllJsonApiRelationships' => true,
 ]; 
- ```
+```
 
 ### Requests and responses
 All requests and responses are formatted according to the format specified by http://jsonapi.org/.
