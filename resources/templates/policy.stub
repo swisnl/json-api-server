@@ -12,20 +12,12 @@ class $MODEL_NAME$Policy
 
     public function index(User $user)
     {
-        if (!$user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$)) {
-            return false;
-        }
-
-        return true;
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$);
     }
 
     public function show(User $user, $requestedItem)
     {
-        if ($user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$)) {
-            return true;
-        }
-
-        return $user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_$UPPER_CASED_MODEL_NAME$);
+        return $user->hasPermissionTo($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$);
     }
 
     public function create(User $user)

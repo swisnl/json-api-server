@@ -91,8 +91,6 @@ If you decide to override the templates, make sure you override the laravel api 
 
 This is the default configuration:
  ``` php
- <?php
- 
  return [
      // Generator configuration
      'path' => [

@@ -116,7 +116,7 @@ abstract class BaseApiController extends Controller
     public function validateObject($id = null)
     {
         $model = $this->repository->makeModel();
-        $this->validate($this->request, $model->getRules($id), $model->getMessages());
+        $this->validate($this->request, $model->getRules($id));
 
         $attributes = $model->getFillable();
         $values = json_decode($this->request->getContent(), true);
