@@ -8,9 +8,6 @@ use Swis\JsonApi\Server\Models\Responses\RespondError;
 
 class ResponseService
 {
-    public function __construct()
-    {
-    }
 
     public function response($strResponseModel, $content = null)
     {
@@ -22,15 +19,7 @@ class ResponseService
     protected function createResponse($responseModel, $content)
     {
         if ($responseModel instanceof RespondError) { //TODO: tijdelijk snel hier geformat
-            $errors = [];
-
-            $errors['errors'] = [
-                0 => [
-                    'status' => (string) $responseModel->getStatusCode(),
-                    'title' => (string) $responseModel->getMessage(),
-                    'detail' => (string) $content,
-                ],
-            ];
+            $errors = $this->formatErrors($responseModel, $content);
 
             return response($errors, $responseModel->getStatusCode());
         }
@@ -54,5 +43,22 @@ class ResponseService
         return (new BaseApiResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
+    }
+
+    /**
+     * @param $responseModel
+     * @param $content
+     * @return mixed
+     */
+    protected function formatErrors($responseModel, $content)
+    {
+        $errors['errors'] = [
+            0 => [
+                'status' => (string)$responseModel->getStatusCode(),
+                'title' => (string)$responseModel->getMessage(),
+                'detail' => (string)$content,
+            ],
+        ];
+        return $errors;
     }
 }

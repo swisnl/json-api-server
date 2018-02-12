@@ -4,7 +4,9 @@ namespace Swis\JsonApi\Server\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
+use Swis\JsonApi\Server\Models\Responses\RespondError;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpCreated;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpForbidden;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpNoContent;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpOk;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpPartialContent;
@@ -69,5 +71,15 @@ trait HandleResponses
         }
 
         return $this->respondWithCollectionOK($content);
+    }
+
+    public function respondWithForbidden($content)
+    {
+        return $this->respond(RespondHttpForbidden::class, $content);
+    }
+
+    public function respondWithBadRequest($content)
+    {
+        return $this->respond(RespondError::class, $content);
     }
 }

@@ -54,7 +54,7 @@
     },
     "laravel": {
       "providers": [
-        "Swis\\LaravelApi\\Providers\\LaravelApiServiceProvider"
+        "Swis\\JsonApi\\Server\\Providers\\LaravelApiServiceProvider"
       ]
     }
   },

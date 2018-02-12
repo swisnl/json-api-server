@@ -4,10 +4,10 @@ namespace Swis\JsonApi\Server\Models\Responses;
 
 use Swis\JsonApi\Server\Constants\HttpCodes;
 
-abstract class RespondError
+class RespondError
 {
     protected $statusCode = HttpCodes::HTTP_BAD_REQUEST;
-    protected $message;
+    protected $message = 'Bad request';
 
     public function getStatusCode()
     {

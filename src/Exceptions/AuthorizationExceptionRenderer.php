@@ -9,9 +9,11 @@
 namespace Swis\JsonApi\Server\Exceptions;
 
 use Exception;
+use Swis\JsonApi\Server\Constants\HttpCodes;
 
 class AuthorizationExceptionRenderer
 {
+    public $status = HttpCodes::HTTP_UNAUTHORIZED;
     /**
      * @param Exception $exception
      *
@@ -19,6 +21,6 @@ class AuthorizationExceptionRenderer
      */
     public function formatErrors(Exception $exception): array
     {
-        return ['message' => $exception->getMessage(), 'status' => '401'];
+        return ['message' => $exception->getMessage(), 'status' => $this->status];
     }
 }

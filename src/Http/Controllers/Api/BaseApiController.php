@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Swis\JsonApi\Server\Exceptions\ForbiddenException;
 use Swis\JsonApi\Server\Repositories\RepositoryInterface;
 use Swis\JsonApi\Server\Traits\HandleResponses;
 use Swis\JsonApi\Server\Traits\HasPermissionChecks;
@@ -28,6 +29,7 @@ abstract class BaseApiController extends Controller
 
     public function index()
     {
+        throw new ForbiddenException('bois');
         $items = $this->repository
             ->paginate(null, $this->request->query());
 
