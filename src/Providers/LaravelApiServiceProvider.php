@@ -26,10 +26,6 @@ class LaravelApiServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
-//        $this->app->singleton(
-//            'Illuminate\Contracts\Debug\ExceptionHandler',
-//            'Swis\JsonApi\Server\Exceptions\LaravelJsonExceptionHandler'
-//        );
         $router->aliasMiddleware('route_permission_middleware', PermissionMiddleware::class);
         $router->aliasMiddleware('configure_locale', ConfigureLocale::class);
         $router->aliasMiddleware('inspect_content_type', InspectContentType::class);

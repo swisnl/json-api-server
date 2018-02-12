@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
+use Swis\JsonApi\Server\Exceptions\NotFoundException;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
 use Tests\TestClasses\TestRepository;
@@ -72,8 +73,8 @@ class RepositoryTest extends TestCase
     /** @test */
     public function set_ids_with_parameters()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['ids' => '1,2,3']);
-        $this->assertEquals($this->testRepository->getQuery()->wheres[0]['values'], [1, 2, 3]);
+        $this->testRepository->paginate($parameters = ['ids' => '1,2,3']);
+        $this->assertEquals([1, 2, 3], $this->testRepository->getQuery()->wheres[0]['values']);
     }
 
     /** @test */
@@ -85,8 +86,8 @@ class RepositoryTest extends TestCase
     /** @test */
     public function exclude_ids_with_parameters()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['exclude_ids' => '1,2,3']);
-        $this->assertEquals($this->testRepository->getQuery()->wheres[0]['values'], [1, 2, 3]);
+        $this->testRepository->paginate($parameters = ['exclude_ids' => '1,2,3']);
+        $this->assertEquals([1, 2, 3], $this->testRepository->getQuery()->wheres[0]['values']);
     }
 
     /** @test */
@@ -98,8 +99,8 @@ class RepositoryTest extends TestCase
     /** @test */
     public function order_by_asc_with_parameters()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['order_by_asc' => true]);
-        $this->assertEquals($this->testRepository->getQuery()->orders[0]['direction'], 'asc');
+        $this->testRepository->paginate($parameters = ['order_by_asc' => true]);
+        $this->assertEquals('asc', $this->testRepository->getQuery()->orders[0]['direction']);
     }
 
     /** @test */
@@ -111,8 +112,8 @@ class RepositoryTest extends TestCase
     /** @test */
     public function order_by_desc_with_parameters()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['order_by_desc' => true]);
-        $this->assertEquals($this->testRepository->getQuery()->orders[0]['direction'], 'desc');
+        $this->testRepository->paginate( $parameters = ['order_by_desc' => true]);
+        $this->assertEquals('desc', $this->testRepository->getQuery()->orders[0]['direction']);
     }
 
     /** @test */
@@ -124,41 +125,48 @@ class RepositoryTest extends TestCase
     /** @test */
     public function paginate_with_page()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['page' => 2]);
-        $this->assertEquals($this->testRepository->getQuery()->offset, 15);
+        $this->testRepository->paginate($parameters = ['page' => 2]);
+        $this->assertEquals(15, $this->testRepository->getQuery()->offset);
     }
 
     /** @test */
     public function paginate_with_per_page()
     {
-        $this->testRepository->paginate(['*'], $parameters = ['per_page' => 2]);
-        $this->assertEquals($this->testRepository->getQuery()->limit, 2);
+        $this->testRepository->paginate($parameters = ['per_page' => 2]);
+        $this->assertEquals(2, $this->testRepository->getQuery()->limit);
     }
 
     /** @test */
     public function paginate_with_all_attribute()
     {
-        $this->assertEquals($this->testRepository->paginate(['*'], $parameters = ['all' => true])->total(), 1);
+        $this->assertEquals(1, $this->testRepository->paginate($parameters = ['all' => true])->total());
+    }
+
+    /** @test */
+    public function set_columns()
+    {
+        $this->testRepository->paginate($parameters = ['fields' => 'title']);
+        $this->assertContains('title', $this->testRepository->getColumns());
     }
 
     /** @test */
     public function find_model_by_id_without_query()
     {
         $model = $this->testRepository->findById(1);
-        $this->assertEquals($this->testModel->title, $model->title);
+        $this->assertEquals($model->title, $this->testModel->title);
     }
 
     /** @test */
     public function find_model_by_id_with_query()
     {
         $model = $this->testRepository->setParameters(['order_by_asc' => true])->findById(1);
-        $this->assertEquals($this->testModel->title, $model->title);
+        $this->assertEquals($model->title, $this->testModel->title);
     }
 
     /** @test */
     public function eager_load_relation_ships()
     {
-        $this->testRepositoryWithRelationships->paginate(['*'], ['include' => 'model']);
+        $this->testRepositoryWithRelationships->paginate(['include' => 'model']);
         $this->assertCount(1, $this->testRepositoryWithRelationships->getQuery()->getEagerLoads());
     }
 
@@ -184,7 +192,9 @@ class RepositoryTest extends TestCase
         ]);
     }
 
-    /** @test */
+    /** @test
+     * @throws \Swis\JsonApi\Server\Exceptions\NotFoundException
+     */
     public function update_model()
     {
         $this->testRepository->update(['title' => 'test2', 'body' => 'test'], 1);
@@ -192,6 +202,15 @@ class RepositoryTest extends TestCase
             'title' => 'test2',
             'body' => 'test',
         ]);
+    }
+
+    /** @test
+     * @throws \Swis\JsonApi\Server\Exceptions\NotFoundException
+     */
+    public function update_model_not_found()
+    {
+        $this->expectException(NotFoundException::class);
+        $this->testRepository->update(['title' => 'test2', 'body' => 'test'], 2);
     }
 
     /** @test */

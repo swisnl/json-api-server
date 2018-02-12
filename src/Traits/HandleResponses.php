@@ -8,6 +8,7 @@ use Swis\JsonApi\Server\Models\Responses\RespondError;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpCreated;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpForbidden;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpNoContent;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpNotFound;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpOk;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpPartialContent;
 use Swis\JsonApi\Server\Services\ResponseService;
@@ -81,5 +82,10 @@ trait HandleResponses
     public function respondWithBadRequest($content)
     {
         return $this->respond(RespondError::class, $content);
+    }
+
+    public function respondWithNotFound($content)
+    {
+        return $this->respond(RespondHttpNotFound::class, $content);
     }
 }

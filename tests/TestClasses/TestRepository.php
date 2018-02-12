@@ -22,4 +22,9 @@ class TestRepository extends BaseApiRepository
     {
         return $this->query->getQuery();
     }
+
+    public function getColumns()
+    {
+        return $this->columns;
+    }
 }

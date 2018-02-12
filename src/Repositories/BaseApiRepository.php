@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Swis\JsonApi\Server\Exceptions\NotFoundException;
 use Swis\JsonApi\Server\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -25,6 +26,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
     /** @var Builder $query */
     protected $query;
+    protected $columns = ['*'];
 
     /**
      * BaseApiRepository constructor.
@@ -35,7 +37,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->initQuery();
     }
 
-    public function paginate($columns = ['*'], $parameters = [])
+    public function paginate($parameters = [])
     {
         $this->initQuery();
 
@@ -48,8 +50,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
             return new LengthAwarePaginator($collection, $total, $total);
         }
-
-        return $this->query->paginate($this->perPage, $columns, 'page', $this->page);
+        return $this->query->paginate($this->perPage, $this->columns, 'page', $this->page);
     }
 
     public function findById($value, $columns = ['*'])
@@ -58,7 +59,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
         $this->eagerLoadRelationships();
 
-        return $this->query->findOrFail($value, $columns);
+        return $this->query->find($value, $columns);
     }
 
     public function create(array $data)
@@ -68,9 +69,18 @@ abstract class BaseApiRepository implements RepositoryInterface
         return $this->model->create($data);
     }
 
+    /**
+     * @param array $data
+     * @param $objectKey
+     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     * @throws NotFoundException
+     */
     public function update(array $data, $objectKey)
     {
-        $this->model = $this->model->where($this->model->getKeyName(), $objectKey)->first();
+        $this->model = $this->findById($objectKey);
+        if (!$this->model) {
+            throw new NotFoundException("{$this->getModelName()} {$objectKey} not found");
+        }
         $this->model->update($data);
 
         return $this->model;
@@ -105,6 +115,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->orderByDesc();
         $this->eagerLoadRelationships();
         $this->setPagination();
+        $this->setColumns();
     }
 
     public function setIds()
@@ -200,4 +211,13 @@ abstract class BaseApiRepository implements RepositoryInterface
     }
 
     abstract public function getModelName(): string;
+
+    public function setColumns()
+    {
+        if (isset($this->parameters['fields'])) {
+            $this->columns = explode(',', $this->parameters['fields']);
+            //Need to set id else pagination breaks
+            $this->columns[] = 'id';
+        }
+    }
 }

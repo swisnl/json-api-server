@@ -2,18 +2,20 @@
 
 namespace Swis\JsonApi\Server\Http\Controllers\Api;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Swis\JsonApi\Server\Exceptions\ForbiddenException;
+use Swis\JsonApi\Server\Exceptions\JsonException;
 use Swis\JsonApi\Server\Repositories\RepositoryInterface;
 use Swis\JsonApi\Server\Traits\HandleResponses;
-use Swis\JsonApi\Server\Traits\HasPermissionChecks;
 
 abstract class BaseApiController extends Controller
 {
-    use DispatchesJobs, ValidatesRequests, HandleResponses, HasPermissionChecks;
+    use DispatchesJobs, ValidatesRequests, HandleResponses, AuthorizesRequests;
 
     protected $respondController;
     protected $repository;
@@ -27,14 +29,17 @@ abstract class BaseApiController extends Controller
         $this->repository->setParameters($request->query());
     }
 
+    /**
+     * @return $this
+     * @throws ForbiddenException
+     */
     public function index()
     {
-        throw new ForbiddenException('bois');
         $items = $this->repository
-            ->paginate(null, $this->request->query());
+            ->paginate($this->request->query());
 
         if (config('laravel_api.permissions.checkDefaultIndexPermission')) {
-            $this->authorizeAction('index');
+            $this->authorizeAction('index', $this->repository->getModelName());
         }
 
         return $this->respondWithCollection($items);
@@ -46,6 +51,7 @@ abstract class BaseApiController extends Controller
      * @param $id
      *
      * @return string
+     * @throws ForbiddenException
      */
     public function show($id)
     {
@@ -61,11 +67,12 @@ abstract class BaseApiController extends Controller
      * Creates a new row in the db.
      *
      * @return $this|\Illuminate\Database\Eloquent\Model
+     * @throws ForbiddenException
      */
     public function create()
     {
         if (config('laravel_api.permissions.checkDefaultCreatePermission')) {
-            $this->authorizeAction('create');
+            $this->authorizeAction('create', $this->repository->getModelName());
         }
         $createdResource = $this->repository->create($this->validateObject());
 
@@ -78,6 +85,7 @@ abstract class BaseApiController extends Controller
      * @param $id
      *
      * @return $this
+     * @throws ForbiddenException
      */
     public function update($id)
     {
@@ -94,6 +102,7 @@ abstract class BaseApiController extends Controller
      * @param $id
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws ForbiddenException
      */
     public function delete($id)
     {
@@ -106,23 +115,35 @@ abstract class BaseApiController extends Controller
         return $this->respondWithNoContent();
     }
 
-    protected function authorizeAction($policyMethod, $requestedObject = null)
+    /**
+     * @param $policyMethod
+     * @param $item
+     * @throws ForbiddenException
+     */
+    protected function authorizeAction($policyMethod, $item)
     {
-        $this->checkIfUserHasPermissions(
-            $policyMethod,
-            $this->repository->getModelName(),
-            $requestedObject
-        );
+        try {
+            $this->authorize($policyMethod, $item);
+        } catch (AuthorizationException $e) {
+            throw new ForbiddenException('This action is forbidden');
+        }
     }
 
     public function validateObject($id = null)
     {
+        if(!$this->request->input('data')) {
+            throw new JsonException('No data object');
+        }
+
+        if(!$this->request->input('data.type')) {
+            throw new JsonException('No type attribute');
+        }
+        //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
 
         $attributes = $model->getFillable();
-        $values = json_decode($this->request->getContent(), true);
-
+        $values = $this->request->input();
         //TODO Check if $values exist
         foreach ($values as $value => $data) {
             if (in_array($value, $attributes)) {

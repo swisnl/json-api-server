@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Server\Services;
 
+use Swis\JsonApi\Server\Exceptions\NotFoundException;
 use Swis\JsonApi\Server\Http\Resources\BaseApiCollectionResource;
 use Swis\JsonApi\Server\Http\Resources\BaseApiResource;
 use Swis\JsonApi\Server\Models\Responses\RespondError;
@@ -18,19 +19,17 @@ class ResponseService
 
     protected function createResponse($responseModel, $content)
     {
-        if ($responseModel instanceof RespondError) { //TODO: tijdelijk snel hier geformat
+        if ($responseModel instanceof RespondError) {
             $errors = $this->formatErrors($responseModel, $content);
 
             return response($errors, $responseModel->getStatusCode());
         }
-
         return response($content, $responseModel->getStatusCode());
     }
 
     public function respondWithResourceCollection($strResponseModel, $content)
     {
         $responseModel = new $strResponseModel();
-
         return (new BaseApiCollectionResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
@@ -38,8 +37,10 @@ class ResponseService
 
     public function responseWithResource($strResponseModel, $content)
     {
+        if(!$content) {
+            throw new NotFoundException('Not found');
+        }
         $responseModel = new $strResponseModel();
-
         return (new BaseApiResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
