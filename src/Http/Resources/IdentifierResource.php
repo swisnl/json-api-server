@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Http\Resources;
+namespace Swis\JsonApi\Server\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 

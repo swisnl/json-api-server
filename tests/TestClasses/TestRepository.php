@@ -2,7 +2,7 @@
 
 namespace Tests\TestClasses;
 
-use Swis\LaravelApi\Repositories\BaseApiRepository;
+use Swis\JsonApi\Server\Repositories\BaseApiRepository;
 
 class TestRepository extends BaseApiRepository
 {

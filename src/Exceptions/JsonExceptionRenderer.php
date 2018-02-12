@@ -6,7 +6,7 @@
  * Time: 16:45.
  */
 
-namespace Swis\LaravelApi\Exceptions;
+namespace Swis\JsonApi\Server\Exceptions;
 
 use Exception;
 

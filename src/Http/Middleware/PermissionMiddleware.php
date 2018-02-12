@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\LaravelApi\Http\Middleware;
+namespace Swis\JsonApi\Server\Http\Middleware;
 
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
-use Swis\LaravelApi\Exceptions\ForbiddenException;
+use Swis\JsonApi\Server\Exceptions\ForbiddenException;
 
 class PermissionMiddleware
 {

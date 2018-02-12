@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\LaravelApi\Services;
+namespace Swis\JsonApi\Server\Services;
 
-use Swis\LaravelApi\Http\Resources\BaseApiCollectionResource;
-use Swis\LaravelApi\Http\Resources\BaseApiResource;
-use Swis\LaravelApi\Models\Responses\RespondError;
+use Swis\JsonApi\Server\Http\Resources\BaseApiCollectionResource;
+use Swis\JsonApi\Server\Http\Resources\BaseApiResource;
+use Swis\JsonApi\Server\Models\Responses\RespondError;
 
 class ResponseService
 {

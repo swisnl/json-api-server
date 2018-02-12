@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Traits;
+namespace Swis\JsonApi\Server\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

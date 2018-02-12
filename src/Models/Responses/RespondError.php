@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\LaravelApi\Models\Responses;
+namespace Swis\JsonApi\Server\Models\Responses;
 
-use Swis\LaravelApi\Constants\HttpCodes;
+use Swis\JsonApi\Server\Constants\HttpCodes;
 
 abstract class RespondError
 {

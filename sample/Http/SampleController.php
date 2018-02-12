@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Repositories\SampleRepository;
 use Illuminate\Http\Request;
-use Swis\LaravelApi\Http\Controllers\Api\BaseApiController;
-use Swis\LaravelApi\Repositories\RepositoryInterface;
+use Swis\JsonApi\Server\Http\Controllers\Api\BaseApiController;
+use Swis\JsonApi\Server\Repositories\RepositoryInterface;
 
 class SampleController extends BaseApiController
 {

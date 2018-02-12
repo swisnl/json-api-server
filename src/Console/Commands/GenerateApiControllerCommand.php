@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Console\Commands;
+namespace Swis\JsonApi\Server\Console\Commands;
 
 class GenerateApiControllerCommand extends BaseGenerateCommand
 {

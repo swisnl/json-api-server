@@ -6,10 +6,10 @@
  * Time: 13:36.
  */
 
-namespace Swis\LaravelApi\Exceptions;
+namespace Swis\JsonApi\Server\Exceptions;
 
 use Exception;
-use Swis\LaravelApi\Constants\HttpCodes;
+use Swis\JsonApi\Server\Constants\HttpCodes;
 
 abstract class JsonException extends Exception
 {

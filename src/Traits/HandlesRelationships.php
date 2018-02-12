@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Traits;
+namespace Swis\JsonApi\Server\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Swis\LaravelApi\Http\Resources\BaseApiResource;
+use Swis\JsonApi\Server\Http\Resources\BaseApiResource;
 
 trait HandlesRelationships
 {

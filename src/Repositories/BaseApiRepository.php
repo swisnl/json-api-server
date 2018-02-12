@@ -1,13 +1,12 @@
 <?php
 
-namespace Swis\LaravelApi\Repositories;
+namespace Swis\JsonApi\Server\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Swis\LaravelApi\Traits\HandlesRelationships;
+use Swis\JsonApi\Server\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
 {

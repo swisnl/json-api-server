@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Providers;
+namespace Swis\JsonApi\Server\Providers;
 
 use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Routing\Router;
@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
-use Swis\LaravelApi\Console\Commands\GenerateAllCommand;
-use Swis\LaravelApi\Console\Commands\GenerateApiControllerCommand;
-use Swis\LaravelApi\Console\Commands\GenerateAuthenticationTestCommand;
-use Swis\LaravelApi\Console\Commands\GenerateModelCommand;
-use Swis\LaravelApi\Console\Commands\GenerateModelPermissionsCommand;
-use Swis\LaravelApi\Console\Commands\GenerateModelTranslationCommand;
-use Swis\LaravelApi\Console\Commands\GeneratePolicyCommand;
-use Swis\LaravelApi\Console\Commands\GenerateRepositoryCommand;
-use Swis\LaravelApi\Console\Commands\GenerateRoutesCommand;
-use Swis\LaravelApi\Http\Middleware\ConfigureLocale;
-use Swis\LaravelApi\Http\Middleware\InspectContentType;
-use Swis\LaravelApi\Http\Middleware\PermissionMiddleware;
+use Swis\JsonApi\Server\Console\Commands\GenerateAllCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateApiControllerCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateAuthenticationTestCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateModelCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateModelPermissionsCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateModelTranslationCommand;
+use Swis\JsonApi\Server\Console\Commands\GeneratePolicyCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateRepositoryCommand;
+use Swis\JsonApi\Server\Console\Commands\GenerateRoutesCommand;
+use Swis\JsonApi\Server\Http\Middleware\ConfigureLocale;
+use Swis\JsonApi\Server\Http\Middleware\InspectContentType;
+use Swis\JsonApi\Server\Http\Middleware\PermissionMiddleware;
 use Symfony\Component\Finder\Finder;
 
 class LaravelApiServiceProvider extends ServiceProvider
@@ -28,7 +28,7 @@ class LaravelApiServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             'Illuminate\Contracts\Debug\ExceptionHandler',
-            'Swis\LaravelApi\Exceptions\LaravelJsonExceptionHandler'
+            'Swis\JsonApi\Server\Exceptions\LaravelJsonExceptionHandler'
         );
         $router->aliasMiddleware('route_permission_middleware', PermissionMiddleware::class);
         $router->aliasMiddleware('configure_locale', ConfigureLocale::class);

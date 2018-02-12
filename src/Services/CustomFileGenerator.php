@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Services;
+namespace Swis\JsonApi\Server\Services;
 
 class CustomFileGenerator
 {

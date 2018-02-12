@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\LaravelApi\Exceptions;
+namespace Swis\JsonApi\Server\Exceptions;
 
-use Swis\LaravelApi\Constants\HttpCodes;
+use Swis\JsonApi\Server\Constants\HttpCodes;
 
 class ForbiddenException extends JsonException
 {

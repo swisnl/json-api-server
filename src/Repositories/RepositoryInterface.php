@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Repositories;
+namespace Swis\JsonApi\Server\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 

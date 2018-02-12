@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Http\Middleware;
+namespace Swis\JsonApi\Server\Http\Middleware;
 
 use Closure;
 

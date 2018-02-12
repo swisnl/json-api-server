@@ -1,14 +1,14 @@
 <?php
 
-namespace Swis\LaravelApi\Traits;
+namespace Swis\JsonApi\Server\Traits;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
-use Swis\LaravelApi\Models\Responses\RespondHttpCreated;
-use Swis\LaravelApi\Models\Responses\RespondHttpNoContent;
-use Swis\LaravelApi\Models\Responses\RespondHttpOk;
-use Swis\LaravelApi\Models\Responses\RespondHttpPartialContent;
-use Swis\LaravelApi\Services\ResponseService;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpCreated;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpNoContent;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpOk;
+use Swis\JsonApi\Server\Models\Responses\RespondHttpPartialContent;
+use Swis\JsonApi\Server\Services\ResponseService;
 
 trait HandleResponses
 {

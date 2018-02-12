@@ -3,7 +3,7 @@
 namespace $NAMESPACE_REPOSITORY$;
 
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use Swis\LaravelApi\Repositories\BaseApiRepository;
+use Swis\JsonApi\Server\Repositories\BaseApiRepository;
 
 class $MODEL_NAME$Repository extends BaseApiRepository
 {

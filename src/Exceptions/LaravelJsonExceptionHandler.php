@@ -6,7 +6,7 @@
  * Time: 13:23.
  */
 
-namespace Swis\LaravelApi\Exceptions;
+namespace Swis\JsonApi\Server\Exceptions;
 
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;

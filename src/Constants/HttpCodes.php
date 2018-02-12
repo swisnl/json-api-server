@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\LaravelApi\Constants;
+namespace Swis\JsonApi\Server\Constants;
 
 class HttpCodes
 {

@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Swis\LaravelApi\Providers\LaravelApiServiceProvider;
+use Swis\JsonApi\Server\Providers\LaravelApiServiceProvider;
 
 class TestCase extends Orchestra
 {

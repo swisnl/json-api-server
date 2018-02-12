@@ -1,14 +1,14 @@
 <?php
 
-namespace Swis\LaravelApi\Http\Controllers\Api;
+namespace Swis\JsonApi\Server\Http\Controllers\Api;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Swis\LaravelApi\Repositories\RepositoryInterface;
-use Swis\LaravelApi\Traits\HandleResponses;
-use Swis\LaravelApi\Traits\HasPermissionChecks;
+use Swis\JsonApi\Server\Repositories\RepositoryInterface;
+use Swis\JsonApi\Server\Traits\HandleResponses;
+use Swis\JsonApi\Server\Traits\HasPermissionChecks;
 
 abstract class BaseApiController extends Controller
 {
