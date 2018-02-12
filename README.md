@@ -204,13 +204,26 @@ The following URL parameters are supported after installing this package:
 * inspect_content_type: Required. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
 
 ### Optional middleware
-There are 2 optional middleware:
+There is optional middleware:
 
-* route_permission_middleware: used to check if a user has permission to acces an API endpoint
 * configure-locale: used to configure the language for translating your responses. Also configurable by using the URL paramater ?lang={language}
 
-## Passport explanation
-TODO
+## Passport installation
+
+**Note: if you want to know more about laravel passport and why these commands should be run go to https://laravel.com/docs/5.5/passport**
+
+```bash
+$ composer require laravel/passport
+$ php artisan migrate
+$ php artisan passport:install
+```
+After running this command, add the ``Laravel\Passport\HasApiTokens`` trait to your ``App\User`` model
+
+Next, you should call the ``Passport::routes`` method within the boot method of your ``AuthServiceProvider``. 
+
+Finally, in your ``config/auth.php`` configuration file, you should set the driver option of the api authentication guard to passport. This will instruct your application to use Passport's TokenGuard when authenticating incoming API requests.
+
+If you created your own routes make sure you have the ``auth:api`` middlware on all the routes you want to use passport with.
 ## Packages Laravel-Api uses
 
 ##### Laravel framework

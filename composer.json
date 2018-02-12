@@ -19,9 +19,7 @@
   "require": {
     "php": "^7.0",
     "dimsav/laravel-translatable": "^8.0",
-    "laravel/framework": "5.5.*",
-    "spatie/laravel-permission": "^2.6",
-    "laravelcollective/html": "^5.5"
+    "laravel/framework": "5.5.*"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

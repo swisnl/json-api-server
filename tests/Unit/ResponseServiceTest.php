@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Swis\JsonApi\Server\Exceptions\NotFoundException;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpForbidden;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpNotFound;
 use Swis\JsonApi\Server\Models\Responses\RespondHttpUnauthorized;
@@ -93,6 +94,13 @@ class ResponseServiceTest extends TestCase
 
         $this->assertEquals(206, $response->getStatusCode());
         $this->assertEquals('PARTIAL', $responseBody);
+    }
+
+    /** @test */
+    public function it_creates_a_not_found_response_in_resource()
+    {
+        $this->expectException(NotFoundException::class);
+        $this->respondWithResource($this->testModel, null);
     }
 
     /** @test */

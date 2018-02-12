@@ -112,7 +112,7 @@ class RepositoryTest extends TestCase
     /** @test */
     public function order_by_desc_with_parameters()
     {
-        $this->testRepository->paginate( $parameters = ['order_by_desc' => true]);
+        $this->testRepository->paginate($parameters = ['order_by_desc' => true]);
         $this->assertEquals('desc', $this->testRepository->getQuery()->orders[0]['direction']);
     }
 
