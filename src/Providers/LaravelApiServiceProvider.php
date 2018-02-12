@@ -19,14 +19,12 @@ use Swis\JsonApi\Server\Console\Commands\GenerateRepositoryCommand;
 use Swis\JsonApi\Server\Console\Commands\GenerateRoutesCommand;
 use Swis\JsonApi\Server\Http\Middleware\ConfigureLocale;
 use Swis\JsonApi\Server\Http\Middleware\InspectContentType;
-use Swis\JsonApi\Server\Http\Middleware\PermissionMiddleware;
 use Symfony\Component\Finder\Finder;
 
 class LaravelApiServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
-        $router->aliasMiddleware('route_permission_middleware', PermissionMiddleware::class);
         $router->aliasMiddleware('configure_locale', ConfigureLocale::class);
         $router->aliasMiddleware('inspect_content_type', InspectContentType::class);
 
