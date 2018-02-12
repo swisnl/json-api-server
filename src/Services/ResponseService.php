@@ -9,7 +9,6 @@ use Swis\JsonApi\Server\Models\Responses\RespondError;
 
 class ResponseService
 {
-
     public function response($strResponseModel, $content = null)
     {
         $responseModel = new $strResponseModel();
@@ -24,12 +23,14 @@ class ResponseService
 
             return response($errors, $responseModel->getStatusCode());
         }
+
         return response($content, $responseModel->getStatusCode());
     }
 
     public function respondWithResourceCollection($strResponseModel, $content)
     {
         $responseModel = new $strResponseModel();
+
         return (new BaseApiCollectionResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
@@ -37,10 +38,11 @@ class ResponseService
 
     public function responseWithResource($strResponseModel, $content)
     {
-        if(!$content) {
+        if (!$content) {
             throw new NotFoundException('Not found');
         }
         $responseModel = new $strResponseModel();
+
         return (new BaseApiResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
@@ -49,17 +51,19 @@ class ResponseService
     /**
      * @param $responseModel
      * @param $content
+     *
      * @return mixed
      */
     protected function formatErrors($responseModel, $content)
     {
         $errors['errors'] = [
             0 => [
-                'status' => (string)$responseModel->getStatusCode(),
-                'title' => (string)$responseModel->getMessage(),
-                'detail' => (string)$content,
+                'status' => (string) $responseModel->getStatusCode(),
+                'title' => (string) $responseModel->getMessage(),
+                'detail' => (string) $content,
             ],
         ];
+
         return $errors;
     }
 }

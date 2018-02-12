@@ -50,6 +50,7 @@ abstract class BaseApiRepository implements RepositoryInterface
 
             return new LengthAwarePaginator($collection, $total, $total);
         }
+
         return $this->query->paginate($this->perPage, $this->columns, 'page', $this->page);
     }
 
@@ -72,8 +73,10 @@ abstract class BaseApiRepository implements RepositoryInterface
     /**
      * @param array $data
      * @param $objectKey
-     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     *
      * @throws NotFoundException
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
      */
     public function update(array $data, $objectKey)
     {
@@ -155,17 +158,6 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->query->getQuery()->orders = null;
         $this->query->orderByDesc($this->parameters['order_by_desc']);
     }
-
-    /*public function setUser(User $user = null)
-    {
-        if (!isset($user)) {
-            return $this;
-        }
-
-        $this->user = $user;
-
-        return $this;
-    }*/
 
     public function initQuery()
     {

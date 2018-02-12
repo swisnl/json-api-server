@@ -252,6 +252,7 @@ class BaseApiResource extends Resource
     {
         $resourceClass = class_basename($this->resource);
         $resourcePlural = str_plural($resourceClass);
+
         // Converts camelcase to dash
         $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
 

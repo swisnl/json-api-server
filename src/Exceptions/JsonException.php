@@ -17,7 +17,8 @@ class JsonException extends Exception
     use HandleResponses;
     protected $code = HttpCodes::HTTP_BAD_REQUEST;
 
-    public function render() {
+    public function render()
+    {
         return $this->respondWithBadRequest($this->message);
     }
 }

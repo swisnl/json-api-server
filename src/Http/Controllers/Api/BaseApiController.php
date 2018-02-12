@@ -30,8 +30,9 @@ abstract class BaseApiController extends Controller
     }
 
     /**
-     * @return $this
      * @throws ForbiddenException
+     *
+     * @return $this
      */
     public function index()
     {
@@ -50,8 +51,9 @@ abstract class BaseApiController extends Controller
      *
      * @param $id
      *
-     * @return string
      * @throws ForbiddenException
+     *
+     * @return string
      */
     public function show($id)
     {
@@ -66,8 +68,9 @@ abstract class BaseApiController extends Controller
     /**
      * Creates a new row in the db.
      *
-     * @return $this|\Illuminate\Database\Eloquent\Model
      * @throws ForbiddenException
+     *
+     * @return $this|\Illuminate\Database\Eloquent\Model
      */
     public function create()
     {
@@ -84,8 +87,9 @@ abstract class BaseApiController extends Controller
      *
      * @param $id
      *
-     * @return $this
      * @throws ForbiddenException
+     *
+     * @return $this
      */
     public function update($id)
     {
@@ -101,8 +105,9 @@ abstract class BaseApiController extends Controller
      *
      * @param $id
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws ForbiddenException
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function delete($id)
     {
@@ -118,6 +123,7 @@ abstract class BaseApiController extends Controller
     /**
      * @param $policyMethod
      * @param $item
+     *
      * @throws ForbiddenException
      */
     protected function authorizeAction($policyMethod, $item)
@@ -129,21 +135,38 @@ abstract class BaseApiController extends Controller
         }
     }
 
+    /**
+     * @param null $id
+     *
+     * @throws JsonException
+     *
+     * @return array|string
+     */
     public function validateObject($id = null)
     {
-        if(!$this->request->input('data')) {
+        //TODO refactor this to a helper function, used in BaseApiResource
+        $resourceClass = class_basename($this->repository->getModelName());
+        $resourcePlural = str_plural($resourceClass);
+        $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
+        $input = $this->request->input('data');
+        if (!$input) {
             throw new JsonException('No data object');
         }
 
-        if(!$this->request->input('data.type')) {
-            throw new JsonException('No type attribute');
+        if (!$input['type']) {
+            throw new JsonException('Type attribute is not present');
+        }
+
+        if ($input['type'] !== $lowerCaseResourceType) {
+            throw new JsonException('Wrong type attribute');
         }
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
 
         $attributes = $model->getFillable();
-        $values = $this->request->input();
+        $values = $input;
+
         //TODO Check if $values exist
         foreach ($values as $value => $data) {
             if (in_array($value, $attributes)) {

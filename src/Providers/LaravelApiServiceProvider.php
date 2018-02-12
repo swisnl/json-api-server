@@ -7,7 +7,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Permission\PermissionServiceProvider;
 use Swis\JsonApi\Server\Console\Commands\GenerateAllCommand;
 use Swis\JsonApi\Server\Console\Commands\GenerateApiControllerCommand;
 use Swis\JsonApi\Server\Console\Commands\GenerateAuthenticationTestCommand;
@@ -40,7 +39,6 @@ class LaravelApiServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->register(PermissionServiceProvider::class);
         $this->app->register(TranslatableServiceProvider::class);
 
         $this->commands([
