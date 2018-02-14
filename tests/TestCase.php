@@ -5,7 +5,7 @@ namespace Tests;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Swis\JsonApi\Server\Providers\LaravelApiServiceProvider;
 
-class TestCase extends Orchestra
+abstract class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {

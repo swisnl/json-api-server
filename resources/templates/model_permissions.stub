@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAME_SPACE_POLICY$;
+namespace $NAME_SPACE_MODEL_PERMISSIONS$;
 
 class $MODEL_NAME$Permissions
 {

@@ -28,14 +28,16 @@ class BaseApiResource extends Resource
     {
         $response = [];
         $wrap = false;
-
+        if(!$isCollection) {
+            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
+        }
         if (!is_string($request) && !$isCollection &&
             $this->findMasterResource($request->getPathInfo()) == $this->getResourceType()) {
             $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
+
             $wrap = true;
             $response['data'] = [];
         }
-
         return $this->mapToJsonApi($response, $wrap);
     }
 
@@ -47,13 +49,12 @@ class BaseApiResource extends Resource
 
         $this->resource->addHidden($this->resource->getKeyName());
 
-        $this->jsonApiModel->setId((string) $this->resource->getKey());
+        $this->jsonApiModel->setId((string)$this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
         $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
         $this->jsonApiModel->setRelationships($this->relationships());
         $this->jsonApiModel->setLinks($this->getLinks());
-
         $this->translateAttributes();
         $this->setExtraValues();
         $this->filterTypeFromAttributes();
@@ -82,7 +83,6 @@ class BaseApiResource extends Resource
 
             $response = $this->addToResponse($response, $key, $value);
         }
-
         return $response;
     }
 
@@ -132,7 +132,7 @@ class BaseApiResource extends Resource
         $masterResource = substr($str, strrpos($str, '/') + 1);
 
         if (is_numeric($masterResource)) {
-            $str = str_replace('/'.$masterResource, '', $str);
+            $str = str_replace('/' . $masterResource, '', $str);
             $masterResource = $this->findMasterResource($str);
         }
 
@@ -170,7 +170,7 @@ class BaseApiResource extends Resource
     protected function getLinks()
     {
         return [
-            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
+            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
         ];
     }
 
@@ -238,13 +238,10 @@ class BaseApiResource extends Resource
         }
 
         $this->includes = explode(',', $request->get('include', null));
-
         if (null == $this->includes) {
             return [];
         }
-
         $relations = $this->includeRelationships($this->resource, $this->includes);
-
         return $relations;
     }
 
@@ -268,7 +265,8 @@ class BaseApiResource extends Resource
      */
     public static function collection($resource)
     {
-        return new class($resource, get_called_class()) extends AnonymousResourceCollection {
+        return new class($resource, get_called_class()) extends AnonymousResourceCollection
+        {
             /**
              * @var string
              */
@@ -277,7 +275,7 @@ class BaseApiResource extends Resource
             /**
              * Create a new anonymous resource collection.
              *
-             * @param mixed  $resource
+             * @param mixed $resource
              * @param string $collects
              */
             public function __construct($resource, $collects)

@@ -13,7 +13,6 @@ class BaseApiCollectionResource extends ResourceCollection
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request
      * @param mixed $request
      *
      * @return array

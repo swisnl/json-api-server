@@ -12,7 +12,7 @@ use Exception;
 use Swis\JsonApi\Server\Constants\HttpCodes;
 use Swis\JsonApi\Server\Traits\HandleResponses;
 
-class JsonException extends Exception
+abstract class JsonException extends Exception
 {
     use HandleResponses;
     protected $code = HttpCodes::HTTP_BAD_REQUEST;

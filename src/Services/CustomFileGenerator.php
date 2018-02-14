@@ -18,6 +18,7 @@ class CustomFileGenerator
             '$UPPER_CASED_MODEL_NAME$' => strtoupper($this->modelName),
             '$NAMESPACE_MODEL$' => config('laravel_api.namespace.model'),
             '$NAME_SPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
+            '$NAME_SPACE_MODEL_PERMISSIONS$' => config('laravel_api.namespace.model_permissions'),
             '$NAME_SPACE_POLICY$' => config('laravel_api.namespace.policy'),
             '$NAMESPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),
             '$NAMESPACE_CONTROLLER$' => config('laravel_api.namespace.controller'),

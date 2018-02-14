@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Swis\JsonApi\Server\Exceptions\BadRequestException;
 use Swis\JsonApi\Server\Exceptions\ForbiddenException;
 use Swis\JsonApi\Server\Exceptions\JsonException;
 use Swis\JsonApi\Server\Repositories\RepositoryInterface;
@@ -57,11 +58,10 @@ abstract class BaseApiController extends Controller
      */
     public function show($id)
     {
-        $item = $this->repository->findById($id);
+        $item = $this->repository->findById($id, $this->request->query());
         if (config('laravel_api.permissions.checkDefaultShowPermission')) {
             $this->authorizeAction('show', $item);
         }
-
         return $this->respondWithOK($item);
     }
 
@@ -90,6 +90,7 @@ abstract class BaseApiController extends Controller
      * @throws ForbiddenException
      *
      * @return $this
+     * @throws JsonException
      */
     public function update($id)
     {
@@ -144,21 +145,21 @@ abstract class BaseApiController extends Controller
      */
     public function validateObject($id = null)
     {
-        //TODO refactor this to a helper function, used in BaseApiResource
+        //TODO refactor this to a helper function, used also in BaseApiResource
         $resourceClass = class_basename($this->repository->getModelName());
         $resourcePlural = str_plural($resourceClass);
         $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
         $input = $this->request->input('data');
         if (!$input) {
-            throw new JsonException('No data object');
+            throw new BadRequestException('No data object');
         }
 
         if (!$input['type']) {
-            throw new JsonException('Type attribute is not present');
+            throw new BadRequestException('Type attribute is not present');
         }
 
         if ($input['type'] !== $lowerCaseResourceType) {
-            throw new JsonException('Wrong type attribute');
+            throw new BadRequestException('Wrong type attribute');
         }
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();

@@ -3,6 +3,7 @@
 namespace $NAME_SPACE_POLICY$;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\User;
 
 class $MODEL_NAME$Policy
 {

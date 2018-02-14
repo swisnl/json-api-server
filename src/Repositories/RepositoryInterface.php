@@ -16,7 +16,7 @@ interface RepositoryInterface
 
     public function paginate($query);
 
-    public function findById($id);
+    public function findById($id, $parameters = []);
 
     public function update(array $data, $id);
 

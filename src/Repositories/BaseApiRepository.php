@@ -54,13 +54,13 @@ abstract class BaseApiRepository implements RepositoryInterface
         return $this->query->paginate($this->perPage, $this->columns, 'page', $this->page);
     }
 
-    public function findById($value, $columns = ['*'])
+    public function findById($value, $parameters = [])
     {
         $this->initQuery();
-
+        $this->parameters = $parameters;
+        $this->setFilters();
         $this->eagerLoadRelationships();
-
-        return $this->query->find($value, $columns);
+        return $this->query->find($value);
     }
 
     public function create(array $data)

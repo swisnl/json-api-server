@@ -62,7 +62,7 @@ This generates the following files:
 * A translation model
 * An API controller
     * Should extend the BaseApiController
-* A routes file where the all the endpoints are def
+* A routes file where the all the CRUD endpoints are defined
 * A repository for your model
     * Could extend the BaseApiRepository
 * A policy for checking permissions
@@ -178,6 +178,8 @@ If you decide to use policies to check for the user's pemissions you have to add
      $this->registerPolicies();
  }    
 ```
+The policies are preconfigured to work with Laravel passport, if you want to use another form of authorizing actions you can change the methods.
+
 
 If  you want to redirect the validation to a specific function in your policy.
 
@@ -199,6 +201,9 @@ The following URL parameters are supported after installing this package:
 * ?per_page={amountToShowPerPage}:To decide how many items you get per page
 * ?ids={commaSeperatedIds}: To retrieve a collection of objects belonging to the ids
 * ?lang={language}: (Requires the configure-locale middleware) to change the php locale to the desired language and automatically translates all translatable models
+* ?fields={columns}: To retrieve certain columns.
+* ?order_by_desc={column}: To order descending based on a column.
+* ?order_by_asc={column}: To order ascending based on a column.
 
 ### Mandatory middleware
 * inspect_content_type: Required. It ensures that the requests should be in json format. If it's in another format it throws a ContentTypeNotSupportedException.
@@ -231,10 +236,6 @@ If you created your own routes make sure you have the ``auth:api`` middlware on 
 
 ##### Dimsav / laravel-translatable
 * https://github.com/dimsav/laravel-translatable
-
-##### spatie / laravel-permission
-* https://github.com/spatie/laravel-permission
-
 
 ## Change log
 

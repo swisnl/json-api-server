@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Swis\JsonApi\Server\Http\Resources\BaseApiResource;
 
@@ -37,10 +36,6 @@ trait HandlesRelationships
     public function getRelationships($model): array//TODO: Skipt relaties die geen return type hebben
     {
         $relations = [];
-        if ($model instanceof Relation) {
-            return $model->getRelationships();
-        }
-
         $class = new \ReflectionClass(get_class($model));
         foreach ($class->getMethods() as $method) {
             $returnType = $method->getReturnType();
@@ -59,14 +54,12 @@ trait HandlesRelationships
     public function includeRelationships($item, $includes)
     {
         $relationshipResources = $this->handleIncludes($item, $includes);
-
         return $this->mergeInnerArrays($relationshipResources);
     }
 
     public function includeCollectionRelationships($items, $includes)
     {
         $relationshipResources = [];
-
         foreach ($items as $item) {
             $relationshipResources = array_merge($relationshipResources, $this->handleIncludes($item, $includes));
         }
@@ -86,25 +79,20 @@ trait HandlesRelationships
     protected function handleIncludes($item, $includes)
     {
         $relationshipResources = [];
-
         foreach ($includes as $include) {
-            if (!$item->$include) {
+            if($item->$include) {
                 continue;
             }
-
             if ($item->$include instanceof Collection) {
                 $included = BaseApiResource::collection($item->$include);
 
-                // Find nested relationship. For example: user->permissions->users
-                $includedNestedRelationships =
-                    $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
             } else {
                 $included = BaseApiResource::make($item->$include);
-                // Find nested relationship. For example: user->permissions->users
-                $includedNestedRelationships =
-                    $this->includeRelationships($included, $this->findNestedRelationships($includes, $include));
             }
-
+            // Find nested relationship. For example: user->permissions->users
+//            TODO fix nested relationships in includes like post.comments
+            $includedNestedRelationships =
+                $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
             if ($included->toArray('') !== []) {
                 $relationshipResources[] = $included;
             }
@@ -113,7 +101,6 @@ trait HandlesRelationships
                 $relationshipResources[] = $includedNestedRelationships;
             }
         }
-
         return $relationshipResources;
     }
 
@@ -130,8 +117,8 @@ trait HandlesRelationships
         $nestedRelationships = [];
 
         foreach ($includes as $value) {
-            if (0 === strpos($value, $include.'.')) {
-                $nestedRelationships[] = str_replace($include.'.', '', $value);
+            if (0 === strpos($value, $include . '.')) {
+                $nestedRelationships[] = str_replace($include . '.', '', $value);
             }
         }
 
