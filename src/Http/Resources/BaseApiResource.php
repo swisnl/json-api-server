@@ -49,7 +49,6 @@ class BaseApiResource extends Resource
         $this->jsonApiModel->setId((string) $this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
-        $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
         $this->jsonApiModel->setRelationships($this->relationships());
         $this->jsonApiModel->setLinks($this->getLinks());
         $this->translateAttributes();
@@ -131,20 +130,19 @@ class BaseApiResource extends Resource
         return $masterResource;
     }
 
-    protected function getPivotAttributes()
-    {
-        $attributes = [];
-
-        if ($this->resource->pivot) {
-            $attributes = $this->resource->pivot->attributesToArray();
-            if (array_key_exists('id', $attributes)) {
-                $attributes['pivot_id'] = $attributes['id'];
-                unset($attributes['id']);
+    /*    protected function getPivotAttributes()
+        {
+            $attributes = [];
+    
+            if ($this->resource->pivot) {
+                $attributes = $this->resource->pivot->attributesToArray();
+                if (array_key_exists('id', $attributes)) {
+                    $attributes['pivot_id'] = $attributes['id'];
+                    unset($attributes['id']);
+                }
             }
-        }
-
-        return $attributes;
-    }
+            return $attributes;
+        }*/
 
     protected function getLinks()
     {

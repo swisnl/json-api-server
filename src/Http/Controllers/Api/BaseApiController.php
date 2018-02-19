@@ -150,35 +150,34 @@ abstract class BaseApiController extends Controller
     {
         //TODO refactor this to a helper function, used also in BaseApiResource & IdentifierResource
         $resourceClass = class_basename($this->repository->getModelName());
-        $resourcePlural = str_plural($resourceClass);
-        $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
-        $input = $this->request->input('data');
-        if (!$input) {
-            throw new BadRequestException('No data object');
-        }
-        if (!$input['type']) {
-            throw new BadRequestException('Type attribute is not present');
-        }
+        $resourcePlural = strtolower(str_plural($resourceClass));
 
-        if ($input['type'] !== $lowerCaseResourceType) {
-            throw new BadRequestException('Wrong type attribute');
-        }
+        $this->validateJsonApiObject($input = $this->request->input(), $resourcePlural);
+        $input = $this->request->input('data');
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
 
-        $attributes = $model->getFillable();
-        $values = $input;
+        return $input;
+    }
 
-        //TODO Check if $values exist
-        foreach ($values as $value => $data) {
-            if (in_array($value, $attributes)) {
-                continue;
-            }
-
-            unset($values[$value]);
+    /**
+     * @param $input
+     * @param $lowerCaseResourceType
+     *
+     * @throws BadRequestException
+     */
+    public function validateJsonApiObject($input, $lowerCaseResourceType)
+    {
+        if (!isset($input['data'])) {
+            throw new BadRequestException('No data object');
+        }
+        if (!isset($input['data']['type'])) {
+            throw new BadRequestException('Type attribute is not present');
         }
 
-        return $values;
+        if ($input['data']['type'] !== $lowerCaseResourceType) {
+            throw new BadRequestException('Wrong type attribute');
+        }
     }
 }

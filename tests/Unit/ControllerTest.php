@@ -9,6 +9,7 @@
 namespace Tests\Unit;
 
 use Illuminate\Http\Response;
+use Swis\JsonApi\Server\Exceptions\BadRequestException;
 use Tests\TestCase;
 use Tests\TestClasses\TestController;
 use Tests\TestClasses\TestModel;
@@ -63,5 +64,35 @@ class ControllerTest extends TestCase
             'title' => 'test',
             'body' => 'test',
         ]);
+    }
+
+    /**
+     * @throws BadRequestException
+     */
+    public function test_validate_json_api_without_data_object()
+    {
+        $this->expectException(BadRequestException::class);
+        $input = [];
+        $this->testController->validateJsonApiObject($input, 'testmodels');
+    }
+
+    /**
+     * @throws BadRequestException
+     */
+    public function test_validate_json_api_without_type_object()
+    {
+        $this->expectException(BadRequestException::class);
+        $input = ['data' => ['test' => 'no type']];
+        $this->testController->validateJsonApiObject($input, 'testmodels');
+    }
+
+    /**
+     * @throws BadRequestException
+     */
+    public function test_validate_json_api_with_wrong_type_object()
+    {
+        $this->expectException(BadRequestException::class);
+        $input = ['data' => ['type' => 'wrong_type']];
+        $this->testController->validateJsonApiObject($input, 'testmodels');
     }
 }
