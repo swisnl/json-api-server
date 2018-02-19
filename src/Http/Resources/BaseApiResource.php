@@ -133,7 +133,7 @@ class BaseApiResource extends Resource
     /*    protected function getPivotAttributes()
         {
             $attributes = [];
-    
+
             if ($this->resource->pivot) {
                 $attributes = $this->resource->pivot->attributesToArray();
                 if (array_key_exists('id', $attributes)) {
