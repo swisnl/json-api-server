@@ -28,15 +28,10 @@ class BaseApiResource extends Resource
     {
         $response = [];
         $wrap = false;
-        if(!$isCollection) {
-            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
-        }
-        if (!is_string($request) && !$isCollection &&
-            $this->findMasterResource($request->getPathInfo()) == $this->getResourceType()) {
-            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
-
+        if (!$isCollection && !$wrap) {
             $wrap = true;
             $response['data'] = [];
+            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         }
         return $this->mapToJsonApi($response, $wrap);
     }
@@ -46,7 +41,6 @@ class BaseApiResource extends Resource
         if (!$this->resource) {
             return;
         }
-
         $this->resource->addHidden($this->resource->getKeyName());
 
         $this->jsonApiModel->setId((string)$this->resource->getKey());
@@ -57,15 +51,10 @@ class BaseApiResource extends Resource
         $this->jsonApiModel->setLinks($this->getLinks());
         $this->translateAttributes();
         $this->setExtraValues();
-        $this->filterTypeFromAttributes();
     }
 
     public function mapToJsonApi($response, bool $wrap)
     {
-        if (!isset($this->id)) { // This doesn't happen anymore, at least I hope it doesn't
-            return;
-        }
-
         $jsonApiArray = [
             'id' => $this->jsonApiModel->getId(),
             'type' => $this->jsonApiModel->getType(),
@@ -91,7 +80,6 @@ class BaseApiResource extends Resource
         if (!isset($value) || empty($value)) {
             return $response;
         }
-
         $response[$key] = $value;
 
         return $response;
@@ -135,22 +123,9 @@ class BaseApiResource extends Resource
             $str = str_replace('/' . $masterResource, '', $str);
             $masterResource = $this->findMasterResource($str);
         }
-
         return $masterResource;
     }
 
-    protected function filterTypeFromAttributes()
-    {
-        if (!array_key_exists('type', $this->jsonApiModel->getAttributes())) {
-            return;
-        }
-
-        if (!method_exists($this->resource, 'getTypeAlias')) {
-            throw new \Exception('Your model lacks the method getTypeAlias');
-        }
-
-        $this->jsonApiModel->changeTypeInAttributes($this->getTypeAlias());
-    }
 
     protected function getPivotAttributes()
     {
@@ -186,7 +161,6 @@ class BaseApiResource extends Resource
             }
 
             $data = $this->resource->$relationship;
-
             if (0 == count($data)) {
                 continue;
             }
@@ -222,7 +196,6 @@ class BaseApiResource extends Resource
             $relationshipData = IdentifierResource::make($data);
             $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
         }
-
         return $relationshipData;
     }
 
@@ -281,7 +254,6 @@ class BaseApiResource extends Resource
             public function __construct($resource, $collects)
             {
                 $this->collects = $collects;
-
                 parent::__construct($resource);
             }
         };

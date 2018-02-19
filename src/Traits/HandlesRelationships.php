@@ -63,7 +63,6 @@ trait HandlesRelationships
         foreach ($items as $item) {
             $relationshipResources = array_merge($relationshipResources, $this->handleIncludes($item, $includes));
         }
-
         return $this->mergeInnerArrays($relationshipResources);
     }
 
@@ -80,49 +79,29 @@ trait HandlesRelationships
     {
         $relationshipResources = [];
         foreach ($includes as $include) {
-            if($item->$include) {
-                continue;
+            $nestedInclude = null;
+            if (str_contains($include, '.')) {
+                $nestedInclude = str_after($include, '.');
+                $include = str_before($include, '.');
             }
+            $included = null;
             if ($item->$include instanceof Collection) {
                 $included = BaseApiResource::collection($item->$include);
-
+                if ($nestedInclude) {
+                    $relationshipResources = $this->includeCollectionRelationships($included, [$nestedInclude]);
+                }
             } else {
                 $included = BaseApiResource::make($item->$include);
-            }
-            // Find nested relationship. For example: user->permissions->users
-//            TODO fix nested relationships in includes like post.comments
-            $includedNestedRelationships =
-                $this->includeCollectionRelationships($included, $this->findNestedRelationships($includes, $include));
-            if ($included->toArray('') !== []) {
-                $relationshipResources[] = $included;
+                $object = str_before($nestedInclude, '.');
+                if (isset($included->$object)) {
+                    $relationshipResources = $this->handleIncludes($included, [$nestedInclude]);
+                }
             }
 
-            if ($includedNestedRelationships !== []) {
-                $relationshipResources[] = $includedNestedRelationships;
-            }
+            $relationshipResources[] = $included;
+
         }
         return $relationshipResources;
-    }
-
-    /**
-     * Checks if there are nested includes. For example: permissions.users.
-     *
-     * @param $includes
-     * @param $include
-     *
-     * @return array
-     */
-    protected function findNestedRelationships($includes, $include)
-    {
-        $nestedRelationships = [];
-
-        foreach ($includes as $value) {
-            if (0 === strpos($value, $include . '.')) {
-                $nestedRelationships[] = str_replace($include . '.', '', $value);
-            }
-        }
-
-        return $nestedRelationships;
     }
 
     /**
@@ -146,7 +125,6 @@ trait HandlesRelationships
 
             $mergedArray[] = $items;
         }
-
         $mergedArray = $this->removeDuplicates($mergedArray);
 
         return $mergedArray;

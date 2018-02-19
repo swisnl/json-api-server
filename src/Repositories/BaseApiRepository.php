@@ -181,6 +181,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         if (!empty($this->parameters) && array_key_exists('include', $this->parameters)) {
             $relations = explode(',', $this->parameters['include']);
         }
+        //Todo if relation isn't found throw BadException, currently throws 500.
         $this->query->with(array_unique($relations));
     }
 

@@ -43,7 +43,6 @@ abstract class BaseApiController extends Controller
         if (config('laravel_api.permissions.checkDefaultIndexPermission')) {
             $this->authorizeAction('index', $this->repository->getModelName());
         }
-
         return $this->respondWithCollection($items);
     }
 
@@ -71,6 +70,7 @@ abstract class BaseApiController extends Controller
      * @throws ForbiddenException
      *
      * @return $this|\Illuminate\Database\Eloquent\Model
+     * @throws JsonException
      */
     public function create()
     {
@@ -129,6 +129,7 @@ abstract class BaseApiController extends Controller
      */
     protected function authorizeAction($policyMethod, $item)
     {
+        //Todo if item is empty, it always returns forbidden.
         try {
             $this->authorize($policyMethod, $item);
         } catch (AuthorizationException $e) {
@@ -145,7 +146,7 @@ abstract class BaseApiController extends Controller
      */
     public function validateObject($id = null)
     {
-        //TODO refactor this to a helper function, used also in BaseApiResource
+        //TODO refactor this to a helper function, used also in BaseApiResource & IdentifierResource
         $resourceClass = class_basename($this->repository->getModelName());
         $resourcePlural = str_plural($resourceClass);
         $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
@@ -153,7 +154,6 @@ abstract class BaseApiController extends Controller
         if (!$input) {
             throw new BadRequestException('No data object');
         }
-
         if (!$input['type']) {
             throw new BadRequestException('Type attribute is not present');
         }

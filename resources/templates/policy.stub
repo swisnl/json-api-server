@@ -4,6 +4,7 @@ namespace $NAME_SPACE_POLICY$;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\User;
+use $NAME_SPACE_MODEL_PERMISSIONS$\$MODEL_NAME$Permissions
 
 class $MODEL_NAME$Policy
 {
@@ -18,7 +19,7 @@ class $MODEL_NAME$Policy
 
     public function show(User $user, $requestedItem)
     {
-        return $user->tokenCan($MODEL_NAME$Permissions::RETRIEVE_ALL_$PLURAL_UPPER_CASED_MODEL_NAME$);
+        return $user->tokenCan($MODEL_NAME$Permissions::RETRIEVE_$UPPER_CASED_MODEL_NAME$);
     }
 
     public function create(User $user)

@@ -166,7 +166,7 @@ class RepositoryTest extends TestCase
     /** @test */
     public function eager_load_relation_ships()
     {
-        $this->testRepositoryWithRelationships->paginate(['include' => 'model']);
+        $this->testRepositoryWithRelationships->paginate(['include' => 'testModels']);
         $this->assertCount(1, $this->testRepositoryWithRelationships->getQuery()->getEagerLoads());
     }
 

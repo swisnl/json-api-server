@@ -21,12 +21,4 @@ class TestModelWithRelationships extends Model
         return [];
     }
 
-    public function getRepository(): string
-    {
-        return TestRepositoryWithRelationships::class;
-    }
-
-    public function getTranslatable()
-    {
-    }
 }
