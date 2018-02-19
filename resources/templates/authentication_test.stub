@@ -1,9 +1,10 @@
 <?php
 
 namespace Tests\Unit;
-
+use Laravel\Passport\Passport;
+use App\User;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
-use $NAMESPACE_MODEL$\$MODEL_NAME$Permissions;
+use $NAME_SPACE_MODEL_PERMISSIONS$\$MODEL_NAME$Permissions;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;

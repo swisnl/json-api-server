@@ -13,6 +13,7 @@ class CustomFileGenerator
             '$MODEL_NAME$' => $this->modelName,
             '$CAMEL_CASE_MODEL_NAME$' => camel_case($this->modelName),
             '$SNAKE_CASED_MODEL_NAME$' => strtolower(snake_case($this->modelName)),
+            '$PLURAL_SNAKE_CASED_MODEL_NAME$' => strtolower(str_plural(snake_case($this->modelName))),
             '$PLURAL_UPPER_CASED_MODEL_NAME$' => strtoupper(str_plural($this->modelName)),
             '$PLURAL_LOWER_CASED_MODEL_NAME$' => strtolower(str_plural($this->modelName)),
             '$UPPER_CASED_MODEL_NAME$' => strtoupper($this->modelName),

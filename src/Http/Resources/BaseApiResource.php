@@ -28,11 +28,11 @@ class BaseApiResource extends Resource
     {
         $response = [];
         $wrap = false;
-        if (!$isCollection && !$wrap) {
+        $isMasterResource = $this->findMasterResource($request->getPathInfo()) == $this->getResourceType();
+        if (!$isCollection && !$wrap && $isMasterResource) {
             $wrap = true;
-            $response['data'] = [];
-            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         }
+        $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         return $this->mapToJsonApi($response, $wrap);
     }
 
