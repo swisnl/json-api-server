@@ -20,7 +20,7 @@ abstract class BaseApiController extends Controller
 
     protected $respondController;
     protected $repository;
-    public $request;
+    protected $request;
 
     public function __construct(RepositoryInterface $repository, Request $request)
     {
