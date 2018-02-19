@@ -22,6 +22,7 @@ class BaseApiResource extends Resource
 
         $this->jsonApiModel = new JsonApiResource();
         $this->setValues();
+        $this->setValues();
     }
 
     public function toArray($request, $isCollection = false)
@@ -31,8 +32,9 @@ class BaseApiResource extends Resource
         $isMasterResource = $this->findMasterResource($request->getPathInfo()) == $this->getResourceType();
         if (!$isCollection && !$wrap && $isMasterResource) {
             $wrap = true;
+            $response['data'] = [];
+            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         }
-        $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         return $this->mapToJsonApi($response, $wrap);
     }
 
