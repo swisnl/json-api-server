@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Schema\Blueprint;
 use Swis\JsonApi\Server\Exceptions\NotFoundException;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
@@ -27,33 +26,10 @@ class RepositoryTest extends TestCase
     {
         parent::setUp();
         $this->setUpDatabase($this->app);
-        $this->testRepository = new TestRepository();
-        $this->testRepositoryWithRelationships = new TestRepositoryWithRelationships();
-    }
-
-    /**
-     * Setup the database for this test file.
-     *
-     * @param $app
-     */
-    private function setUpDatabase($app)
-    {
-        $app['db']->connection()->getSchemaBuilder()->create('test_models', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->string('body');
-        });
-
-        $app['db']->connection()->getSchemaBuilder()->create('test_model_with_relationships', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->string('body');
-            $table->integer('test_model_id')->unsigned();
-            $table->foreign('test_model_id')->references('id')->on('test_models');
-        });
-
         $this->testModel = new TestModel(['title' => 'test', 'body' => 'test']);
         $this->testModel->save();
+        $this->testRepository = new TestRepository();
+        $this->testRepositoryWithRelationships = new TestRepositoryWithRelationships();
     }
 
     /** @test */

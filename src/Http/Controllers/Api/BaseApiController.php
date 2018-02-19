@@ -20,7 +20,7 @@ abstract class BaseApiController extends Controller
 
     protected $respondController;
     protected $repository;
-    protected $request;
+    public $request;
 
     public function __construct(RepositoryInterface $repository, Request $request)
     {
@@ -43,6 +43,7 @@ abstract class BaseApiController extends Controller
         if (config('laravel_api.permissions.checkDefaultIndexPermission')) {
             $this->authorizeAction('index', $this->repository->getModelName());
         }
+
         return $this->respondWithCollection($items);
     }
 
@@ -61,6 +62,7 @@ abstract class BaseApiController extends Controller
         if (config('laravel_api.permissions.checkDefaultShowPermission')) {
             $this->authorizeAction('show', $item);
         }
+
         return $this->respondWithOK($item);
     }
 
@@ -68,9 +70,9 @@ abstract class BaseApiController extends Controller
      * Creates a new row in the db.
      *
      * @throws ForbiddenException
+     * @throws JsonException
      *
      * @return $this|\Illuminate\Database\Eloquent\Model
-     * @throws JsonException
      */
     public function create()
     {
@@ -88,9 +90,9 @@ abstract class BaseApiController extends Controller
      * @param $id
      *
      * @throws ForbiddenException
+     * @throws JsonException
      *
      * @return $this
-     * @throws JsonException
      */
     public function update($id)
     {

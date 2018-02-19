@@ -54,6 +54,7 @@ trait HandlesRelationships
     public function includeRelationships($item, $includes)
     {
         $relationshipResources = $this->handleIncludes($item, $includes);
+
         return $this->mergeInnerArrays($relationshipResources);
     }
 
@@ -63,6 +64,7 @@ trait HandlesRelationships
         foreach ($items as $item) {
             $relationshipResources = array_merge($relationshipResources, $this->handleIncludes($item, $includes));
         }
+
         return $this->mergeInnerArrays($relationshipResources);
     }
 
@@ -99,8 +101,8 @@ trait HandlesRelationships
             }
 
             $relationshipResources[] = $included;
-
         }
+
         return $relationshipResources;
     }
 

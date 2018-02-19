@@ -24,6 +24,7 @@
   "require-dev": {
     "filp/whoops": "~2.0",
     "friendsofphp/php-cs-fixer": "^2.4",
+    "mockery/mockery": "^1.0",
     "orchestra/testbench": "~3.5",
     "phpunit/php-code-coverage": "^5.3",
     "phpunit/phpunit": "~6.0",

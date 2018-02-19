@@ -35,6 +35,7 @@ class BaseApiResource extends Resource
             $response['data'] = [];
             $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         }
+
         return $this->mapToJsonApi($response, $wrap);
     }
 
@@ -45,7 +46,7 @@ class BaseApiResource extends Resource
         }
         $this->resource->addHidden($this->resource->getKeyName());
 
-        $this->jsonApiModel->setId((string)$this->resource->getKey());
+        $this->jsonApiModel->setId((string) $this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
         $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
@@ -74,6 +75,7 @@ class BaseApiResource extends Resource
 
             $response = $this->addToResponse($response, $key, $value);
         }
+
         return $response;
     }
 
@@ -122,12 +124,12 @@ class BaseApiResource extends Resource
         $masterResource = substr($str, strrpos($str, '/') + 1);
 
         if (is_numeric($masterResource)) {
-            $str = str_replace('/' . $masterResource, '', $str);
+            $str = str_replace('/'.$masterResource, '', $str);
             $masterResource = $this->findMasterResource($str);
         }
+
         return $masterResource;
     }
-
 
     protected function getPivotAttributes()
     {
@@ -147,7 +149,7 @@ class BaseApiResource extends Resource
     protected function getLinks()
     {
         return [
-            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
+            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
         ];
     }
 
@@ -198,6 +200,7 @@ class BaseApiResource extends Resource
             $relationshipData = IdentifierResource::make($data);
             $this->checkIfDataIsSet($relationshipData) ?: $relationshipData = [];
         }
+
         return $relationshipData;
     }
 
@@ -206,17 +209,14 @@ class BaseApiResource extends Resource
         return isset($relationshipData->resource->id);
     }
 
-    protected function getIncludedRelationships($request)
+    protected function getIncludedRelationships(Request $request)
     {
-        if (!$request instanceof Request) {
-            return [];
-        }
-
         $this->includes = explode(',', $request->get('include', null));
         if (null == $this->includes) {
             return [];
         }
         $relations = $this->includeRelationships($this->resource, $this->includes);
+
         return $relations;
     }
 
@@ -240,8 +240,7 @@ class BaseApiResource extends Resource
      */
     public static function collection($resource)
     {
-        return new class($resource, get_called_class()) extends AnonymousResourceCollection
-        {
+        return new class($resource, get_called_class()) extends AnonymousResourceCollection {
             /**
              * @var string
              */
@@ -250,7 +249,7 @@ class BaseApiResource extends Resource
             /**
              * Create a new anonymous resource collection.
              *
-             * @param mixed $resource
+             * @param mixed  $resource
              * @param string $collects
              */
             public function __construct($resource, $collects)

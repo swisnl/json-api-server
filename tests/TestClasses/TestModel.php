@@ -20,5 +20,4 @@ class TestModel extends Model
     {
         return [];
     }
-
 }

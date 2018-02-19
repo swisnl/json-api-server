@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: dtulp
  * Date: 14-2-2018
- * Time: 15:04
+ * Time: 15:04.
  */
 
 namespace Tests\Unit\Exceptions;

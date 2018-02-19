@@ -60,6 +60,7 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->parameters = $parameters;
         $this->setFilters();
         $this->eagerLoadRelationships();
+
         return $this->query->find($value);
     }
 

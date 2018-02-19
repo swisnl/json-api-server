@@ -20,5 +20,4 @@ class TestModelWithRelationships extends Model
     {
         return [];
     }
-
 }

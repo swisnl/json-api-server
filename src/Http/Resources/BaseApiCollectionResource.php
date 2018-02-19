@@ -26,20 +26,18 @@ class BaseApiCollectionResource extends ResourceCollection
         $response['data'] = $items;
         empty($includedRelationships) ?: $response['included'] = $includedRelationships;
         response($items);
+
         return $response;
     }
 
-    protected function getIncludedRelationships($items, $request)
+    protected function getIncludedRelationships($items, Request $request)
     {
-        if (!$request instanceof Request) {
-            return [];
-        }
-
         $includes = explode(',', $request->get('include', null));
         if ($includes === []) {
             return [];
         }
         $relations = $this->includeCollectionRelationships($items, $includes);
+
         return $relations;
     }
 }

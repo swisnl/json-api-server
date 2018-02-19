@@ -30,6 +30,7 @@ class ResponseService
     public function respondWithResourceCollection($strResponseModel, $content)
     {
         $responseModel = new $strResponseModel();
+
         return (new BaseApiCollectionResource($content))
             ->response()
             ->setStatusCode($responseModel->getStatusCode());
