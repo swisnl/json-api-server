@@ -31,9 +31,9 @@ class BaseApiResource extends Resource
         $wrap = false;
         $isMasterResource = $this->findMasterResource($request->getPathInfo()) == $this->getResourceType();
         if (!$isCollection && !$wrap && $isMasterResource) {
+            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
             $wrap = true;
             $response['data'] = [];
-            $this->jsonApiModel->setIncluded($this->getIncludedRelationships($request));
         }
 
         return $this->mapToJsonApi($response, $wrap);
