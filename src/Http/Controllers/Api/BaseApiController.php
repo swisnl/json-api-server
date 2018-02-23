@@ -3,6 +3,7 @@
 namespace Swis\JsonApi\Server\Http\Controllers\Api;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -99,7 +100,6 @@ abstract class BaseApiController extends Controller
         if (config('laravel_api.permissions.checkDefaultUpdatePermission')) {
             $this->authorizeAction('update', $this->repository->findById($id));
         }
-
         return $this->respondWithOK($this->repository->update($this->validateObject($id), $id));
     }
 
@@ -128,13 +128,27 @@ abstract class BaseApiController extends Controller
      * @param $item
      *
      * @throws ForbiddenException
+     * @throws AuthorizationException
      */
-    protected function authorizeAction($policyMethod, $item)
+    protected function authorizeAction($policyMethod, $requestedObject = null)
     {
-        //Todo if item is empty, it always returns forbidden.
         try {
-            $this->authorize($policyMethod, $item);
-        } catch (AuthorizationException $e) {
+            if (null !== $requestedObject) {
+                if ($requestedObject instanceof Paginator) {
+                    foreach ($requestedObject->items() as $item) {
+                        $this->authorize($policyMethod, $item);
+                    }
+
+                    return;
+                }
+
+                $this->authorize($policyMethod, $requestedObject);
+
+                return;
+            }
+
+            $this->authorize($policyMethod, $this->repository->getModelName());
+        } catch (AuthorizationException $exception) {
             throw new ForbiddenException('This action is forbidden');
         }
     }
@@ -153,11 +167,10 @@ abstract class BaseApiController extends Controller
         $resourcePlural = strtolower(str_plural($resourceClass));
 
         $this->validateJsonApiObject($input = $this->request->input(), $resourcePlural);
-        $input = $this->request->input('data');
+        $input = $this->request->input();
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
-
         return $input;
     }
 
@@ -169,15 +182,15 @@ abstract class BaseApiController extends Controller
      */
     public function validateJsonApiObject($input, $lowerCaseResourceType)
     {
-        if (!isset($input['data'])) {
-            throw new BadRequestException('No data object');
-        }
-        if (!isset($input['data']['type'])) {
-            throw new BadRequestException('Type attribute is not present');
-        }
-
-        if ($input['data']['type'] !== $lowerCaseResourceType) {
-            throw new BadRequestException('Wrong type attribute');
-        }
+//        if (!isset($input['data'])) {
+//            throw new BadRequestException('No data object');
+//        }
+//        if (!isset($input['data']['type'])) {
+//            throw new BadRequestException('Type attribute is not present');
+//        }
+//
+//        if ($input['data']['type'] !== $lowerCaseResourceType) {
+//            throw new BadRequestException('Wrong type attribute');
+//        }
     }
 }

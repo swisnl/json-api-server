@@ -46,6 +46,7 @@ class BaseApiResource extends Resource
         }
         $this->resource->addHidden($this->resource->getKeyName());
 
+
         $this->jsonApiModel->setId((string) $this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
@@ -53,6 +54,7 @@ class BaseApiResource extends Resource
         $this->jsonApiModel->setLinks($this->getLinks());
         $this->translateAttributes();
         $this->setExtraValues();
+        $this->filterTypeFromAttributes();
     }
 
     public function mapToJsonApi($response, bool $wrap)
@@ -157,6 +159,7 @@ class BaseApiResource extends Resource
         $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + ['available_relationships' => $relationships]);
         $relationshipsIdentifiers = [];
 
+
         foreach ($relationships as $relationship) {
             if (!config('laravel_api.loadAllJsonApiRelationships') && !$this->resource->relationLoaded($relationship)) {
                 continue;
@@ -175,7 +178,6 @@ class BaseApiResource extends Resource
 
             $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
         }
-
         return $relationshipsIdentifiers;
     }
 
@@ -200,6 +202,19 @@ class BaseApiResource extends Resource
         }
 
         return $relationshipData;
+    }
+
+    protected function filterTypeFromAttributes()
+    {
+        if (!array_key_exists('type', $this->jsonApiModel->getAttributes())) {
+            return;
+        }
+
+        if (!method_exists($this->resource, 'getTypeAlias')) {
+            throw new \Exception('Your model lacks the method getTypeAlias');
+        }
+
+        $this->jsonApiModel->changeTypeInAttributes($this->getTypeAlias());
     }
 
     protected function checkIfDataIsSet($relationshipData): bool

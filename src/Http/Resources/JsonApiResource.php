@@ -82,4 +82,16 @@ class JsonApiResource
 
         return $this;
     }
+
+    public function changeTypeInAttributes($typeAlias)
+    {
+        if (!isset($this->attributes['type'])) {
+            return $this;
+        }
+
+        $this->attributes[$typeAlias] = $this->attributes['type'];
+        unset($this->attributes['type']);
+
+        return $this;
+    }
 }

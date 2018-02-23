@@ -47,7 +47,6 @@ trait HandlesRelationships
                 $relations[] = $method->getName();
             }
         }
-
         return $relations;
     }
 
@@ -90,13 +89,13 @@ trait HandlesRelationships
             if ($item->$include instanceof Collection) {
                 $included = BaseApiResource::collection($item->$include);
                 if ($nestedInclude) {
-                    $relationshipResources = $this->includeCollectionRelationships($included, [$nestedInclude]);
+                    $relationshipResources[] = $this->includeCollectionRelationships($included, [$nestedInclude]);
                 }
             } else {
                 $included = BaseApiResource::make($item->$include);
                 $object = str_before($nestedInclude, '.');
                 if (isset($included->$object)) {
-                    $relationshipResources = $this->handleIncludes($included, [$nestedInclude]);
+                    $relationshipResources[] = $this->handleIncludes($included, [$nestedInclude]);
                 }
             }
 
