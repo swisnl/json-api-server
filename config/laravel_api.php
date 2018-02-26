@@ -51,6 +51,7 @@ return [
         'checkDefaultDeletePermission' => false,
     ],
 
+
     // Load all relationships to have response exactly like json api. This slows down the API immensely.
     'loadAllJsonApiRelationships' => true,
 ];

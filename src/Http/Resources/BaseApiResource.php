@@ -22,7 +22,6 @@ class BaseApiResource extends Resource
 
         $this->jsonApiModel = new JsonApiResource();
         $this->setValues();
-        $this->setValues();
     }
 
     public function toArray($request, $isCollection = false)

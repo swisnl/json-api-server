@@ -54,14 +54,23 @@ abstract class BaseApiRepository implements RepositoryInterface
         return $this->query->paginate($this->perPage, $this->columns, 'page', $this->page);
     }
 
+    /**
+     * @param $value
+     * @param array $parameters
+     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     * @throws NotFoundException
+     */
     public function findById($value, $parameters = [])
     {
         $this->initQuery();
         $this->parameters = $parameters;
         $this->setFilters();
         $this->eagerLoadRelationships();
-
-        return $this->query->find($value);
+        $this->model = $this->query->find($value);
+        if (!$this->model) {
+            throw new NotFoundException("{$this->getModelName()} {$value} not found");
+        }
+        return $this->model;
     }
 
     public function create(array $data)
@@ -82,9 +91,6 @@ abstract class BaseApiRepository implements RepositoryInterface
     public function update(array $data, $objectKey)
     {
         $this->model = $this->findById($objectKey);
-        if (!$this->model) {
-            throw new NotFoundException("{$this->getModelName()} {$objectKey} not found");
-        }
         $this->model->update($data);
 
         return $this->model;

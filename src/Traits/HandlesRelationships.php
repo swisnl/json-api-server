@@ -80,11 +80,7 @@ trait HandlesRelationships
     {
         $relationshipResources = [];
         foreach ($includes as $include) {
-            $nestedInclude = null;
-            if (str_contains($include, '.')) {
-                $nestedInclude = str_after($include, '.');
-                $include = str_before($include, '.');
-            }
+            list($nestedInclude, $include) = $this->getNestedRelation($include);
             $included = null;
             if ($item->$include instanceof Collection) {
                 $included = BaseApiResource::collection($item->$include);
@@ -150,5 +146,19 @@ trait HandlesRelationships
         }
 
         return $relations;
+    }
+
+    /**
+     * @param $include
+     * @return array
+     */
+    protected function getNestedRelation($include): array
+    {
+        $nestedInclude = null;
+        if (str_contains($include, '.')) {
+            $nestedInclude = str_after($include, '.');
+            $include = str_before($include, '.');
+        }
+        return array($nestedInclude, $include);
     }
 }
