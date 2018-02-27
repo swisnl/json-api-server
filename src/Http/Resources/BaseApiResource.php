@@ -46,9 +46,10 @@ class BaseApiResource extends Resource
         $this->resource->addHidden($this->resource->getKeyName());
 
 
-        $this->jsonApiModel->setId((string) $this->resource->getKey());
+        $this->jsonApiModel->setId((string)$this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
+        $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
         $this->jsonApiModel->setRelationships($this->relationships());
         $this->jsonApiModel->setLinks($this->getLinks());
         $this->translateAttributes();
@@ -124,31 +125,31 @@ class BaseApiResource extends Resource
         $masterResource = substr($str, strrpos($str, '/') + 1);
 
         if (is_numeric($masterResource)) {
-            $str = str_replace('/'.$masterResource, '', $str);
+            $str = str_replace('/' . $masterResource, '', $str);
             $masterResource = $this->findMasterResource($str);
         }
 
         return $masterResource;
     }
 
-    /*    protected function getPivotAttributes()
-        {
-            $attributes = [];
+    protected function getPivotAttributes()
+    {
+        $attributes = [];
 
-            if ($this->resource->pivot) {
-                $attributes = $this->resource->pivot->attributesToArray();
-                if (array_key_exists('id', $attributes)) {
-                    $attributes['pivot_id'] = $attributes['id'];
-                    unset($attributes['id']);
-                }
+        if ($this->resource->pivot) {
+            $attributes = $this->resource->pivot->attributesToArray();
+            if (array_key_exists('id', $attributes)) {
+                $attributes['pivot_id'] = $attributes['id'];
+                unset($attributes['id']);
             }
-            return $attributes;
-        }*/
+        }
+        return $attributes;
+    }
 
     protected function getLinks()
     {
         return [
-            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
+            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
         ];
     }
 
@@ -252,7 +253,8 @@ class BaseApiResource extends Resource
      */
     public static function collection($resource)
     {
-        return new class($resource, get_called_class()) extends AnonymousResourceCollection {
+        return new class($resource, get_called_class()) extends AnonymousResourceCollection
+        {
             /**
              * @var string
              */
@@ -261,7 +263,7 @@ class BaseApiResource extends Resource
             /**
              * Create a new anonymous resource collection.
              *
-             * @param mixed  $resource
+             * @param mixed $resource
              * @param string $collects
              */
             public function __construct($resource, $collects)
