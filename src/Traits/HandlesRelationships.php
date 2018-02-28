@@ -47,6 +47,7 @@ trait HandlesRelationships
                 $relations[] = $method->getName();
             }
         }
+
         return $relations;
     }
 
@@ -150,6 +151,7 @@ trait HandlesRelationships
 
     /**
      * @param $include
+     *
      * @return array
      */
     protected function getNestedRelation($include): array
@@ -159,6 +161,7 @@ trait HandlesRelationships
             $nestedInclude = str_after($include, '.');
             $include = str_before($include, '.');
         }
-        return array($nestedInclude, $include);
+
+        return [$nestedInclude, $include];
     }
 }

@@ -57,8 +57,10 @@ abstract class BaseApiRepository implements RepositoryInterface
     /**
      * @param $value
      * @param array $parameters
-     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     *
      * @throws NotFoundException
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
      */
     public function findById($value, $parameters = [])
     {
@@ -66,10 +68,11 @@ abstract class BaseApiRepository implements RepositoryInterface
         $this->parameters = $parameters;
         $this->setFilters();
         $this->eagerLoadRelationships();
-        $this->model = $this->query->find($value);
+        $this->model = $this->query->find($value, $this->columns);
         if (!$this->model) {
             throw new NotFoundException("{$this->getModelName()} {$value} not found");
         }
+
         return $this->model;
     }
 

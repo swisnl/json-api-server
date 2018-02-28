@@ -45,8 +45,7 @@ class BaseApiResource extends Resource
         }
         $this->resource->addHidden($this->resource->getKeyName());
 
-
-        $this->jsonApiModel->setId((string)$this->resource->getKey());
+        $this->jsonApiModel->setId((string) $this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
         $this->jsonApiModel->setAttributes($this->resource->attributesToArray());
         $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + $this->getPivotAttributes());
@@ -125,7 +124,7 @@ class BaseApiResource extends Resource
         $masterResource = substr($str, strrpos($str, '/') + 1);
 
         if (is_numeric($masterResource)) {
-            $str = str_replace('/' . $masterResource, '', $str);
+            $str = str_replace('/'.$masterResource, '', $str);
             $masterResource = $this->findMasterResource($str);
         }
 
@@ -143,13 +142,14 @@ class BaseApiResource extends Resource
                 unset($attributes['id']);
             }
         }
+
         return $attributes;
     }
 
     protected function getLinks()
     {
         return [
-            'self' => env('API_URL') . '/' . $this->getResourceType() . '/' . $this->resource->getKey(),
+            'self' => env('API_URL').'/'.$this->getResourceType().'/'.$this->resource->getKey(),
         ];
     }
 
@@ -158,7 +158,6 @@ class BaseApiResource extends Resource
         $relationships = $this->getRelationships($this->resource);
         $this->jsonApiModel->setAttributes($this->jsonApiModel->getAttributes() + ['available_relationships' => $relationships]);
         $relationshipsIdentifiers = [];
-
 
         foreach ($relationships as $relationship) {
             if (!config('laravel_api.loadAllJsonApiRelationships') && !$this->resource->relationLoaded($relationship)) {
@@ -178,6 +177,7 @@ class BaseApiResource extends Resource
 
             $relationshipsIdentifiers[$relationship] = ['data' => $relationshipData];
         }
+
         return $relationshipsIdentifiers;
     }
 
@@ -253,8 +253,7 @@ class BaseApiResource extends Resource
      */
     public static function collection($resource)
     {
-        return new class($resource, get_called_class()) extends AnonymousResourceCollection
-        {
+        return new class($resource, get_called_class()) extends AnonymousResourceCollection {
             /**
              * @var string
              */
@@ -263,7 +262,7 @@ class BaseApiResource extends Resource
             /**
              * Create a new anonymous resource collection.
              *
-             * @param mixed $resource
+             * @param mixed  $resource
              * @param string $collects
              */
             public function __construct($resource, $collects)

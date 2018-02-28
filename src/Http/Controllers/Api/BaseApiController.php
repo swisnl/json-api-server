@@ -100,6 +100,7 @@ abstract class BaseApiController extends Controller
         if (config('laravel_api.permissions.checkDefaultUpdatePermission')) {
             $this->authorizeAction('update', $this->repository->findById($id));
         }
+
         return $this->respondWithOK($this->repository->update($this->validateObject($id), $id));
     }
 
@@ -126,6 +127,7 @@ abstract class BaseApiController extends Controller
     /**
      * @param $policyMethod
      * @param $item
+     * @param null|mixed $requestedObject
      *
      * @throws ForbiddenException
      * @throws AuthorizationException
@@ -171,6 +173,7 @@ abstract class BaseApiController extends Controller
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
+
         return $input;
     }
 
