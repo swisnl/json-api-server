@@ -2,13 +2,13 @@
 [![Coverage Badge](https://api.shippable.com/projects/59b1544eb54e3d0700e6495f/coverageBadge?branch=master)](https://app.shippable.com/bitbucket/swisnl/laravel-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 
-# Laravel-Api
+# Laravel JSON API server
 Set up a laravel API in just a few minutes with this package. All the standard API functionality is already there for you.
 
 This package strives to save you some time while building your API. 
 It already has the basic features an API should have, like:
 
-* A generator to generate your needed files for each model
+* Generators to generate your needed files for each model
 * An abstract layer to handle your basic CRUD actions
 * Creates routes for all your endpoints
 * Support for a few useful URL parameters
@@ -47,13 +47,13 @@ The BaseApiRepository uses a trait to retrieve a models relationships. You can u
 After installing the package you can instantly generate all the required files by executing this command:
 
 ```bash
-$ php artisan laravel-api:generate-all {Model}
+$ php artisan json-api-server:generate-all {Model}
 ```
 
 To override the default path without overriding the laravel_generator config file, you can use the `--path={path}` option. For example:
 
 ```bash
-$ php artisan laravel-api:generate-all Test --path=app/temp/
+$ php artisan json-api-server:generate-all Test --path=app/temp/
 ```
 
 This generates the following files:
@@ -73,14 +73,14 @@ You'll be able to do the basic CRUD actions without writing anything.
 You also have the ability to generate the files separately:
 
 ```bash
-$ php artisan laravel-api:generate-controller {name}
-$ php artisan laravel-api:generate-model {name}
-$ php artisan laravel-api:generate-model-permissions {name}
-$ php artisan laravel-api:generate-policy {name}
-$ php artisan laravel-api:generate-repository {name}
-$ php artisan laravel-api:generate-routes {name}
-$ php artisan laravel-api:generate-test {name}
-$ php artisan laravel-api:generate-translation {name}
+$ php artisan json-api-server:generate-controller {name}
+$ php artisan json-api-server:generate-model {name}
+$ php artisan json-api-server:generate-model-permissions {name}
+$ php artisan json-api-server:generate-policy {name}
+$ php artisan json-api-server:generate-repository {name}
+$ php artisan json-api-server:generate-routes {name}
+$ php artisan json-api-server:generate-test {name}
+$ php artisan json-api-server:generate-translation {name}
 ```
 
 ### Configuration

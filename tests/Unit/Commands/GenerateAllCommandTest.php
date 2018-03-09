@@ -15,7 +15,7 @@ class GenerateAllCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_all_files()
     {
-        $this->artisan('laravel-api:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
+        $this->artisan('json-api-server:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.model').'Example.php'));
@@ -29,7 +29,7 @@ class GenerateAllCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_all_files_except_translation()
     {
-        $this->artisan('laravel-api:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/', '--skip' => 'translation']);
+        $this->artisan('json-api-server:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/', '--skip' => 'translation']);
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
         $this->assertTrue(file_exists(config('laravel_api.path.model').'Example.php'));

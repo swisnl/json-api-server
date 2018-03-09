@@ -15,7 +15,7 @@ class GenerateRoutesCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-routes {name} {--path=}';
+    protected $signature = 'json-api-server:generate-routes {name} {--path=}';
 
     /**
      * The console command description.

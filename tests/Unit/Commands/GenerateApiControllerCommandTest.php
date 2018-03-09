@@ -15,7 +15,7 @@ class GenerateApiControllerCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_an_api_controller()
     {
-        $this->artisan('laravel-api:generate-controller', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
+        $this->artisan('json-api-server:generate-controller', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
         unlink('tests/Data/Output/'.'ExampleController.php');
     }
@@ -23,7 +23,7 @@ class GenerateApiControllerCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_an_api_controller_without_override()
     {
-        $this->artisan('laravel-api:generate-controller', ['name' => 'Example']);
+        $this->artisan('json-api-server:generate-controller', ['name' => 'Example']);
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
         unlink('tests/Data/Output/'.'ExampleController.php');
     }

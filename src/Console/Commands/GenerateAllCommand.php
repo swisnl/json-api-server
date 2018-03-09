@@ -11,7 +11,7 @@ class GenerateAllCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-all {name} {--path=} {--skip=}';
+    protected $signature = 'json-api-server:generate-all {name} {--path=} {--skip=}';
 
     /**
      * The console command description.
@@ -42,14 +42,14 @@ class GenerateAllCommand extends Command
     public function makeGeneratorCalls()
     {
         $generatorCalls = [
-            'controller' => 'laravel-api:generate-controller',
-            'model' => 'laravel-api:generate-model',
-            'model-permissions' => 'laravel-api:generate-model-permissions',
-            'repository' => 'laravel-api:generate-repository',
-            'translation' => 'laravel-api:generate-translation',
-            'policy' => 'laravel-api:generate-policy',
-            'test' => 'laravel-api:generate-test',
-            'routes' => 'laravel-api:generate-routes',
+            'controller' => 'json-api-server:generate-controller',
+            'model' => 'json-api-server:generate-model',
+            'model-permissions' => 'json-api-server:generate-model-permissions',
+            'repository' => 'json-api-server:generate-repository',
+            'translation' => 'json-api-server:generate-translation',
+            'policy' => 'json-api-server:generate-policy',
+            'test' => 'json-api-server:generate-test',
+            'routes' => 'json-api-server:generate-routes',
         ];
 
         foreach ($generatorCalls as $type => $generatorCall) {

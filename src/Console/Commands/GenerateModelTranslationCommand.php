@@ -9,7 +9,7 @@ class GenerateModelTranslationCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-translation {name} {--path=}';
+    protected $signature = 'json-api-server:generate-translation {name} {--path=}';
 
     /**
      * The console command description.

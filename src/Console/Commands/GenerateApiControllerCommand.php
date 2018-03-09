@@ -9,7 +9,7 @@ class GenerateApiControllerCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-controller {name} {--path=}';
+    protected $signature = 'json-api-server:generate-controller {name} {--path=}';
 
     /**
      * The console command description.

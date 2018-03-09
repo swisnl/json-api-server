@@ -15,7 +15,7 @@ class GenerateAuthenticationTestCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_an_authentication_test()
     {
-        $this->artisan('laravel-api:generate-test', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
+        $this->artisan('json-api-server:generate-test', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.auth_test').'ExampleAuthenticationTest.php'));
         unlink('tests/Data/Output/'.'ExampleAuthenticationTest.php');
     }

@@ -9,7 +9,7 @@ class GeneratePolicyCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-policy {name} {--path=}';
+    protected $signature = 'json-api-server:generate-policy {name} {--path=}';
 
     /**
      * The console command description.

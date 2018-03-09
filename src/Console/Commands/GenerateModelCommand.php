@@ -9,7 +9,7 @@ class GenerateModelCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-model {name} {--path=}';
+    protected $signature = 'json-api-server:generate-model {name} {--path=}';
 
     /**
      * The console command description.

@@ -15,7 +15,7 @@ class GenerateRepositoryCommandTest extends CommandTestCase
     /** @test */
     public function it_generates_a_repository()
     {
-        $this->artisan('laravel-api:generate-repository', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
+        $this->artisan('json-api-server:generate-repository', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));
         unlink('tests/Data/Output/'.'ExampleRepository.php');
     }

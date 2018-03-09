@@ -9,7 +9,7 @@ class GenerateRepositoryCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-repository {name} {--path=}';
+    protected $signature = 'json-api-server:generate-repository {name} {--path=}';
 
     /**
      * The console command description.

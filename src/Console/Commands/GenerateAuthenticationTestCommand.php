@@ -9,7 +9,7 @@ class GenerateAuthenticationTestCommand extends BaseGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'laravel-api:generate-test {name} {--path=}';
+    protected $signature = 'json-api-server:generate-test {name} {--path=}';
 
     /**
      * The console command description.

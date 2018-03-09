@@ -1,17 +1,38 @@
 {
-  "name": "swisnl/laravel-api",
+  "name": "swisnl/json-api-server",
   "type": "library",
-  "description": "API in Laravel",
+  "description": "Set up a JSON API in Laravel in just a few minutes.",
   "keywords": [
     "swisnl",
-    "laravel-api"
+    "laravel",
+    "laravel-api",
+    "json-api",
+    "json-api-server"
   ],
   "homepage": "http://www.swis.nl",
   "license": "MIT",
   "authors": [
     {
+      "name": "Arnaud van Zandwijk",
+      "email": "arnaud@swis.nl",
+      "homepage": "https://www.swis.nl",
+      "role": "Developer"
+    },
+    {
+      "name": "Björn Brala",
+      "email": "bjorn@swis.nl",
+      "homepage": "https://www.swis.nl",
+      "role": "Developer"
+    },
+    {
       "name": "Dylan de Wit",
       "email": "ddewit@swis.nl",
+      "homepage": "https://www.swis.nl",
+      "role": "Developer"
+    },
+    {
+      "name": "Dani Tulp",
+      "email": "dtulp@swis.nl",
       "homepage": "https://www.swis.nl",
       "role": "Developer"
     }
