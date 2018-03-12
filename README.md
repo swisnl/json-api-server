@@ -24,7 +24,7 @@ Via Composer
 $ composer require swisnl/laravel-api
 ```
 
-###Sample
+### Sample
 
 Please see the folder [sample](sample) for a sample of an application using this package.
 
