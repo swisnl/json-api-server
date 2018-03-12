@@ -166,7 +166,7 @@ return $this->respondWithCollection($object);
 These methods automatically converts your objects to json api format and creates a response with the correct status code and body.
 
 ### Using policies
-If you decide to use policies to check for the user's pemissions you have to add the policies to your Providers\AuthServicePorvider.
+If you decide to use policies to check for the user's pemissions you have to add the policies to your Providers\AuthServiceProvider.
 
 ```php
  protected $policies = [
