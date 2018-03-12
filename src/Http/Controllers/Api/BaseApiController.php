@@ -9,7 +9,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Swis\JsonApi\Server\Exceptions\BadRequestException;
 use Swis\JsonApi\Server\Exceptions\ForbiddenException;
 use Swis\JsonApi\Server\Exceptions\JsonException;
 use Swis\JsonApi\Server\Repositories\RepositoryInterface;
@@ -164,36 +163,11 @@ abstract class BaseApiController extends Controller
      */
     public function validateObject($id = null)
     {
-        //TODO refactor this to a helper function, used also in BaseApiResource & IdentifierResource
-        $resourceClass = class_basename($this->repository->getModelName());
-        $resourcePlural = strtolower(str_plural($resourceClass));
-
-        $this->validateJsonApiObject($input = $this->request->input(), $resourcePlural);
         $input = $this->request->input();
         //TODO get rules custom validator instead of model?
         $model = $this->repository->makeModel();
         $this->validate($this->request, $model->getRules($id));
 
         return $input;
-    }
-
-    /**
-     * @param $input
-     * @param $lowerCaseResourceType
-     *
-     * @throws BadRequestException
-     */
-    public function validateJsonApiObject($input, $lowerCaseResourceType)
-    {
-//        if (!isset($input['data'])) {
-//            throw new BadRequestException('No data object');
-//        }
-//        if (!isset($input['data']['type'])) {
-//            throw new BadRequestException('Type attribute is not present');
-//        }
-//
-//        if ($input['data']['type'] !== $lowerCaseResourceType) {
-//            throw new BadRequestException('Wrong type attribute');
-//        }
     }
 }
