@@ -4,7 +4,13 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## 1.1 - 2018-03-12
+## Unrealeased
+
+### Changed
+
+- Change LICENSE.md to default GitHub contents.
+
+## 0.2 - 2018-03-12
 
 ### Added
 - Changed namespace from `Swis\LaravelApi` to `Swis\JsonApi\Server`
@@ -33,7 +39,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - HasPermissionsChecks
 
 
-## 1.0 - 2018-02-09
+## 0.1 - 2018-02-09
 
 ### Added
 - Everything, initial release.
