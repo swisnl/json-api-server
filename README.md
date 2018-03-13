@@ -21,7 +21,7 @@ It already has the basic features an API should have, like:
 Via Composer
 
 ```bash
-$ composer require swisnl/laravel-api
+$ composer require swisnl/json-api-server
 ```
 
 ### Sample
