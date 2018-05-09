@@ -4,11 +4,15 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unrealeased
+## 0.2.1
 
 ### Changed
 
 - Change LICENSE.md to default GitHub contents.
+
+### Fixed
+
+- Bugfix when using the 'all' parameter and the query returns an empty collection.
 
 ## 0.2 - 2018-03-12
 
