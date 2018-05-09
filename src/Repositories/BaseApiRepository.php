@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Swis\JsonApi\Server\Exceptions\NotFoundException;
+use Swis\JsonApi\Server\Paginators\EmptyPaginator;
 use Swis\JsonApi\Server\Traits\HandlesRelationships;
 
 abstract class BaseApiRepository implements RepositoryInterface
@@ -47,6 +48,9 @@ abstract class BaseApiRepository implements RepositoryInterface
         if (array_key_exists('all', $this->parameters)) {
             $collection = $this->query->get();
             $total = count($collection);
+            if (0 == $total) {
+                return new EmptyPaginator();
+            }
 
             return new LengthAwarePaginator($collection, $total, $total);
         }
