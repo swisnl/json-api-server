@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Swis\JsonApi\Server\Exceptions\NotFoundException;
+use Swis\JsonApi\Server\Paginators\EmptyPaginator;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
 use Tests\TestClasses\TestRepository;
@@ -116,6 +117,13 @@ class RepositoryTest extends TestCase
     public function paginate_with_all_attribute()
     {
         $this->assertEquals(1, $this->testRepository->paginate($parameters = ['all' => true])->total());
+    }
+
+    /** @test */
+    public function paginate_with_all_attribute_empty_collection()
+    {
+        $result = $this->testRepositoryWithRelationships->paginate(['all' => true]);
+        $this->assertInstanceOf(EmptyPaginator::class, $result);
     }
 
     /** @test */
