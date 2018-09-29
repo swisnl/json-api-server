@@ -4,14 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased
+## 0.3.0
 
 ### Changed
 
 - Added support for recent Laravel versions.
 - Run tests on Travis instead of Shippable
-
-
 
 ## 0.2.1
 
