@@ -1,4 +1,4 @@
-[![Run Status](https://api.shippable.com/projects/5aa68088fece96150069d42d/badge?branch=master)](https://app.shippable.com/github/swisnl/json-api-server)
+[![Build Status](https://travis-ci.org/swisnl/json-api-server.svg?branch=master)](https://travis-ci.org/swisnl/json-api-server)
 [![Coverage Badge](https://api.shippable.com/projects/5aa68088fece96150069d42d/coverageBadge?branch=master)](https://app.shippable.com/github/swisnl/json-api-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 
