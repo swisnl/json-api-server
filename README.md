@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/swisnl/json-api-server.svg?branch=master)](https://travis-ci.org/swisnl/json-api-server)
 [![Coverage Badge](https://api.shippable.com/projects/5aa68088fece96150069d42d/coverageBadge?branch=master)](https://app.shippable.com/github/swisnl/json-api-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
+[![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
 
 # Laravel JSON API server
 Set up a laravel API in just a few minutes with this package. All the standard API functionality is already there for you.
@@ -258,16 +259,21 @@ If you discover any security related issues, please email security@swis.nl inste
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/swisnl/laravel-api.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/swisnl/laravel-api/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/swisnl/laravel-api.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/swisnl/laravel-api.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/swisnl/laravel-api.svg?style=flat-square
+## SWIS
 
-[link-packagist]: https://packagist.org/packages/swisnl/laravel-api
-[link-travis]: https://travis-ci.org/swisnl/laravel-api
-[link-scrutinizer]: https://scrutinizer-ci.com/g/swisnl/laravel-api/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/swisnl/laravel-api
-[link-downloads]: https://packagist.org/packages/swisnl/laravel-api
+[SWIS](https://www.swis.nl) is a web agency from Leiden, the Netherlands. We love working with open source software.
+
+
+[ico-version]: https://img.shields.io/packagist/v/swisnl/json-api-server.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/swisnl/json-api-server/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/swisnl/json-api-server.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/swisnl/json-api-server.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/swisnl/json-api-server.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/swisnl/json-api-server
+[link-travis]: https://travis-ci.org/swisnl/json-api-server
+[link-scrutinizer]: https://scrutinizer-ci.com/g/swisnl/json-api-server/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/swisnl/json-api-server
+[link-downloads]: https://packagist.org/packages/swisnl/json-api-server
 [link-author]: https://github.com/DylandeWit
