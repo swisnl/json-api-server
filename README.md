@@ -217,7 +217,7 @@ There is optional middleware:
 
 ## Passport installation
 
-**Note: if you want to know more about laravel passport and why these commands should be run go to https://laravel.com/docs/5.5/passport**
+**Note: if you want to know more about laravel passport and why these commands should be run go to https://laravel.com/docs/passport**
 
 ```bash
 $ composer require laravel/passport
@@ -234,7 +234,7 @@ If you created your own routes make sure you have the ``auth:api`` middlware on 
 ## Packages Laravel-Api uses
 
 ##### Laravel framework
-* https://laravel.com/docs/5.5/
+* https://laravel.com/docs/
 
 ##### Dimsav / laravel-translatable
 * https://github.com/dimsav/laravel-translatable
