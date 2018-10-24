@@ -26,7 +26,7 @@ class SampleAuthenticationTest extends TestCase
         $this->user->givePermissionTo(SamplePermissions::UPDATE_SAMPLE);
         $this->user->givePermissionTo(SamplePermissions::DELETE_SAMPLE);
 
-        $this->baseUrl = env('API_URL').'/\samples\/';
+        $this->baseUrl = env('API_URL').'/samples/';
     }
 
     /** @test */
