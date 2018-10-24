@@ -27,7 +27,7 @@ class $MODEL_NAME$AuthenticationTest extends TestCase
         $this->user->givePermissionTo($MODEL_NAME$Permissions::UPDATE_$UPPER_CASED_MODEL_NAME$);
         $this->user->givePermissionTo($MODEL_NAME$Permissions::DELETE_$UPPER_CASED_MODEL_NAME$);
 
-        $this->baseUrl = env('API_URL').'/\$PLURAL_LOWER_CASED_MODEL_NAME$\/';
+        $this->baseUrl = env('API_URL').'/$PLURAL_SNAKE_CASED_MODEL_NAME$/';
     }
 
     /** @test */
