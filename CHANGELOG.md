@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.3.3
+
+### Fixed
+
+- The `authentication_test.stub` called `PUT` instead of `PATCH` (issue #14)
+
 ## 0.3.2
 
 ### Fixed
