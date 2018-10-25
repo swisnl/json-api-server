@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 - Fix inconsistent url in `authentication_test.stub` (issue #8)
 - Route stub generated a route with the controller action `destroy` instead of `delete` (issue #9)
+- As per specification, the server should allow using the `Accept` header in requests. (issue #12)
 
 ## 0.3.0
 
