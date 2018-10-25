@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class $MODEL_NAME$AuthenticationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     protected $user;
     protected $baseUrl;
@@ -28,6 +28,7 @@ class $MODEL_NAME$AuthenticationTest extends TestCase
         $this->user->givePermissionTo($MODEL_NAME$Permissions::DELETE_$UPPER_CASED_MODEL_NAME$);
 
         $this->baseUrl = env('API_URL').'/$PLURAL_SNAKE_CASED_MODEL_NAME$/';
+        $this->withHeaders(['Accept'=>'application/vnd.api+json']);
     }
 
     /** @test */
