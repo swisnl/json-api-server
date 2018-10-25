@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\$MODEL_NAME$Controller as Controller;
 Route::prefix('$PLURAL_SNAKE_CASED_MODEL_NAME$')->middleware('auth:api')->group(function () {
     Route::get('', Controller::class . '@index');
     Route::get('/{id}', Controller::class . '@show');
-    Route::delete('/{id}', Controller::class . '@destroy');
+    Route::delete('/{id}', Controller::class . '@delete');
     Route::post('', Controller::class . '@create');
     Route::patch('/{id}', Controller::class . '@update');
 });
