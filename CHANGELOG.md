@@ -6,6 +6,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## 0.3.2
 
+### Fixed
+
 - Enable disable middleware for tests and add "Accept: application/vnd.api+json" header when running test calls.
 
 ## 0.3.1
