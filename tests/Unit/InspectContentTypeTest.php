@@ -51,4 +51,17 @@ class InspectContentTypeTest extends TestCase
         });
         $this->assertEquals($response, null);
     }
+
+    /**
+     * @test
+     *
+     * @throws ContentTypeNotSupportedException
+     */
+    public function itDoesNotThrowNotSupportedExceptionWhenUsingAcceptHeader()
+    {
+        $this->request->headers->set('Accept', 'application/vnd.api+json');
+        $response = $this->middleware->handle($this->request, function () {
+        });
+        $this->assertEquals($response, null);
+    }
 }
