@@ -4,6 +4,10 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.3.2
+
+- Enable disable middleware for tests and add "Accept: application/vnd.api+json" header when running test calls.
+
 ## 0.3.1
 
 ### Fixed 
