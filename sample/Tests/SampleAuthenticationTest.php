@@ -5,12 +5,11 @@ namespace Tests\Unit;
 use App\Sample;
 use App\SamplePermissions;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class SampleAuthenticationTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseTransactions;
 
     protected $user;
     protected $baseUrl;
@@ -27,6 +26,7 @@ class SampleAuthenticationTest extends TestCase
         $this->user->givePermissionTo(SamplePermissions::DELETE_SAMPLE);
 
         $this->baseUrl = env('API_URL').'/samples/';
+        $this->withHeaders(['Accept' => 'application/vnd.api+json']);
     }
 
     /** @test */
