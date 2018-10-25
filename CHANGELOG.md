@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+
+### Fixed 
+
+- Fix inconsistent url in `authentication_test.stub` (issue #8)
+
 ## 0.3.0
 
 ### Changed
