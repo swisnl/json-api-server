@@ -52,7 +52,7 @@ class $MODEL_NAME$AuthenticationTest extends TestCase
     {
         $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
 
-        $response = $this->put($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
+        $response = $this->patch($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
         $response->assertStatus(401);
     }
 
@@ -63,7 +63,7 @@ class $MODEL_NAME$AuthenticationTest extends TestCase
 
         $$CAMEL_CASE_MODEL_NAME$ = factory($MODEL_NAME$::class)->create();
 
-        $response = $this->put($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
+        $response = $this->patch($this->baseUrl.$$CAMEL_CASE_MODEL_NAME$->id, $$CAMEL_CASE_MODEL_NAME$->toArray());
 
         $response->assertStatus(200);
     }
