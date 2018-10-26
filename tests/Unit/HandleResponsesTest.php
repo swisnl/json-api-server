@@ -9,6 +9,7 @@
 namespace Tests\Unit;
 
 use Swis\JsonApi\Server\Traits\HandleResponses;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
 
@@ -29,6 +30,7 @@ class HandleResponsesTest extends TestCase
         $response = $this->mock->respondWithForbidden('FORBIDDEN');
 
         $this->assertEquals('FORBIDDEN', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('application/vnd.api+json', $response->headers->get('Content-Type'));
         $this->assertEquals(403, $response->getStatusCode());
     }
 
@@ -38,6 +40,7 @@ class HandleResponsesTest extends TestCase
         $response = $this->mock->respondWithBadRequest('BAD REQUEST');
 
         $this->assertEquals('BAD REQUEST', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('application/vnd.api+json', $response->headers->get('Content-Type'));
         $this->assertEquals(400, $response->getStatusCode());
     }
 
@@ -47,6 +50,7 @@ class HandleResponsesTest extends TestCase
         $response = $this->mock->respondWithNotFound('NOT FOUND');
 
         $this->assertEquals('NOT FOUND', json_decode($response->getContent())->errors[0]->detail);
+        $this->assertEquals('application/vnd.api+json', $response->headers->get('Content-Type'));
         $this->assertEquals(404, $response->getStatusCode());
     }
 
@@ -56,9 +60,12 @@ class HandleResponsesTest extends TestCase
         $model = new TestModel();
         $model->body = 'TEST';
         $response = $this->mock->respondWithCollection($model);
+
+
         $responseBody = json_decode($response->getContent())->data;
 
         $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/vnd.api+json', $response->headers->get('Content-Type'));
         $this->assertEquals('TEST', $responseBody->attributes->body);
     }
 }

@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+
+### Fixed
+
+- Server should always respond with `Content-type: application/vnd.api+json`
+
 ## 0.3.3
 
 ### Fixed
@@ -11,7 +17,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - The `authentication_test.stub` called `PUT` instead of `PATCH` (issue #14)
 
 ## 0.3.2
-
+self
 ### Fixed
 
 - Enable disable middleware for tests and add "Accept: application/vnd.api+json" header when running test calls.
