@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 
 - Server should always respond with `Content-type: application/vnd.api+json`
+- Server should not escape slashes in responses (issue #11)
 
 ## 0.3.3
 
