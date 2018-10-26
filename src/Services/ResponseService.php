@@ -21,10 +21,10 @@ class ResponseService
         if ($responseModel instanceof RespondError) {
             $errors = $this->formatErrors($responseModel, $content);
 
-            return response()->json($errors, $responseModel->getStatusCode(), ['Content-Type' => 'application/vnd.api+json']);
+            return response()->json($errors, $responseModel->getStatusCode(), ['Content-Type' => 'application/vnd.api+json'], JSON_UNESCAPED_SLASHES);
         }
 
-        return response()->json($content, $responseModel->getStatusCode(), ['Content-Type' => 'application/vnd.api+json']);
+        return response()->json($content, $responseModel->getStatusCode(), ['Content-Type' => 'application/vnd.api+json'], JSON_UNESCAPED_SLASHES);
     }
 
     public function respondWithResourceCollection($strResponseModel, $content)
@@ -33,6 +33,7 @@ class ResponseService
 
         return (new BaseApiCollectionResource($content))
             ->response()
+            ->setEncodingOptions(JSON_UNESCAPED_SLASHES)
             ->header('Content-Type', 'application/vnd.api+json')
             ->setStatusCode($responseModel->getStatusCode());
     }
@@ -46,6 +47,7 @@ class ResponseService
 
         return (new BaseApiResource($content))
             ->response()
+            ->setEncodingOptions(JSON_UNESCAPED_SLASHES)
             ->header('Content-Type', 'application/vnd.api+json')
             ->setStatusCode($responseModel->getStatusCode());
     }
