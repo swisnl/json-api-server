@@ -9,7 +9,6 @@
 namespace Tests\Unit;
 
 use Swis\JsonApi\Server\Traits\HandleResponses;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Tests\TestCase;
 use Tests\TestClasses\TestModel;
 
@@ -60,7 +59,6 @@ class HandleResponsesTest extends TestCase
         $model = new TestModel();
         $model->body = 'TEST';
         $response = $this->mock->respondWithCollection($model);
-
 
         $responseBody = json_decode($response->getContent())->data;
 
