@@ -165,7 +165,7 @@ class BaseApiResource extends Resource
             }
 
             $data = $this->resource->$relationship;
-            if (0 == count($data)) {
+            if ((is_array($data) || $data instanceof \Countable) && 0 == count($data)) {
                 continue;
             }
 

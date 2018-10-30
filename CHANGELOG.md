@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+
+### Fixed
+
+- Extra check so that uncountable data is not counted when getting relationships (Issue #20, thanks @bondas83)
+
 ## 0.3.4
 
 ### Fixed
