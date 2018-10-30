@@ -43,7 +43,7 @@ trait HandlesRelationships
             if (!$returnType) {
                 continue;
             }
-            if (in_array(pathinfo($returnType)['basename'], $this->relationshipTypes)) {
+            if ($this->isRelationshipReturntype($returnType)) {
                 $relations[] = $method->getName();
             }
         }
@@ -163,5 +163,24 @@ trait HandlesRelationships
         }
 
         return [$nestedInclude, $include];
+    }
+
+    /**
+     * @param $returnType
+     * @return bool
+     */
+    protected function isRelationshipReturntype($returnType): bool
+    {
+        /**
+         * compatibility php7.0 & php7.1+
+         */
+        $returnTypeClassname = null;
+        if(is_callable([$returnType, 'getName'])) {
+            $returnTypeClassname = $returnType->getName();
+        } else {
+            $returnTypeClassname = (string) $returnType;
+        }
+
+        return in_array($returnTypeClassname, $this->relationshipTypes);
     }
 }
