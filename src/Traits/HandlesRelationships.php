@@ -165,17 +165,13 @@ trait HandlesRelationships
         return [$nestedInclude, $include];
     }
 
-    /**
-     * @param $returnType
-     * @return bool
-     */
-    protected function isRelationshipReturntype($returnType): bool
+    protected function isRelationshipReturntype(\ReflectionType $returnType): bool
     {
         /**
-         * compatibility php7.0 & php7.1+
+         * compatibility php7.0 & php7.1+.
          */
         $returnTypeClassname = null;
-        if(is_callable([$returnType, 'getName'])) {
+        if (is_callable([$returnType, 'getName'])) {
             $returnTypeClassname = $returnType->getName();
         } else {
             $returnTypeClassname = (string) $returnType;
