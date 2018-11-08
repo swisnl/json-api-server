@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.3.6
+
+### Fixed 
+
+- Fixed getRelationships windows problem (issue #23)
+
 ## 0.3.5
 
 ### Fixed
