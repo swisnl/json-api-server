@@ -164,10 +164,15 @@ abstract class BaseApiController extends Controller
     public function validateObject($id = null)
     {
         $input = $this->request->input();
-        //TODO get rules custom validator instead of model?
-        $model = $this->repository->makeModel();
-        $this->validate($this->request, $model->getRules($id));
+        if (isset($input['data']) and isset($input['data']['attributes'])) {
+            $input = $input['data']['attributes'];
+        }
 
-        return $input;
+        $model = $this->repository->makeModel();
+
+        return $this->getValidationFactory()->make(
+            $input,
+            $model->getRules($id)
+        )->validate();
     }
 }
