@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.3.7
+
+### Fixed
+
+- Fixed validation of objects through model rules (issue #26, thanks @bondas83)
+
 ## 0.3.6
 
 ### Fixed 
