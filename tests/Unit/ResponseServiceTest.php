@@ -22,7 +22,7 @@ class ResponseServiceTest extends TestCase
      */
     private $responseService;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->responseService = new ResponseService();

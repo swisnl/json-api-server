@@ -4,7 +4,7 @@ namespace Tests;
 
 class CommandTestCase extends TestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         config(['laravel_api.path.templates' => 'resources/templates/']);

@@ -22,7 +22,7 @@ class ControllerTest extends TestCase
     /** @var TestModel */
     protected $testModel;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->setUpDatabase($this->app);
