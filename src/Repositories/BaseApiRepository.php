@@ -64,7 +64,7 @@ abstract class BaseApiRepository implements RepositoryInterface
      *
      * @throws NotFoundException
      *
-     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|Model|static|static[]|null
      */
     public function findById($value, $parameters = [])
     {
@@ -93,7 +93,7 @@ abstract class BaseApiRepository implements RepositoryInterface
      *
      * @throws NotFoundException
      *
-     * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|Model|static|static[]|null
      */
     public function update(array $data, $objectKey)
     {
