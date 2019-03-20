@@ -23,7 +23,7 @@ class RepositoryTest extends TestCase
      * Bootstrap the database
      * Setup a base repository which most test cases use.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpDatabase($this->app);

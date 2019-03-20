@@ -9,7 +9,7 @@ class EmptyPaginatorTest extends TestCase
     /** @var EmptyPaginator */
     private $emptyPaginator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->emptyPaginator = new EmptyPaginator();
     }

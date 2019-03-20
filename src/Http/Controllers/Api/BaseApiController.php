@@ -126,7 +126,7 @@ abstract class BaseApiController extends Controller
     /**
      * @param $policyMethod
      * @param $item
-     * @param null|mixed $requestedObject
+     * @param mixed|null $requestedObject
      *
      * @throws ForbiddenException
      * @throws AuthorizationException
