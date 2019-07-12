@@ -117,6 +117,8 @@ class BaseApiResource extends Resource
 
     protected function findMasterResource($str)
     {
+        $str = rtrim($str, '/');
+        
         if (empty($str)) {
             return;
         }
