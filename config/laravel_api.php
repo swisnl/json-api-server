@@ -15,7 +15,7 @@ return [
 
         'policy' => app_path('Policies/'),
 
-        'auth_test' => base_path('tests/Authentication/'),
+        'auth_test' => base_path('tests/Feature/Authentication/'),
 
         'templates' => 'vendor/swisnl/json-api-server/resources/templates/',
 

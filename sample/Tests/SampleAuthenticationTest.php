@@ -4,17 +4,17 @@ namespace Tests\Unit;
 
 use App\Sample;
 use App\SamplePermissions;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SampleAuthenticationTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected $user;
     protected $baseUrl;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->user = factory(User::class)->create();
