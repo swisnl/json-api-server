@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Swis\JsonApi\Server\Traits\HandlesRelationships;
 
 class BaseApiResource extends Resource
@@ -236,7 +237,7 @@ class BaseApiResource extends Resource
     protected function getResourceType()
     {
         $resourceClass = class_basename($this->resource);
-        $resourcePlural = str_plural($resourceClass);
+        $resourcePlural = Str::plural($resourceClass);
 
         // Converts camelcase to dash
         $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));

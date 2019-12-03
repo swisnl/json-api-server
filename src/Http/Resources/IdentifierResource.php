@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Server\Http\Resources;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\Resource;
 
 class IdentifierResource extends Resource
@@ -24,7 +25,7 @@ class IdentifierResource extends Resource
     protected function getResourceType()
     {
         $resourceClass = class_basename($this->resource);
-        $resourcePlural = str_plural($resourceClass);
+        $resourcePlural = Str::plural($resourceClass);
         // Converts camelcase to dash
         $lowerCaseResourceType = strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $resourcePlural));
 

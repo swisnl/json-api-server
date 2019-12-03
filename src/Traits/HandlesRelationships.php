@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Server\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -90,7 +91,7 @@ trait HandlesRelationships
                 }
             } else {
                 $included = BaseApiResource::make($item->$include);
-                $object = str_before($nestedInclude, '.');
+                $object = Str::before($nestedInclude, '.');
                 if (isset($included->$object)) {
                     $relationshipResources[] = $this->handleIncludes($included, [$nestedInclude]);
                 }
@@ -157,9 +158,9 @@ trait HandlesRelationships
     protected function getNestedRelation($include): array
     {
         $nestedInclude = null;
-        if (str_contains($include, '.')) {
-            $nestedInclude = str_after($include, '.');
-            $include = str_before($include, '.');
+        if (Str::contains($include, '.')) {
+            $nestedInclude = Str::after($include, '.');
+            $include = Str::before($include, '.');
         }
 
         return [$nestedInclude, $include];
