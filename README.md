@@ -236,8 +236,8 @@ If you created your own routes make sure you have the ``auth:api`` middlware on 
 ##### Laravel framework
 * https://laravel.com/docs/
 
-##### Dimsav / laravel-translatable
-* https://github.com/dimsav/laravel-translatable
+##### Astrotomic / laravel-translatable
+* https://github.com/Astrotomic/laravel-translatable
 
 ## Change log
 

@@ -16,7 +16,10 @@ use Swis\JsonApi\Server\Traits\HandleResponses;
 
 abstract class BaseApiController extends Controller
 {
-    use DispatchesJobs, ValidatesRequests, HandleResponses, AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
+    use HandleResponses;
+    use AuthorizesRequests;
 
     protected $respondController;
     protected $repository;

@@ -9,9 +9,6 @@ use Swis\JsonApi\Server\Exceptions\ContentTypeNotSupportedException;
 class InspectContentType
 {
     /**
-     * @param Request $request
-     * @param Closure $next
-     *
      * @throws ContentTypeNotSupportedException
      *
      * @return mixed

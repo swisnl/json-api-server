@@ -88,7 +88,6 @@ abstract class BaseApiRepository implements RepositoryInterface
     }
 
     /**
-     * @param array $data
      * @param $objectKey
      *
      * @throws NotFoundException

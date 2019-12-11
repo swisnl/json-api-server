@@ -41,7 +41,7 @@ class ControllerTest extends TestCase
     {
         $this->response = $this->testController->index();
         $collection = $this->response->getContent();
-        $this->assertContains('data', $collection);
+        $this->assertStringContainsString('data', $collection);
     }
 
     /**

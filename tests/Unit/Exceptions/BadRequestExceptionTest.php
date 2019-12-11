@@ -18,6 +18,6 @@ class BadRequestExceptionTest extends TestCase
         $badRequestException = new BadRequestException('BAD REQUEST');
         $response = $badRequestException->render();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertContains('BAD REQUEST', $response->getContent());
+        $this->assertStringContainsString('BAD REQUEST', $response->getContent());
     }
 }

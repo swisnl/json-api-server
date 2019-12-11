@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Sample extends Model

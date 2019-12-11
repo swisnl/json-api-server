@@ -3,7 +3,7 @@
 namespace $NAMESPACE_MODEL$;
 
 use Illuminate\Database\Eloquent\Model;
-use Dimsav\Translatable\Translatable;
+use Astrotomic\Translatable\Translatable;
 
 class $MODEL_NAME$ extends Model
 {

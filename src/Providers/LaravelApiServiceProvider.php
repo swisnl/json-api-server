@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Server\Providers;
 
-use Dimsav\Translatable\TranslatableServiceProvider;
+use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
