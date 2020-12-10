@@ -30,14 +30,14 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_an_sample_unauthenticated()
+    public function itCreatesAnSampleUnauthenticated()
     {
         $response = $this->post($this->baseUrl);
         $response->assertStatus(401);
     }
 
     /** @test */
-    public function it_creates_an_sample_authenticated()
+    public function itCreatesAnSampleAuthenticated()
     {
         Passport::actingAs($this->user);
 
@@ -46,7 +46,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_an_sample_unauthenticated()
+    public function itUpdatesAnSampleUnauthenticated()
     {
         $sample = factory(Sample::class)->create();
 
@@ -55,7 +55,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_an_sample_authenticated()
+    public function itUpdatesAnSampleAuthenticated()
     {
         Passport::actingAs($this->user);
 
@@ -67,7 +67,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_retrieves_an_sample_unauthenticated()
+    public function itRetrievesAnSampleUnauthenticated()
     {
         $sample = factory(Sample::class)->create();
 
@@ -76,7 +76,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_retrieves_an_sample_authenticated()
+    public function itRetrievesAnSampleAuthenticated()
     {
         Passport::actingAs($this->user);
 
@@ -87,7 +87,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_retrieves_all_samples_unauthenticated()
+    public function itRetrievesAllSamplesUnauthenticated()
     {
         factory(Sample::class, 3)->create();
 
@@ -96,7 +96,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_retrieves_all_samples_authenticated()
+    public function itRetrievesAllSamplesAuthenticated()
     {
         Passport::actingAs($this->user);
 
@@ -107,7 +107,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_deletes_an_sample_unauthenticated()
+    public function itDeletesAnSampleUnauthenticated()
     {
         $sample = factory(Sample::class)->create();
 
@@ -116,7 +116,7 @@ class SampleAuthenticationTest extends TestCase
     }
 
     /** @test */
-    public function it_deletes_an_sample_authenticated()
+    public function itDeletesAnSampleAuthenticated()
     {
         Passport::actingAs($this->user);
 

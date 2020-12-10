@@ -13,7 +13,7 @@ use Tests\CommandTestCase;
 class GenerateAuthenticationTestCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_generates_an_authentication_test()
+    public function itGeneratesAnAuthenticationTest()
     {
         $this->artisan('json-api-server:generate-test', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.auth_test').'ExampleAuthenticationTest.php'));

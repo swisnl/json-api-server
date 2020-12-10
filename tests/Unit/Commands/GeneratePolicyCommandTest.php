@@ -13,7 +13,7 @@ use Tests\CommandTestCase;
 class GeneratePolicyCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_generates_a_policy()
+    public function itGeneratesAPolicy()
     {
         $this->artisan('json-api-server:generate-policy', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.policy').'ExamplePolicy.php'));

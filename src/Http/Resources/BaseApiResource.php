@@ -194,7 +194,7 @@ class BaseApiResource extends Resource
                 }
             }
 
-            if ($relationshipData->toArray(true) == []) {
+            if ([] == $relationshipData->toArray(true)) {
                 $relationshipData = [];
             }
         } elseif ($data instanceof Model) {

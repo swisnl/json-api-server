@@ -13,7 +13,7 @@ use Tests\CommandTestCase;
 class GenerateAllCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_generates_all_files()
+    public function itGeneratesAllFiles()
     {
         $this->artisan('json-api-server:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));
@@ -27,7 +27,7 @@ class GenerateAllCommandTest extends CommandTestCase
     }
 
     /** @test */
-    public function it_generates_all_files_except_translation()
+    public function itGeneratesAllFilesExceptTranslation()
     {
         $this->artisan('json-api-server:generate-all', ['name' => 'Example', '--path' => 'tests/Data/Output/', '--skip' => 'translation']);
         $this->assertTrue(file_exists(config('laravel_api.path.repository').'ExampleRepository.php'));

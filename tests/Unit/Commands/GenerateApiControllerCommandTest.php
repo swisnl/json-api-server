@@ -13,7 +13,7 @@ use Tests\CommandTestCase;
 class GenerateApiControllerCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_generates_an_api_controller()
+    public function itGeneratesAnApiController()
     {
         $this->artisan('json-api-server:generate-controller', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
@@ -21,7 +21,7 @@ class GenerateApiControllerCommandTest extends CommandTestCase
     }
 
     /** @test */
-    public function it_generates_an_api_controller_without_override()
+    public function itGeneratesAnApiControllerWithoutOverride()
     {
         $this->artisan('json-api-server:generate-controller', ['name' => 'Example']);
         $this->assertTrue(file_exists(config('laravel_api.path.controller').'ExampleController.php'));
