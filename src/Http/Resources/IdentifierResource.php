@@ -2,10 +2,10 @@
 
 namespace Swis\JsonApi\Server\Http\Resources;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class IdentifierResource extends Resource
+class IdentifierResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
