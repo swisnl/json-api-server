@@ -4,12 +4,12 @@ namespace Swis\JsonApi\Server\Http\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Swis\JsonApi\Server\Traits\HandlesRelationships;
 
-class BaseApiResource extends Resource
+class BaseApiResource extends JsonResource
 {
     use HandlesRelationships;
 
@@ -44,7 +44,7 @@ class BaseApiResource extends Resource
         if (!$this->resource) {
             return;
         }
-        $this->resource->addHidden($this->resource->getKeyName());
+        $this->resource->makeHidden($this->resource->getKeyName());
 
         $this->jsonApiModel->setId((string) $this->resource->getKey());
         $this->jsonApiModel->setType($this->getResourceType());
