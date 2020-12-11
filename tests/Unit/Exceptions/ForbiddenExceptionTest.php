@@ -18,6 +18,6 @@ class ForbiddenExceptionTest extends TestCase
         $forbiddenException = new ForbiddenException('FORBIDDEN');
         $response = $forbiddenException->render();
         $this->assertEquals(403, $response->getStatusCode());
-        $this->assertContains('FORBIDDEN', $response->getContent());
+        $this->assertStringContainsString('FORBIDDEN', $response->getContent());
     }
 }

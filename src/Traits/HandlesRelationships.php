@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Str;
 use Swis\JsonApi\Server\Http\Resources\BaseApiResource;
 
 trait HandlesRelationships
@@ -72,8 +73,8 @@ trait HandlesRelationships
      * Loops through all included tags. It checks for each include if there is a nested include.
      * And also runs that recursively through includeCollectionRelationships.
      *
-     * @param $item
-     * @param $includes
+     * @param mixed $item
+     * @param mixed $includes
      *
      * @return array
      */
@@ -90,7 +91,7 @@ trait HandlesRelationships
                 }
             } else {
                 $included = BaseApiResource::make($item->$include);
-                $object = str_before($nestedInclude, '.');
+                $object = Str::before($nestedInclude, '.');
                 if (isset($included->$object)) {
                     $relationshipResources[] = $this->handleIncludes($included, [$nestedInclude]);
                 }
@@ -151,15 +152,13 @@ trait HandlesRelationships
 
     /**
      * @param $include
-     *
-     * @return array
      */
     protected function getNestedRelation($include): array
     {
         $nestedInclude = null;
-        if (str_contains($include, '.')) {
-            $nestedInclude = str_after($include, '.');
-            $include = str_before($include, '.');
+        if (Str::contains($include, '.')) {
+            $nestedInclude = Str::after($include, '.');
+            $include = Str::before($include, '.');
         }
 
         return [$nestedInclude, $include];

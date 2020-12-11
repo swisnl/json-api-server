@@ -17,7 +17,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     const PAGE = 1;
     const PER_PAGE = 15;
 
-    /** @var Model $model */
+    /** @var Model */
     protected $model;
     protected $user;
 
@@ -25,7 +25,7 @@ abstract class BaseApiRepository implements RepositoryInterface
     protected $perPage = self::PER_PAGE;
     protected $parameters;
 
-    /** @var Builder $query */
+    /** @var Builder */
     protected $query;
     protected $columns = ['*'];
 
@@ -88,7 +88,6 @@ abstract class BaseApiRepository implements RepositoryInterface
     }
 
     /**
-     * @param array $data
      * @param $objectKey
      *
      * @throws NotFoundException

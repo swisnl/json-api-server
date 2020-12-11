@@ -2,6 +2,8 @@
 
 namespace Swis\JsonApi\Server\Services;
 
+use Illuminate\Support\Str;
+
 class CustomFileGenerator
 {
     private $modelName;
@@ -11,11 +13,11 @@ class CustomFileGenerator
     {
         $this->stubVariables = [
             '$MODEL_NAME$' => $this->modelName,
-            '$CAMEL_CASE_MODEL_NAME$' => camel_case($this->modelName),
-            '$SNAKE_CASED_MODEL_NAME$' => strtolower(snake_case($this->modelName)),
-            '$PLURAL_SNAKE_CASED_MODEL_NAME$' => strtolower(str_plural(snake_case($this->modelName))),
-            '$PLURAL_UPPER_CASED_MODEL_NAME$' => strtoupper(str_plural($this->modelName)),
-            '$PLURAL_LOWER_CASED_MODEL_NAME$' => strtolower(str_plural($this->modelName)),
+            '$CAMEL_CASE_MODEL_NAME$' => Str::camel($this->modelName),
+            '$SNAKE_CASED_MODEL_NAME$' => strtolower(Str::snake($this->modelName)),
+            '$PLURAL_SNAKE_CASED_MODEL_NAME$' => strtolower(Str::plural(Str::snake($this->modelName))),
+            '$PLURAL_UPPER_CASED_MODEL_NAME$' => strtoupper(Str::plural($this->modelName)),
+            '$PLURAL_LOWER_CASED_MODEL_NAME$' => strtolower(Str::plural($this->modelName)),
             '$UPPER_CASED_MODEL_NAME$' => strtoupper($this->modelName),
             '$NAMESPACE_MODEL$' => config('laravel_api.namespace.model'),
             '$NAME_SPACE_REPOSITORY$' => config('laravel_api.namespace.repository'),

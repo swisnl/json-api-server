@@ -9,7 +9,7 @@ use Tests\TestCase;
 class CustomFileGeneratorTest extends TestCase
 {
     /** @test */
-    public function it_generates_all_desired_custom_api_files()
+    public function itGeneratesAllDesiredCustomApiFiles()
     {
         $modelName = 'Example';
         $path = 'tests/Data/Output/';

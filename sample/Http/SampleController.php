@@ -9,7 +9,7 @@ use Swis\JsonApi\Server\Repositories\RepositoryInterface;
 
 class SampleController extends BaseApiController
 {
-    /** @var RepositoryInterface $repository */
+    /** @var RepositoryInterface */
     protected $repository;
 
     public function __construct(SampleRepository $repository, Request $request)

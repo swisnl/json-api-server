@@ -30,7 +30,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_an_OK_response()
+    public function itCreatesAnOKResponse()
     {
         $this->testModel->body = 'OK';
         $response = $this->respondWithOK($this->testModel);
@@ -41,7 +41,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_partial_content_response()
+    public function itCreatesAPartialContentResponse()
     {
         $this->testModel->body = 'PARTIAL';
         $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
@@ -53,7 +53,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_created_response()
+    public function itCreatesACreatedResponse()
     {
         $this->testModel->body = 'CREATED';
         $response = $this->respondWithCreated($this->testModel);
@@ -64,7 +64,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_no_content_response()
+    public function itCreatesANoContentResponse()
     {
         $response = $this->respondWithNoContent();
 
@@ -72,7 +72,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_collection_response_with_OK()
+    public function itCreatesACollectionResponseWithOK()
     {
         $this->testModel->body = 'OK';
         $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
@@ -84,7 +84,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_collection_response_with_PARTIAL()
+    public function itCreatesACollectionResponseWithPARTIAL()
     {
         $this->testModel->body = 'PARTIAL';
         $paginator = new LengthAwarePaginator([$this->testModel], 1, 1);
@@ -97,14 +97,14 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_not_found_response_in_resource()
+    public function itCreatesANotFoundResponseInResource()
     {
         $this->expectException(NotFoundException::class);
         $this->respondWithResource($this->testModel, null);
     }
 
     /** @test */
-    public function it_creates_a_forbidden_response()
+    public function itCreatesAForbiddenResponse()
     {
         $message = 'FORBIDDEN';
         $response = $this->responseService->response(RespondHttpForbidden::class, $message);
@@ -114,7 +114,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_not_found_response()
+    public function itCreatesANotFoundResponse()
     {
         $message = 'NOT FOUND';
         $response = $this->responseService->response(RespondHttpNotFound::class, $message);
@@ -124,7 +124,7 @@ class ResponseServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_unauthorized_response()
+    public function itCreatesAUnauthorizedResponse()
     {
         $message = 'UNAUTHORIZED';
         $response = $this->responseService->response(RespondHttpUnauthorized::class, $message);

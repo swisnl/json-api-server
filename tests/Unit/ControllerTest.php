@@ -15,7 +15,7 @@ use Tests\TestClasses\TestModel;
 
 class ControllerTest extends TestCase
 {
-    /** @var TestController $testController */
+    /** @var TestController */
     protected $testController;
     /** @var Response */
     protected $response;
@@ -37,17 +37,17 @@ class ControllerTest extends TestCase
      *
      * @throws \Swis\JsonApi\Server\Exceptions\ForbiddenException
      */
-    public function test_index()
+    public function testIndex()
     {
         $this->response = $this->testController->index();
         $collection = $this->response->getContent();
-        $this->assertContains('data', $collection);
+        $this->assertStringContainsString('data', $collection);
     }
 
     /**
      * @throws \Swis\JsonApi\Server\Exceptions\ForbiddenException
      */
-    public function test_show()
+    public function testShow()
     {
         $this->response = $this->testController->show(1);
         $collection = json_decode($this->response->getContent());
@@ -57,7 +57,7 @@ class ControllerTest extends TestCase
     /**
      * @throws \Swis\JsonApi\Server\Exceptions\ForbiddenException
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->response = $this->testController->delete(1);
         $this->assertDatabaseMissing('test_models', [

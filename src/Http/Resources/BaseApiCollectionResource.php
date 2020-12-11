@@ -32,7 +32,7 @@ class BaseApiCollectionResource extends ResourceCollection
     protected function getIncludedRelationships($items, Request $request)
     {
         $includes = explode(',', $request->get('include', null));
-        if ($includes === []) {
+        if ([] === $includes) {
             return [];
         }
         $relations = $this->includeCollectionRelationships($items, $includes);

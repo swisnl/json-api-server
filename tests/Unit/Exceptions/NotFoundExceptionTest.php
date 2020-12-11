@@ -18,6 +18,6 @@ class NotFoundExceptionTest extends TestCase
         $notFoundException = new NotFoundException('NOT FOUND');
         $response = $notFoundException->render();
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertContains('NOT FOUND', $response->getContent());
+        $this->assertStringContainsString('NOT FOUND', $response->getContent());
     }
 }

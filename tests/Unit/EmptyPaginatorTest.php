@@ -15,13 +15,13 @@ class EmptyPaginatorTest extends TestCase
     }
 
     /** @test */
-    public function test_total()
+    public function testTotal()
     {
         $this->assertEquals(0, $this->emptyPaginator->total());
     }
 
     /** @test */
-    public function test_to_array()
+    public function testToArray()
     {
         $this->assertEquals([], $this->emptyPaginator->toArray()['data']);
         $this->assertEquals(0, $this->emptyPaginator->toArray()['total']);

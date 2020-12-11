@@ -14,7 +14,7 @@ use Tests\TestClasses\TestModel;
 
 class HandleResponsesTest extends TestCase
 {
-    /** @var HandleResponses $mock */
+    /** @var HandleResponses */
     private $mock;
 
     protected function setUp(): void
@@ -24,7 +24,7 @@ class HandleResponsesTest extends TestCase
     }
 
     /** @test */
-    public function test_respond_with_forbidden()
+    public function testRespondWithForbidden()
     {
         $response = $this->mock->respondWithForbidden('FORBIDDEN');
 
@@ -34,7 +34,7 @@ class HandleResponsesTest extends TestCase
     }
 
     /** @test */
-    public function test_respond_with_bad_request()
+    public function testRespondWithBadRequest()
     {
         $response = $this->mock->respondWithBadRequest('BAD REQUEST');
 
@@ -44,7 +44,7 @@ class HandleResponsesTest extends TestCase
     }
 
     /** @test */
-    public function test_respond_with_not_found()
+    public function testRespondWithNotFound()
     {
         $response = $this->mock->respondWithNotFound('NOT FOUND');
 
@@ -54,7 +54,7 @@ class HandleResponsesTest extends TestCase
     }
 
     /** @test */
-    public function test_respond_with_collection_model()
+    public function testRespondWithCollectionModel()
     {
         $model = new TestModel();
         $model->body = 'TEST';

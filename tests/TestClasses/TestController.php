@@ -14,7 +14,7 @@ use Swis\JsonApi\Server\Repositories\RepositoryInterface;
 
 class TestController extends BaseApiController
 {
-    /** @var RepositoryInterface $repository */
+    /** @var RepositoryInterface */
     protected $repository;
 
     public function __construct(TestRepository $repository, Request $request)

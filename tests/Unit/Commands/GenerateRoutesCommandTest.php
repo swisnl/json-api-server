@@ -13,7 +13,7 @@ use Tests\CommandTestCase;
 class GenerateRoutesCommandTest extends CommandTestCase
 {
     /** @test */
-    public function it_generates_routes()
+    public function itGeneratesRoutes()
     {
         $this->artisan('json-api-server:generate-routes', ['name' => 'Example', '--path' => 'tests/Data/Output/']);
         $this->assertTrue(file_exists(config('laravel_api.path.routes').'ExampleRoutes.php'));
