@@ -4,6 +4,21 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.5.0
+
+### Added
+
+- Laravel 7 and 8 support.
+
+### Changed
+
+- Moved from dimsav/laravel-translatable to astrotomic/laravel-translatable.
+
+### Removed
+
+- Laravel 5 support.
+- PHP 7.1 support.
+
 ## 0.4.0
 
 ### Added
