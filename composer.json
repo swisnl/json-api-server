@@ -41,13 +41,13 @@
     "php": ">=7.2",
     "ext-json": "*",
     "astrotomic/laravel-translatable": "^11.6",
-    "laravel/framework": "^7.0|^8.0"
+    "laravel/framework": "^6.0|^7.0|^8.0"
   },
   "require-dev": {
     "filp/whoops": "~2.0",
     "friendsofphp/php-cs-fixer": "^2.16",
     "mockery/mockery": "^1.0",
-    "orchestra/testbench": "^5.0|^6.0",
+    "orchestra/testbench": "^4.0|^5.0|^6.0",
     "phpunit/php-code-coverage": "^7.0",
     "phpunit/phpunit": "^8.0",
     "spatie/phpunit-watcher": "^1.3",
