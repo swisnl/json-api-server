@@ -3,6 +3,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 [![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
 
+🚨 **THIS PACKAGE HAS BEEN ABANDONED** 🚨
+
+We don't use this package anymore in our own projects and there are many, better alternatives, so that's why we have chosen to abandon it. We suggest using [laravel-json-api/laravel](https://laraveljsonapi.io/) or one of the [other alternatives](https://jsonapi.org/implementations/#server-libraries-php) instead. Feel free to fork our code and maintain your own copy.
+
 # Laravel JSON API server
 Set up a laravel API in just a few minutes with this package. All the standard API functionality is already there for you.
 
