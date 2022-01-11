@@ -1,7 +1,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/json-api-server.svg)](https://packagist.org/packages/swisnl/json-api-server)
 [![Build Status](https://travis-ci.org/swisnl/json-api-server.svg?branch=master)](https://travis-ci.org/swisnl/json-api-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
-[![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
+[![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%230737A9.svg)](https://www.swis.nl)
 
 🚨 **THIS PACKAGE HAS BEEN ABANDONED** 🚨
 
