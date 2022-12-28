@@ -41,7 +41,7 @@
     "php": ">=7.2",
     "ext-json": "*",
     "astrotomic/laravel-translatable": "^11.6",
-    "laravel/framework": "^6.0|^7.0|^8.0"
+    "laravel/framework": "^6.0|^7.0|^8.0|^9.0"
   },
   "require-dev": {
     "filp/whoops": "~2.0",
