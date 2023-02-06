@@ -91,7 +91,7 @@ trait HandlesRelationships
                 }
             } else {
                 $included = BaseApiResource::make($item->$include);
-                $object = Str::before($nestedInclude, '.');
+                $object = Str::before($nestedInclude??'', '.');
                 if (isset($included->$object)) {
                     $relationshipResources[] = $this->handleIncludes($included, [$nestedInclude]);
                 }
