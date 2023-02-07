@@ -4,6 +4,12 @@ All Notable changes to `json-api-server` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 0.6.0
+
+### Added
+
+- Laravel 9 support.
+
 ## 0.5.1
 
 ### Added
